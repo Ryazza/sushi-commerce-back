@@ -8,6 +8,7 @@ use App\Entity\Product\Comments;
 use App\Entity\Product\Description;
 use App\Entity\Product\Event;
 use App\Entity\Product\Pictures;
+use App\Entity\Product\Special;
 use App\Repository\ProductRepository;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
@@ -56,6 +57,11 @@ class Product
      * @ORM\ManyToMany(targetEntity=Event::class, mappedBy="product")
      */
     private $events;
+
+    /**
+     * @ORM\OneToOne(targetEntity=Special::class, mappedBy="product", cascade={"persist", "remove"})
+     */
+    private $special;
 
     public function __construct()
     {
@@ -207,6 +213,28 @@ class Product
         if ($this->events->removeElement($event)) {
             $event->removeProduct($this);
         }
+
+        return $this;
+    }
+
+    public function getSpecial(): ?Special
+    {
+        return $this->special;
+    }
+
+    public function setSpecial(?Special $special): self
+    {
+        // unset the owning side of the relation if necessary
+        if ($special === null && $this->special !== null) {
+            $this->special->setProduct(null);
+        }
+
+        // set the owning side of the relation if necessary
+        if ($special !== null && $special->getProduct() !== $this) {
+            $special->setProduct($this);
+        }
+
+        $this->special = $special;
 
         return $this;
     }
