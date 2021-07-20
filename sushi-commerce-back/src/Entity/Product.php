@@ -4,6 +4,7 @@ namespace App\Entity;
 
 use ApiPlatform\Core\Annotation\ApiResource;
 use App\Entity\Product\Category;
+use App\Entity\Product\Comments;
 use App\Entity\Product\Description;
 use App\Entity\Product\Pictures;
 use App\Repository\ProductRepository;
@@ -45,10 +46,16 @@ class Product
      */
     private $pictures;
 
+    /**
+     * @ORM\OneToMany(targetEntity=Comments::class, mappedBy="product")
+     */
+    private $comments;
+
     public function __construct()
     {
         $this->descriptions = new ArrayCollection();
         $this->pictures = new ArrayCollection();
+        $this->comments = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -134,6 +141,36 @@ class Product
             // set the owning side to null (unless already changed)
             if ($picture->getProduct() === $this) {
                 $picture->setProduct(null);
+            }
+        }
+
+        return $this;
+    }
+
+    /**
+     * @return Collection|Comments[]
+     */
+    public function getComments(): Collection
+    {
+        return $this->comments;
+    }
+
+    public function addComment(Comments $comment): self
+    {
+        if (!$this->comments->contains($comment)) {
+            $this->comments[] = $comment;
+            $comment->setProduct($this);
+        }
+
+        return $this;
+    }
+
+    public function removeComment(Comments $comment): self
+    {
+        if ($this->comments->removeElement($comment)) {
+            // set the owning side to null (unless already changed)
+            if ($comment->getProduct() === $this) {
+                $comment->setProduct(null);
             }
         }
 
