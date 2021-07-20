@@ -5,6 +5,7 @@ namespace App\Entity;
 use ApiPlatform\Core\Annotation\ApiResource;
 use App\Entity\Product\Category;
 use App\Entity\Product\Description;
+use App\Entity\Product\Pictures;
 use App\Repository\ProductRepository;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
@@ -39,9 +40,15 @@ class Product
      */
     private $descriptions;
 
+    /**
+     * @ORM\OneToMany(targetEntity=Pictures::class, mappedBy="product")
+     */
+    private $pictures;
+
     public function __construct()
     {
         $this->descriptions = new ArrayCollection();
+        $this->pictures = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -97,6 +104,36 @@ class Product
             // set the owning side to null (unless already changed)
             if ($description->getProduct() === $this) {
                 $description->setProduct(null);
+            }
+        }
+
+        return $this;
+    }
+
+    /**
+     * @return Collection|Pictures[]
+     */
+    public function getPictures(): Collection
+    {
+        return $this->pictures;
+    }
+
+    public function addPicture(Pictures $picture): self
+    {
+        if (!$this->pictures->contains($picture)) {
+            $this->pictures[] = $picture;
+            $picture->setProduct($this);
+        }
+
+        return $this;
+    }
+
+    public function removePicture(Pictures $picture): self
+    {
+        if ($this->pictures->removeElement($picture)) {
+            // set the owning side to null (unless already changed)
+            if ($picture->getProduct() === $this) {
+                $picture->setProduct(null);
             }
         }
 
