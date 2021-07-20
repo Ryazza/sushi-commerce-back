@@ -6,6 +6,7 @@ use ApiPlatform\Core\Annotation\ApiResource;
 use App\Entity\Product\Category;
 use App\Entity\Product\Comments;
 use App\Entity\Product\Description;
+use App\Entity\Product\Event;
 use App\Entity\Product\Pictures;
 use App\Repository\ProductRepository;
 use Doctrine\Common\Collections\ArrayCollection;
@@ -51,11 +52,17 @@ class Product
      */
     private $comments;
 
+    /**
+     * @ORM\ManyToMany(targetEntity=Event::class, mappedBy="product")
+     */
+    private $events;
+
     public function __construct()
     {
         $this->descriptions = new ArrayCollection();
         $this->pictures = new ArrayCollection();
         $this->comments = new ArrayCollection();
+        $this->events = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -172,6 +179,33 @@ class Product
             if ($comment->getProduct() === $this) {
                 $comment->setProduct(null);
             }
+        }
+
+        return $this;
+    }
+
+    /**
+     * @return Collection|Event[]
+     */
+    public function getEvents(): Collection
+    {
+        return $this->events;
+    }
+
+    public function addEvent(Event $event): self
+    {
+        if (!$this->events->contains($event)) {
+            $this->events[] = $event;
+            $event->addProduct($this);
+        }
+
+        return $this;
+    }
+
+    public function removeEvent(Event $event): self
+    {
+        if ($this->events->removeElement($event)) {
+            $event->removeProduct($this);
         }
 
         return $this;
