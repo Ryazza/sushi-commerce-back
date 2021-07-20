@@ -4,7 +4,10 @@ namespace App\Entity;
 
 use ApiPlatform\Core\Annotation\ApiResource;
 use App\Entity\Product\Category;
+use App\Entity\Product\Description;
 use App\Repository\ProductRepository;
+use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
@@ -31,6 +34,16 @@ class Product
      */
     private $category;
 
+    /**
+     * @ORM\OneToMany(targetEntity=Description::class, mappedBy="product")
+     */
+    private $descriptions;
+
+    public function __construct()
+    {
+        $this->descriptions = new ArrayCollection();
+    }
+
     public function getId(): ?int
     {
         return $this->id;
@@ -56,6 +69,36 @@ class Product
     public function setCategory(?Category $category): self
     {
         $this->category = $category;
+
+        return $this;
+    }
+
+    /**
+     * @return Collection|Description[]
+     */
+    public function getDescriptions(): Collection
+    {
+        return $this->descriptions;
+    }
+
+    public function addDescription(Description $description): self
+    {
+        if (!$this->descriptions->contains($description)) {
+            $this->descriptions[] = $description;
+            $description->setProduct($this);
+        }
+
+        return $this;
+    }
+
+    public function removeDescription(Description $description): self
+    {
+        if ($this->descriptions->removeElement($description)) {
+            // set the owning side to null (unless already changed)
+            if ($description->getProduct() === $this) {
+                $description->setProduct(null);
+            }
+        }
 
         return $this;
     }
