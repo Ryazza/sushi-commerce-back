@@ -13,59 +13,62 @@ function isDate(date) {
 }
 
 exports.addUser = async (form) => {
-    if (!validateEmail(form.email)) {
-        return {
-            success: false,
-            error: "Email invalide !"
+    try {
+        if (!validateEmail(form.email)) {
+            return {
+                success: false,
+                error: "Email invalide !"
+            }
         }
-    }
-    if (form.password.length < 6) {
-        return {
-            success: false,
-            error: "Le mot de passe doit faire au minimum 2 caractères !"
+        if (form.password.length < 6) {
+            return {
+                success: false,
+                error: "Le mot de passe doit faire au minimum 2 caractères !"
+            }
         }
-    }
-    form.password = await bcrypt.hash(form.password, 10);
-    if(form.gender.length < 3) {
-        return {
-            success: false,
-            error: "Genre invalide"
+        form.password = await bcrypt.hash(form.password, 10);
+        if (form.gender.length < 3) {
+            return {
+                success: false,
+                error: "Genre invalide"
+            }
         }
-    }
-    if (form.firstName.length < 2 || form.firstName.length > 200) {
-        return {
-            success: false,
-            error: "Le prénom doit faire entre 2 et 200 caractères !"
+        if (form.firstName.length < 2 || form.firstName.length > 200) {
+            return {
+                success: false,
+                error: "Le prénom doit faire entre 2 et 200 caractères !"
+            }
         }
-    }
-    if (form.lastName.length < 2 || form.lastName.length > 200) {
-        return {
-            success: false,
-            error: "Le nom doit faire entre 2 et 200 caractères !"
+        if (form.lastName.length < 2 || form.lastName.length > 200) {
+            return {
+                success: false,
+                error: "Le nom doit faire entre 2 et 200 caractères !"
+            }
         }
-    }
-    if (!isDate(form.birth)) {
-        return {
-            success: false,
-            error: "Date invalide !"
+        if (!isDate(form.birth)) {
+            return {
+                success: false,
+                error: "Date invalide !"
+            }
         }
+        if (form.admin) {
+            form.admin = false;
+        }
+        if (form.adress) {
+            form.adress = []
+        }
+        if (form.payment) {
+            form.payment = []
+        }
+        const user = new User({createdAt: new Date(), updateAt: new Date(), admin: false, adress: [], payment: []});
+        Object.assign(user, form);
+        await user.save();
+        return {
+            success: true
+        };
+    } catch (e) {
+        throw e
     }
-    if(form.admin) {
-        form.admin = false;
-    }
-    if(form.adress) {
-        form.adress = []
-    }
-    if(form.payment) {
-        form.payment = []
-    }
-
-    const user = new User({createdAt: new Date(), updateAt: new Date(), admin: false, adress: [], payment: []});
-    Object.assign(user, form);
-    await user.save();
-    return {
-        success: true
-    };
 }
 
 exports.logUser = async (form) => {
