@@ -7,6 +7,7 @@ let logger = require('morgan');
 
 // Import des routes
 let UserRoutes = require('./routes/user.routes');
+let OrderRoutes = require('./routes/order.routes');
 
 // -----
 
@@ -20,6 +21,7 @@ app.use(cors());
 
 // Routeso
 app.use('/user', UserRoutes);
+app.use('/order', OrderRoutes);
 
 // -----
 
