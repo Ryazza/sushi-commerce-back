@@ -53,13 +53,19 @@ exports.addUser = async (form) => {
     if(form.admin) {
         form.admin = false;
     }
+    if(form.adress) {
+        form.adress = []
+    }
+    if(form.payment) {
+        form.payment = []
+    }
 
-    // const user = new User({createdAt: new Date(), updateAt: new Date(), admin: false});
-    // Object.assign(user, form);
-    // await user.save();
-    // return {
-    //     success: true
-    // };
+    const user = new User({createdAt: new Date(), updateAt: new Date(), admin: false, adress: [], payment: []});
+    Object.assign(user, form);
+    await user.save();
+    return {
+        success: true
+    };
 }
 
 exports.logUser = async (form) => {
