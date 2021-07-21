@@ -98,14 +98,14 @@ exports.logUser = async (form) => {
         }
     }
 }
-
-
 exports.unsetUser = async (id) => {
     await User.deleteOne({_id: id});
     return {
         success: true
     };
 }
+
+
 
 exports.allUser = async () => {
     let users = await User.find({})
