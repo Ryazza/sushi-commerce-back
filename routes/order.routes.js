@@ -13,6 +13,10 @@ router.put('/:id', orderController.updateOrder)
 
 router.delete('/:id', orderController.deleteOrder)
 
+/*-------------- ADMIN -----------------*/
+
+router.get('/status/:status/:order', orderController.getAllOrderByStatus)
+
 // reste middleware checkTokenMiddleware.checkToken
 
 module.exports = router;

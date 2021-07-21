@@ -91,3 +91,27 @@ exports.deleteOrderById = async (id) => {
     }
 }
 
+//----------------------- ADMIN ---------------------------//
+
+
+exports.getAllOrderByStatus = async ( status, order ) => {
+    console.log(order)
+    try {
+        if ((status === "préparation" || status === "envoyé") && (order === "desc" || order === 'asc')) {
+            let inOrder = "";
+            order === "desc" ? inOrder = -1 : inOrder = 1;
+            let orders = await Order.find({status: status}).sort({_id: inOrder})
+            return {
+                success: true,
+                order: orders
+            }
+        } else {
+            return {
+                success: false,
+                message: "Demande incorrecte",
+            }
+        }
+    } catch (e) {
+        trow (e)
+    }
+}

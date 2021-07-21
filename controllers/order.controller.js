@@ -97,3 +97,21 @@ exports.deleteOrder = async ( req, res ) => {
         throw e;
     }
 }
+
+/*-------------------------- ADMIN -------------------------*/
+
+exports.getAllOrderByStatus = async (req, res) => {
+    console.log(req.params)
+
+    try {
+        let allOrder = await OrderService.getAllOrderByStatus(req.params.status, req.params.order);
+        res.status(200);
+        res.send(allOrder);
+    } catch (e) {
+        res.status(400)
+        res.send({
+            success: false,
+            errors: e.errors
+        })
+    }
+}
