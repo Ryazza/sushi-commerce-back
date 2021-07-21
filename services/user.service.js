@@ -104,7 +104,13 @@ exports.unsetUser = async (id) => {
         success: true
     };
 }
-
+exports.getMe = async (id) => {
+    let user = await User.findOne({_id: id})
+    return {
+        success: true,
+        user: user
+    }
+}
 
 
 exports.allUser = async () => {
@@ -183,13 +189,7 @@ exports.updateUserPass = async (id, change) => {
     };
 }
 
-exports.getMe = async (id) => {
-    let user = await User.findOne({_id: id})
-    return {
-        success: true,
-        user: user
-    }
-}
+
 
 exports.deleteUserById = async (id) => {
     await User.deleteOne({_id: id})
