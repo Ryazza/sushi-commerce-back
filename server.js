@@ -20,6 +20,7 @@ app.use(cors());
 
 // Routes
 app.use('/user', UserRoutes);
+app.use('/product', UserRoutes);
 
 // -----
 

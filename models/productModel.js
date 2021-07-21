@@ -1,37 +1,38 @@
 const mongoose = require('mongoose');
 const uniqueValidator = require('mongoose-unique-validator');
 
-const UsersSchema  = new mongoose.Schema({
-    login: {
-        type: String,
-        unique: true,
-        required: true
-    },
-    password: {
+const ProductsSchema  = new mongoose.Schema({
+    name:  {
         type: String,
         required: true
     },
-    email: {
+    category: {
         type: String,
-        unique: true,
         required: true
+    },
+    description: {
+        type: String,
+        required: true
+    },
+    pictures: {
+        type:Array
+    },
+    events : {
+        type: Array
     },
     createdAt : {
         type: Date,
         required: true
     },
-    updateAt : {
-        type: Date,
+    stock: {
+        type: Array,
         required: true
-    },
-    admin: {
-        type: Boolean,
-        required: true
+
     }
 });
 
-UsersSchema.plugin(uniqueValidator);
+ProductsSchema.plugin(uniqueValidator);
 
-const Users = mongoose.model('users', UsersSchema);
+const Products = mongoose.model('products', ProductsSchema);
 
-module.exports = Users;
+module.exports = Products;
