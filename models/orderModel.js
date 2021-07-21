@@ -40,6 +40,10 @@ const OrderSchema = new mongoose.Schema({
         type: Number,
         required: true,
     },
+    gift_package: {
+        type: Boolean,
+        default: false,
+    },
     status: {
         type: String,
         required: true,
