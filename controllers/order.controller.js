@@ -1,4 +1,5 @@
 const OrderService = require('../services/order.service')
+const Order = require("../models/orderModel");
 
 exports.addOrder = async (req, res) => {
     try {
@@ -8,7 +9,6 @@ exports.addOrder = async (req, res) => {
             res.status(201)
             res.send(newOrder)
         } else {
-            console.log("rentré else");
             res.status(400)
             res.send(newOrder)
         }
@@ -73,5 +73,27 @@ exports.updateOrder = async (req, res) => {
             success: false,
             errors: e.errors
         });
+    }
+}
+
+exports.deleteOrder = async ( req, res ) => {
+    try {
+        let order = await Order.findByIdAndDelete(req.params.id);
+        if (order) {
+            res.status(200);
+            res.send({
+                success: true,
+                errors: "Commande supprimé avec succes!"
+            })
+
+        } else {
+            res.status(400)
+            res.send({
+                success: false,
+                errors: "Commande non valide!"
+            })
+        }
+    } catch (e) {
+        throw e;
     }
 }

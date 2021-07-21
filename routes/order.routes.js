@@ -11,9 +11,8 @@ router.get('/:id', orderController.getOneOrder)
 
 router.put('/:id', orderController.updateOrder)
 
-//
-// router.delete('/' , checkTokenMiddleware.checkToken, orderController.deleteOrder)
-//
-// router.put('/login', checkTokenMiddleware.checkToken, orderController.updateOrder);
+router.delete('/:id', orderController.deleteOrder)
+
+// reste middleware checkTokenMiddleware.checkToken
 
 module.exports = router;

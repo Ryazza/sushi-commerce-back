@@ -79,3 +79,15 @@ exports.updateOrder = async (id, change ) => {
         throw e;
     }
 }
+
+exports.deleteOrderById = async (id) => {
+    try {
+        await Order.deleteOne({_id: id})
+        return {
+            success: true
+        }
+    } catch (e) {
+        throw e;
+    }
+}
+
