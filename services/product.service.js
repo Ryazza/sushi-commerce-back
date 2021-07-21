@@ -5,24 +5,43 @@ const jwt = require('jsonwebtoken');
 
 
 exports.addProduct = async (form) => {
+    try {
+        const product = new Product({createdAt: new Date()});
 
-    const product = new Product({createdAt: new Date()});
-
-    Object.assign(product, form);
-    await product.save();
-    return {
-        success: true
-    };
-
+        Object.assign(product, form);
+        await product.save();
+        return {
+            success: true
+        };
+    } catch (e) {
+        throw e;
+    }
 }
 
 
-exports.addUser = async (form) => {
-
+exports.allProducts = async () => {
+    try {
+        let products = await Product.find({})
+        return {
+            success: true,
+            products: products
+        }
+    } catch (e) {
+        throw e;
+    }
 }
 
-exports.logUser = async (form) => {
-
+exports.searchProduct = async (keyword) => {
+    try {
+        console.log("service")
+        let products = await Product.find(keyword)
+        return {
+            success: true,
+            products: products
+        }
+    } catch (e) {
+        throw e;
+    }
 }
 
 exports.unsetUser = async (id) => {
