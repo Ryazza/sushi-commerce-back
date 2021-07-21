@@ -5,7 +5,7 @@ const checkTokenMiddleware = require('../controllers/jwt.controller');
 
 router.post('/', orderController.addOrder)
 
-// router.get('/', checkTokenMiddleware.checkToken, orderController.getAll)
+router.get('/', orderController.getAllOrder)
 //
 // router.delete('/' , checkTokenMiddleware.checkToken, orderController.deleteOrder)
 //

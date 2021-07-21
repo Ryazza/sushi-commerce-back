@@ -3,6 +3,8 @@ const Order = require('../models/orderModel');
 exports.addOrder = async (form) => {
 
     try {
+
+        //console.log(typeof form.client_ID);
         if (form.articles.length < 1) {
             return {
                 success: false,
@@ -26,5 +28,10 @@ exports.addOrder = async (form) => {
 
 }
 
-
+exports.getAllOrder = async () => {
+    let orders = await Order.find({})
+    return {
+        success: true,
+        order: orders
+    }
 }
