@@ -32,6 +32,10 @@ const OrderSchema = new mongoose.Schema({
         country: {type: String, required: true},
         phone: {type: String, required: true},
     },
+    shipping_fee: {
+        type: Number,
+        required: true,
+    },
     totalAmount: {
         type: Number,
         required: true,
