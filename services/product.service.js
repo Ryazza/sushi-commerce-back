@@ -4,7 +4,7 @@ const bcrypt = require('bcrypt')
 const jwt = require('jsonwebtoken');
 
 
-export async function addProduct(form) {
+exports.addProduct = async (form) => {
 
     const product = new Product({createdAt: new Date()});
 
