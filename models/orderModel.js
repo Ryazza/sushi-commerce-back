@@ -22,6 +22,16 @@ const OrderSchema = new mongoose.Schema({
             }
         },
     ],
+    sendTo: {
+        firstname: {type: String, required: true},
+        lastname: {type: String, required: true},
+        address: {type: String, required: true},
+        additionnal_adress: {type: String},
+        postalCode: {type: Number, required: true},
+        city: {type: String, required: true},
+        country: {type: String, required: true},
+        phone: {type: String, required: true},
+    },
     totalAmount: {
         type: Number,
         required: true,
@@ -29,7 +39,7 @@ const OrderSchema = new mongoose.Schema({
     status: {
         type: String,
         required: true,
-    }
+    },
 },{
     timestamps: true,
 });
