@@ -70,9 +70,8 @@ exports.addUser = async (form) => {
         throw e
     }
 }
-
 exports.logUser = async (form) => {
-    const user = await User.findOne({login: form.login})
+    const user = await User.findOne({email: form.email})
     if (!user) {
         return {
             success: false,
@@ -88,21 +87,18 @@ exports.logUser = async (form) => {
         } else {
             const token = jwt.sign({
                 id: user._id,
-                login: user.login,
                 email: user.email,
                 admin: user.admin
             }, SECRET, {expiresIn: '24 hours'})
             return {
                 success: true,
                 token: token,
-                login: user.login,
-                email: user.email,
-                id: user.id,
                 admin: user.admin
             };
         }
     }
 }
+
 
 exports.unsetUser = async (id) => {
     await User.deleteOne({_id: id});
