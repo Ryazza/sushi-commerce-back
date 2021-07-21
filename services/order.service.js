@@ -35,3 +35,11 @@ exports.getAllOrder = async () => {
         order: orders
     }
 }
+
+exports.getOneOrder = async ({ id }) => {
+    let orders = await Order.findById(id)
+    return {
+        success: true,
+        order: orders
+    }
+}

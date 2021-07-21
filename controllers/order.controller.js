@@ -30,12 +30,27 @@ exports.getAllOrder = async (req, res) => {
         res.status(200);
         res.send(allOrder);
     } catch (e) {
-        console.log("error" + e)
         res.status(400)
         res.send({
             success: false,
             errors: e.errors
         })
     }
+}
 
+exports.getOneOrder = async (req, res) => {
+    console.log(req.params)
+    try {
+        let oneOrder = await OrderService.getOneOrder(req.params);
+        res.status(200);
+        res.send(oneOrder);
+    } catch (e) {
+
+        console.log("catch" + e);
+        res.status(400)
+        res.send({
+            success: false,
+            errors: e.errors
+        })
+    }
 }

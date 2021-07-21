@@ -6,6 +6,8 @@ const checkTokenMiddleware = require('../controllers/jwt.controller');
 router.post('/', orderController.addOrder)
 
 router.get('/', orderController.getAllOrder)
+
+router.get('/:id', orderController.getOneOrder)
 //
 // router.delete('/' , checkTokenMiddleware.checkToken, orderController.deleteOrder)
 //
