@@ -5,7 +5,7 @@ const checkTokenMiddleware = require('../controllers/jwt.controller');
 
 //routes for user and all
 router.get('/', ProductController.getProducts)
-router.get('/:keyword', ProductController.searchProduct)
+router.get('/:keyword', ProductController.searchProductByName)
 // router.get('/{id}', ProductController.getProduct)
 
 //admin user routes

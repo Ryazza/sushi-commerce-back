@@ -31,10 +31,11 @@ exports.allProducts = async () => {
     }
 }
 
-exports.searchProduct = async (keyword) => {
+exports.searchProductByName = async (keyword) => {
     try {
-        console.log("service")
-        let products = await Product.find(keyword)
+        let products = await Product.find({name: {$regex: keyword, $options: "i"}})
+        console.log("keyword", keyword)
+
         return {
             success: true,
             products: products

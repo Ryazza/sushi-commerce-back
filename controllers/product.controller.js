@@ -39,10 +39,13 @@ exports.getProducts = async (req, res) => {
     }
 
 }
-exports.searchProduct = async (req, res) => {
+exports.searchProductByName = async (req, res) => {
     try {
-        let keyword = req.params;
-        let products = await ProductService.searchProduct(keyword);
+        let keyword = req.params.keyword;
+
+        console.log("keyword", keyword)
+        let products = await ProductService.searchProductByName(keyword);
+        console.log("ça passe dans le controller")
         res.status(200);
         res.send(products);
     } catch (e) {
