@@ -45,33 +45,16 @@ exports.searchProductByName = async (keyword) => {
     }
 }
 
-exports.unsetUser = async (id) => {
+exports.searchOneProduct = async (id) => {
+    try {
+        let product = await Product.findOneAndUpdate({_id: id}, {views: +1});
 
+        return {
+            success: true,
+            products: product
+        }
+    } catch (e) {
+        throw e;
+    }
 }
 
-exports.allUser = async () => {
-
-}
-
-exports.updateLogin = async (id, change) => {
-
-}
-
-exports.updateMail = async (id, change) => {
-
-}
-exports.updateUserPass = async (id, change) => {
-
-}
-
-exports.getMe = async (id) => {
-
-}
-
-exports.deleteUserById = async (id) => {
-
-}
-
-exports.updateRole = async (id, role) => {
-
-}

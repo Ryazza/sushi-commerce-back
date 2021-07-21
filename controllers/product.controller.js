@@ -43,9 +43,24 @@ exports.searchProductByName = async (req, res) => {
     try {
         let keyword = req.params.keyword;
 
-        console.log("keyword", keyword)
         let products = await ProductService.searchProductByName(keyword);
-        console.log("ça passe dans le controller")
+        res.status(200);
+        res.send(products);
+    } catch (e) {
+        res.status(400);
+        res.send({
+            success: false,
+            errors: e.errors
+        })
+    }
+
+}
+
+exports.searchOneProduct = async (req, res) => {
+    try {
+        let id = req.params.id;
+
+        let products = await ProductService.searchOneProduct(id);
         res.status(200);
         res.send(products);
     } catch (e) {
