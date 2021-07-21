@@ -7,7 +7,6 @@ let logger = require('morgan');
 
 // Import des routes
 let UserRoutes = require('./routes/user.routes');
-
 // -----
 
 let app = express();
@@ -20,7 +19,6 @@ app.use(cors());
 
 // Routeso
 app.use('/user', UserRoutes);
-
 // -----
 
 // DB

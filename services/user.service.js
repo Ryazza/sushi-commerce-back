@@ -8,35 +8,58 @@ function validateEmail(email) {
     return re.test(String(email).toLowerCase());
 }
 
+function isDate(date) {
+    return (new Date(date) !== "Invalid Date") && !isNaN(new Date(date));
+}
+
 exports.addUser = async (form) => {
-    if (form.password !== form.confPassword) {
-        return {
-            success: false,
-            error: "Les mots de passes ne sont pas identiques"
-        }
-    }
-    if (form.login.length < 2) {
-        return {
-            success: false,
-            error: "Le nom d'utilisateur doit faire plus de 2 caractères !"
-        }
-    }
     if (!validateEmail(form.email)) {
         return {
             success: false,
             error: "Email invalide !"
         }
     }
+    if (form.password.length < 6) {
+        return {
+            success: false,
+            error: "Le mot de passe doit faire au minimum 2 caractères !"
+        }
+    }
     form.password = await bcrypt.hash(form.password, 10);
+    if(form.gender.length < 3) {
+        return {
+            success: false,
+            error: "Genre invalide"
+        }
+    }
+    if (form.firstName.length < 2 || form.firstName.length > 200) {
+        return {
+            success: false,
+            error: "Le prénom doit faire entre 2 et 200 caractères !"
+        }
+    }
+    if (form.lastName.length < 2 || form.lastName.length > 200) {
+        return {
+            success: false,
+            error: "Le nom doit faire entre 2 et 200 caractères !"
+        }
+    }
+    if (!isDate(form.birth)) {
+        return {
+            success: false,
+            error: "Date invalide !"
+        }
+    }
     if(form.admin) {
         form.admin = false;
     }
-    const user = new User({createdAt: new Date(), updateAt: new Date(), admin: false});
-    Object.assign(user, form);
-    await user.save();
-    return {
-        success: true
-    };
+
+    // const user = new User({createdAt: new Date(), updateAt: new Date(), admin: false});
+    // Object.assign(user, form);
+    // await user.save();
+    // return {
+    //     success: true
+    // };
 }
 
 exports.logUser = async (form) => {

@@ -13,7 +13,7 @@ exports.addUser = async (req, res) => {
             res.send(newUser)
         }
     } catch (e) {
-        res.status(400)
+        res.status(403)
         res.send({
             success: false,
             errors: e.errors
