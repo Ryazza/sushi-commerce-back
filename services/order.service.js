@@ -19,27 +19,63 @@ exports.addOrder = async (form) => {
         return {
             success: true
         };
-    } catch {
-        return {
-            success: false,
-            error: "La requete n'a pas aboutie"
-        }
+    } catch (e) {
+        throw e;
     }
 
 }
 
 exports.getAllOrder = async () => {
-    let orders = await Order.find({})
-    return {
-        success: true,
-        order: orders
+
+    try {
+        let orders = await Order.find({})
+        return {
+            success: true,
+            order: orders
+        }
+    } catch (e) {
+        trow (e)
     }
+
 }
 
 exports.getOneOrder = async ({ id }) => {
-    let orders = await Order.findById(id)
-    return {
-        success: true,
-        order: orders
+
+    try {
+        let orders = await Order.findById(id)
+        return {
+            success: true,
+            order: orders
+        }
+    } catch (e) {
+        throw e;
+    }
+
+}
+
+exports.updateOrder = async (id, change ) => {
+
+    try {
+        order = await Order.findById(id);
+        if (!order) {
+            return {
+                success: false,
+                message: "Numero de commande incorrect",
+            }
+        }
+        console.log(change)
+        await Order.findOneAndUpdate(
+            { _id: id },
+            change,
+            { new: true }
+        )
+
+        return {
+            success: true,
+            message: "Votre Commande a bien été modifié",
+            order: change,
+        };
+    } catch (e) {
+        throw e;
     }
 }

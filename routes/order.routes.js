@@ -8,6 +8,9 @@ router.post('/', orderController.addOrder)
 router.get('/', orderController.getAllOrder)
 
 router.get('/:id', orderController.getOneOrder)
+
+router.put('/:id', orderController.updateOrder)
+
 //
 // router.delete('/' , checkTokenMiddleware.checkToken, orderController.deleteOrder)
 //

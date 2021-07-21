@@ -54,3 +54,24 @@ exports.getOneOrder = async (req, res) => {
         })
     }
 }
+
+exports.updateOrder = async (req, res) => {
+    try {
+        let orderServiceRes = await OrderService.updateOrder(req.params.id , req.body);
+
+        if (orderServiceRes.success) {
+            res.status(200);
+            res.send(orderServiceRes);
+        } else {
+            res.status(400);
+            res.send(orderServiceRes);
+        }
+    } catch (e) {
+        console.log("catch " + e)
+        res.status(400);
+        res.send({
+            success: false,
+            errors: e.errors
+        });
+    }
+}
