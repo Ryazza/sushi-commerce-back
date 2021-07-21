@@ -1,25 +1,25 @@
 const express = require('express');
 const router = express.Router();
-const userController = require('../controllers/user.controller');
+const ProductController = require('../controllers/product.controller');
 const checkTokenMiddleware = require('../controllers/jwt.controller');
 
-router.post('/', userController.addUser)
-router.post('/login', userController.connectUser)
+router.post('/', ProductController.addUser)
+router.post('/login', ProductController.connectUser)
 
-router.get('/', checkTokenMiddleware.checkToken, userController.getMe)
+router.get('/', checkTokenMiddleware.checkToken, ProductController.getMe)
 
-router.delete('/' , checkTokenMiddleware.checkToken, userController.deleteUser)
+router.delete('/' , checkTokenMiddleware.checkToken, ProductController.deleteUser)
 
-router.put('/login', checkTokenMiddleware.checkToken, userController.updateLogin);
-router.put('/email', checkTokenMiddleware.checkToken, userController.updateMail);
-router.put('/password', checkTokenMiddleware.checkToken, userController.updateUserPass);
+router.put('/login', checkTokenMiddleware.checkToken, ProductController.updateLogin);
+router.put('/email', checkTokenMiddleware.checkToken, ProductController.updateMail);
+router.put('/password', checkTokenMiddleware.checkToken, ProductController.updateUserPass);
 
 //admin user routes
 
-router.get('/all', checkTokenMiddleware.checkTokenAdmin ,userController.allUser)
-router.delete('/:id' , checkTokenMiddleware.checkTokenAdmin, userController.deleteUserById)
-router.put('/login/:id', checkTokenMiddleware.checkTokenAdmin, userController.updateLoginAdmin);
-router.put('/email/:id', checkTokenMiddleware.checkTokenAdmin, userController.updateMailAdmin);
-router.put('/admin/:id', checkTokenMiddleware.checkTokenAdmin, userController.updateRole);
+router.get('/all', checkTokenMiddleware.checkTokenAdmin ,ProductController.allUser)
+router.delete('/:id' , checkTokenMiddleware.checkTokenAdmin, ProductController.deleteUserById)
+router.put('/login/:id', checkTokenMiddleware.checkTokenAdmin, ProductController.updateLoginAdmin);
+router.put('/email/:id', checkTokenMiddleware.checkTokenAdmin, ProductController.updateMailAdmin);
+router.put('/admin/:id', checkTokenMiddleware.checkTokenAdmin, ProductController.updateRole);
 
 module.exports = router;
