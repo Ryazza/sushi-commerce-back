@@ -1,20 +1,19 @@
 const Order = require('../models/orderModel');
-//const Product = require('../models/productModel');
+const Product = require('../models/productModel');
 const { checkObjectId } = require('../helper/dbHelper');
 
 exports.addOrder = async (form) => {
 
     try {
-
         let verify = verifyEntry(form);
 
         if(verify.success === true) {
 
             // calcul function totalAmount and other;
-            let form = calculate(form);
+            let formValid = await calculate(form);
 
             const order = new Order({createdAt: new Date(), updateAt: new Date()});
-            Object.assign(order, form);
+            Object.assign(order, formValid);
 
             await order.save();
             return {
@@ -27,12 +26,9 @@ exports.addOrder = async (form) => {
                 message: verify.message,
             }
         }
-
-
     } catch (e) {
         throw e;
     }
-
 }
 
 exports.getAllOrder = async () => {
@@ -96,18 +92,19 @@ exports.updateOrder = async (id, change ) => {
 
         if(verify.success === true) {
             // calcul function totalAmount and other;
-            let change = calculate(change);
+            let changeValid = await calculate(change);
+            //console.log(changeValid);
 
             await Order.findOneAndUpdate(
-                {_id: id},
-                change,
-                {new: true}
+                { _id: id },
+                changeValid,
+                { new: true }
             )
 
             return {
                 success: true,
                 message: "Votre Commande a bien été modifié",
-                order: change,
+                order: changeValid,
             };
         } else {
             return {
@@ -135,7 +132,7 @@ exports.deleteOrderById = async (id) => {
 
 
 exports.getAllOrderByStatus = async ( status, order ) => {
-    console.log(order)
+    //console.log(order)
     try {
         if ((status === "préparation" || status === "envoyé") && (order === "desc" || order === 'asc')) {
             let inOrder;
@@ -158,19 +155,17 @@ exports.getAllOrderByStatus = async ( status, order ) => {
 
 /*----------- function for add updtate order -----------------*/
 
-function calculate(form) {
+async function calculate(form) {
 
     let articles = [];
     let totalAmount = 0;
-    form.test = 5;
-    console.log(form)
 
-    // form.articles.forEach(article => {
-    //     let product = Product.find({_id: article.id});
-    //     let amount = product.price * article.quantity;
-    //     articles.push({article, amount: amount})
-    //     totalAmount += amount;
-    // });
+     for(let i=0; i < form.articles.length; i++) {
+        let product = await Product.findById(form.articles[i].id);
+        let amount = product.price * form.articles[i].quantity;
+        articles.push({ id: form.articles[i].id, quantity: form.articles[i].quantity, amount: amount});
+        totalAmount += amount;
+    };
 
     /*----------------------- A lier au systeme fraix de port -------------------------*/
     let shipping_fee = 10;
@@ -188,7 +183,6 @@ function calculate(form) {
     form.shipping_fee = shipping_fee;
     form.articles = articles;
     form.totalAmount = totalAmount + shipping_fee;
-
     return form;
 }
 
