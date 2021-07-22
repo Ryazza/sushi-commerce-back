@@ -11,7 +11,7 @@ function validateEmail(email) {
 function isDate(date) {
     return (new Date(date) !== "Invalid Date") && !isNaN(new Date(date));
 }
-
+//inscriptio
 exports.addUser = async (form) => {
     try {
         if (!validateEmail(form.email)) {
@@ -70,6 +70,7 @@ exports.addUser = async (form) => {
         throw e
     }
 }
+//connexion
 exports.logUser = async (form) => {
     const user = await User.findOne({email: form.email})
     if (!user) {
@@ -98,12 +99,14 @@ exports.logUser = async (form) => {
         }
     }
 }
+// Supprimer mon compte
 exports.unsetUser = async (id) => {
     await User.deleteOne({_id: id});
     return {
         success: true
     };
 }
+//Récupérer mes information
 exports.getMe = async (id) => {
     let user = await User.findOne({_id: id})
     return {
@@ -111,6 +114,7 @@ exports.getMe = async (id) => {
         user: user
     }
 }
+//Modifier mon mot de passse
 exports.updateUserPass = async (id, change) => {
     if (change.newPassword.length < 6) {
         return {
@@ -133,30 +137,20 @@ exports.updateUserPass = async (id, change) => {
         message: "Le mot de passe a bien été changer"
     };
 }
-
-
-
-
-exports.allUser = async () => {
-    let users = await User.find({})
-    return {
-        success: true,
-        users: users
-    }
-}
+// Modifier mon adress mail
 exports.updateMail = async (id, change) => {
+    if (!validateEmail(change.email)) {
+        return {
+            success: false,
+            error: "Email invalide !"
+        }
+    }
     const user = await User.findOne({_id: id})
     if (user.email === change.email) {
         return {
             success: true,
             message: "Aucun changement n'a été effectuer",
             email: change.email
-        }
-    }
-    if (!validateEmail(change.email)) {
-        return {
-            success: false,
-            error: "Email invalide !"
         }
     }
     await User.findOneAndUpdate({_id: id}, {email: change.email, updateAt: new Date()});
@@ -166,6 +160,40 @@ exports.updateMail = async (id, change) => {
         email: change.email
     };
 }
+//Modifier ma date de naissance
+exports.updateBirth = async (id, change) => {
+    if (!isDate(change.birth)) {
+        return {
+            success: false,
+            error: "Date invalide !"
+        }
+    }
+    const user = await User.findOne({_id: id})
+    let newDate = new Date(change.birth)
+    if (user.birth.getTime() === newDate.getTime()) {
+        return {
+            success: true,
+            message: "Aucun changement n'a été effectuer",
+            email: change.email
+        }
+    }
+    await User.findOneAndUpdate({_id: id}, {birth: change.birth, updateAt: new Date()});
+    return {
+        success: true,
+        message: "Votre date de naissance a bien été modifier",
+        birth: new Date(change.birth)
+    };
+}
+
+
+exports.allUser = async () => {
+    let users = await User.find({})
+    return {
+        success: true,
+        users: users
+    }
+}
+
 
 
 
