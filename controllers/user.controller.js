@@ -73,7 +73,7 @@ exports.getMe = async (req, res) => {
         });
     }
 }
-// modifier mon mot de passe
+//Modifier mon mot de passe
 exports.updateUserPass = async (req, res) => {
     try {
         const token = req.headers.authorization && checkTokenMiddleware.extractBearerToken(req.headers.authorization);
@@ -94,6 +94,32 @@ exports.updateUserPass = async (req, res) => {
         });
     }
 }
+//Modification de la date de naissance
+exports.updateBirth = async (req, res) => {
+
+}
+//Modification de l'email
+exports.updateMail = async (req, res) => {
+    try {
+        const token = req.headers.authorization && checkTokenMiddleware.extractBearerToken(req.headers.authorization);
+        const decoded = jwt.decode(token, {complete: false});
+        let userServiceRes = await UserService.updateMail(decoded.id, req.body);
+        if (userServiceRes.success) {
+            res.status(200);
+            res.send(userServiceRes);
+        } else {
+            res.status(400);
+            res.send(userServiceRes);
+        }
+    } catch (e) {
+        res.status(400);
+        res.send({
+            success: false,
+            errors: e.errors
+        });
+    }
+}
+
 
 
 
@@ -110,54 +136,6 @@ exports.allUser = async (req, res) => {
         })
     }
 }
-
-exports.updateLogin = async (req, res) => {
-    try {
-        const token = req.headers.authorization && checkTokenMiddleware.extractBearerToken(req.headers.authorization);
-        const decoded = jwt.decode(token, {complete: false});
-
-        let userServiceRes = await UserService.updateLogin(decoded.id, req.body);
-
-        if (userServiceRes.success) {
-            res.status(200);
-            res.send(userServiceRes);
-        } else {
-            res.status(400);
-            res.send(userServiceRes);
-        }
-    } catch (e) {
-        res.status(400);
-        res.send({
-            success: false,
-            errors: e.errors
-        });
-    }
-}
-exports.updateMail = async (req, res) => {
-    try {
-        const token = req.headers.authorization && checkTokenMiddleware.extractBearerToken(req.headers.authorization);
-        const decoded = jwt.decode(token, {complete: false});
-
-        let userServiceRes = await UserService.updateMail(decoded.id, req.body);
-
-        if (userServiceRes.success) {
-            res.status(200);
-            res.send(userServiceRes);
-        } else {
-            res.status(400);
-            res.send(userServiceRes);
-        }
-    } catch (e) {
-        res.status(400);
-        res.send({
-            success: false,
-            errors: e.errors
-        });
-    }
-}
-
-
-
 exports.deleteUserById = async (req, res) => {
     try {
         let userServiceRes = await UserService.deleteUserById(req.params.id);

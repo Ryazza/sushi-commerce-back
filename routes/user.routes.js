@@ -10,8 +10,8 @@ router.get('/', checkTokenMiddleware.checkToken, userController.getMe)
 
 router.delete('/' , checkTokenMiddleware.checkToken, userController.deleteUser)
 
-router.put('/login', checkTokenMiddleware.checkToken, userController.updateLogin);
 router.put('/email', checkTokenMiddleware.checkToken, userController.updateMail);
+router.put('/birth', checkTokenMiddleware.checkToken, userController.updateBirth);
 router.put('/password', checkTokenMiddleware.checkToken, userController.updateUserPass);
 
 //admin user routes

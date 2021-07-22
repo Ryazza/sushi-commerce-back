@@ -135,6 +135,8 @@ exports.updateUserPass = async (id, change) => {
 }
 
 
+
+
 exports.allUser = async () => {
     let users = await User.find({})
     return {
@@ -142,30 +144,6 @@ exports.allUser = async () => {
         users: users
     }
 }
-
-exports.updateLogin = async (id, change) => {
-    const user = await User.findOne({_id: id})
-    if (user.login === change.login) {
-        return {
-            success: true,
-            message: "Aucun changement n'a été effectuer",
-            login: change.login
-        }
-    }
-    if (change.login.length < 2) {
-        return {
-            success: false,
-            error: "Le nom d'utilisateur doit faire au moins 2 caractères !",
-        }
-    }
-    await User.findOneAndUpdate({_id: id}, {login: change.login, updateAt: new Date()});
-    return {
-        success: true,
-        message: "Votre Login a bien été modifier",
-        login: change.login
-    };
-}
-
 exports.updateMail = async (id, change) => {
     const user = await User.findOne({_id: id})
     if (user.email === change.email) {
