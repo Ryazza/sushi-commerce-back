@@ -184,8 +184,7 @@ exports.updateBirth = async (id, change) => {
         birth: new Date(change.birth)
     };
 }
-
-
+//ADMIN récupéré un la liste de tout les utilisateur inscrit
 exports.allUser = async () => {
     let users = await User.find({})
     return {
@@ -193,11 +192,6 @@ exports.allUser = async () => {
         users: users
     }
 }
-
-
-
-
-
 exports.deleteUserById = async (id) => {
     await User.deleteOne({_id: id})
     return {
