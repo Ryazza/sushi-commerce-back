@@ -72,3 +72,17 @@ exports.searchOneProduct = async (req, res) => {
     }
 
 }
+exports.mostViewedProducts = async (req, res) => {
+    try {
+        let products = await ProductService.mostViewedProducts();
+        res.status(200);
+        res.send(products);
+    } catch (e) {
+        res.status(400);
+        res.send({
+            success: false,
+            errors: e.errors
+        })
+    }
+
+}

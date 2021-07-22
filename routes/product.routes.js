@@ -6,7 +6,8 @@ const checkTokenMiddleware = require('../controllers/jwt.controller');
 //routes for user and all
 router.get('/', ProductController.getProducts)
 router.get('/search/:keyword', ProductController.searchProductByName)
-router.get('/:id', ProductController.searchOneProduct)
+router.get('/one/:id', ProductController.searchOneProduct)
+router.get('/most_viewed' ,ProductController.mostViewedProducts)
 
 // router.get('/{id}', ProductController.getProduct)
 

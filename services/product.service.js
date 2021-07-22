@@ -30,11 +30,21 @@ exports.allProducts = async () => {
         throw e;
     }
 }
+exports.mostViewedProducts = async () => {
+    try {
+        let products = await Product.find({}).sort({views : -1})
+        return {
+            success: true,
+            products: products
+        }
+    } catch (e) {
+        throw e;
+    }
+}
 
 exports.searchProductByName = async (keyword) => {
     try {
         let products = await Product.find({name: {$regex: keyword, $options: "i"}})
-        console.log("keyword", keyword)
 
         return {
             success: true,
