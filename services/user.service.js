@@ -192,6 +192,7 @@ exports.allUser = async () => {
         users: users
     }
 }
+//ADMIN Supprimer un utilisateur
 exports.deleteUserById = async (id) => {
     await User.deleteOne({_id: id})
     return {
