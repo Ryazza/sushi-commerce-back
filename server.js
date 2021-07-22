@@ -8,6 +8,7 @@ let logger = require('morgan');
 // Import des routes
 let UserRoutes = require('./routes/user.routes');
 let productRoutes = require('./routes/product.routes');
+let OrderRoutes = require('./routes/order.routes');
 
 // -----
 
@@ -21,6 +22,7 @@ app.use(cors());
 
 // Routes
 app.use('/user', UserRoutes);
+app.use('/order', OrderRoutes);
 
 app.use('/product', productRoutes);
 // -----
