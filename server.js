@@ -21,8 +21,8 @@ app.use(cors());
 
 // Routes
 app.use('/user', UserRoutes);
-app.use('/product', productRoutes);
 
+app.use('/product', productRoutes);
 // -----
 
 // DB

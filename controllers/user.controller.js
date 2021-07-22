@@ -1,7 +1,7 @@
 const UserService = require('../services/user.service')
 const jwt = require('jsonwebtoken');
 const checkTokenMiddleware = require('../controllers/jwt.controller');
-
+//inscription
 exports.addUser = async (req, res) => {
     try {
         let newUser = await UserService.addUser(req.body)
@@ -13,13 +13,14 @@ exports.addUser = async (req, res) => {
             res.send(newUser)
         }
     } catch (e) {
-        res.status(400)
+        res.status(403)
         res.send({
             success: false,
             errors: e.errors
         })
     }
 }
+//connection
 exports.connectUser = async (req, res) => {
     try {
         let logUser = await UserService.logUser(req.body)
@@ -38,6 +39,7 @@ exports.connectUser = async (req, res) => {
         })
     }
 }
+//Supprimer mon compte
 exports.deleteUser = async (req, res) => {
     try {
         const token = req.headers.authorization && checkTokenMiddleware.extractBearerToken(req.headers.authorization);
@@ -55,34 +57,14 @@ exports.deleteUser = async (req, res) => {
         })
     }
 }
-exports.allUser = async (req, res) => {
+//Récupéré mes information
+exports.getMe = async (req, res) => {
     try {
-        let allUser = await UserService.allUser();
+        const token = req.headers.authorization && checkTokenMiddleware.extractBearerToken(req.headers.authorization);
+        const decoded = jwt.decode(token, {complete: false});
+        let userServiceRes = await UserService.getMe(decoded.id);
         res.status(200);
-        res.send(allUser);
-    } catch (e) {
-        res.status(400)
-        res.send({
-            success: false,
-            errors: e.errors
-        })
-    }
-}
-
-exports.updateLogin = async (req, res) => {
-    try {
-        const token = req.headers.authorization && checkTokenMiddleware.extractBearerToken(req.headers.authorization);
-        const decoded = jwt.decode(token, {complete: false});
-
-        let userServiceRes = await UserService.updateLogin(decoded.id, req.body);
-
-        if (userServiceRes.success) {
-            res.status(200);
-            res.send(userServiceRes);
-        } else {
-            res.status(400);
-            res.send(userServiceRes);
-        }
+        res.send(userServiceRes);
     } catch (e) {
         res.status(400);
         res.send({
@@ -91,33 +73,11 @@ exports.updateLogin = async (req, res) => {
         });
     }
 }
-exports.updateMail = async (req, res) => {
-    try {
-        const token = req.headers.authorization && checkTokenMiddleware.extractBearerToken(req.headers.authorization);
-        const decoded = jwt.decode(token, {complete: false});
-
-        let userServiceRes = await UserService.updateMail(decoded.id, req.body);
-
-        if (userServiceRes.success) {
-            res.status(200);
-            res.send(userServiceRes);
-        } else {
-            res.status(400);
-            res.send(userServiceRes);
-        }
-    } catch (e) {
-        res.status(400);
-        res.send({
-            success: false,
-            errors: e.errors
-        });
-    }
-}
+//Modifier mon mot de passe
 exports.updateUserPass = async (req, res) => {
     try {
         const token = req.headers.authorization && checkTokenMiddleware.extractBearerToken(req.headers.authorization);
         const decoded = jwt.decode(token, {complete: false});
-
         let userServiceRes = await UserService.updateUserPass(decoded.id, req.body);
         if (userServiceRes.success) {
             res.status(200);
@@ -134,13 +94,40 @@ exports.updateUserPass = async (req, res) => {
         });
     }
 }
-exports.getMe = async (req, res) => {
+//Modification de l'email
+exports.updateMail = async (req, res) => {
     try {
         const token = req.headers.authorization && checkTokenMiddleware.extractBearerToken(req.headers.authorization);
         const decoded = jwt.decode(token, {complete: false});
-        let userServiceRes = await UserService.getMe(decoded.id);
-        res.status(200);
-        res.send(userServiceRes);
+        let userServiceRes = await UserService.updateMail(decoded.id, req.body);
+        if (userServiceRes.success) {
+            res.status(200);
+            res.send(userServiceRes);
+        } else {
+            res.status(400);
+            res.send(userServiceRes);
+        }
+    } catch (e) {
+        res.status(400);
+        res.send({
+            success: false,
+            errors: e.errors
+        });
+    }
+}
+//Modification de la date de naissance
+exports.updateBirth = async (req, res) => {
+    try {
+        const token = req.headers.authorization && checkTokenMiddleware.extractBearerToken(req.headers.authorization);
+        const decoded = jwt.decode(token, {complete: false});
+        let userServiceRes = await UserService.updateBirth(decoded.id, req.body);
+        if (userServiceRes.success) {
+            res.status(200);
+            res.send(userServiceRes);
+        } else {
+            res.status(400);
+            res.send(userServiceRes);
+        }
     } catch (e) {
         res.status(400);
         res.send({
@@ -150,6 +137,21 @@ exports.getMe = async (req, res) => {
     }
 }
 
+
+
+exports.allUser = async (req, res) => {
+    try {
+        let allUser = await UserService.allUser();
+        res.status(200);
+        res.send(allUser);
+    } catch (e) {
+        res.status(400)
+        res.send({
+            success: false,
+            errors: e.errors
+        })
+    }
+}
 exports.deleteUserById = async (req, res) => {
     try {
         let userServiceRes = await UserService.deleteUserById(req.params.id);
@@ -164,31 +166,10 @@ exports.deleteUserById = async (req, res) => {
         })
     }
 }
-
-exports.updateLoginAdmin = async (req, res) => {
-    try {
-        let userServiceRes = await UserService.updateLogin(req.params.id , req.body);
-
-        if (userServiceRes.success) {
-            res.status(200);
-            res.send(userServiceRes);
-        } else {
-            res.status(400);
-            res.send(userServiceRes);
-        }
-    } catch (e) {
-        res.status(400);
-        res.send({
-            success: false,
-            errors: e.errors
-        });
-    }
-}
-
+//ADMIN Modifier le mail par id
 exports.updateMailAdmin = async (req, res) => {
     try {
         let userServiceRes = await UserService.updateMail(req.params.id , req.body);
-
         if (userServiceRes.success) {
             res.status(200);
             res.send(userServiceRes);
@@ -204,7 +185,7 @@ exports.updateMailAdmin = async (req, res) => {
         });
     }
 }
-
+// ADMIN modifier le role par id
 exports.updateRole = async (req, res) => {
     try {
         let userServiceRes = await UserService.updateRole(req.params.id , req.body);
