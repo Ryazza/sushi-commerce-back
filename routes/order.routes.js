@@ -9,6 +9,8 @@ router.get('/', orderController.getAllOrder)
 
 router.get('/:id', orderController.getOneOrder)
 
+router.get('/byUser/:id', orderController.getOrderByUser)
+
 router.put('/:id', orderController.updateOrder)
 
 router.delete('/:id', orderController.deleteOrder)

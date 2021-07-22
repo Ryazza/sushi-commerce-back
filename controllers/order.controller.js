@@ -39,7 +39,6 @@ exports.getAllOrder = async (req, res) => {
 }
 
 exports.getOneOrder = async (req, res) => {
-    console.log(req.params)
     try {
         let oneOrder = await OrderService.getOneOrder(req.params);
         res.status(200);
@@ -51,6 +50,22 @@ exports.getOneOrder = async (req, res) => {
         res.send({
             success: false,
             errors: e.errors
+        })
+    }
+}
+
+exports.getOrderByUser = async (req, res) => {
+    try {
+        let oneOrder = await OrderService.getOrderByUser(req.params.id);
+        res.status(200);
+        res.send(oneOrder);
+    } catch (e) {
+
+        console.log("catch" + e);
+        res.status(400)
+        res.send({
+            success: false,
+            errors: "Id Invalide"
         })
     }
 }

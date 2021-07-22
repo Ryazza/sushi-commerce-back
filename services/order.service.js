@@ -1,4 +1,5 @@
 const Order = require('../models/orderModel');
+const { checkObjectId } = require('../helper/dbHelper');
 
 exports.addOrder = async (form) => {
 
@@ -40,7 +41,6 @@ exports.getAllOrder = async () => {
 }
 
 exports.getOneOrder = async ({ id }) => {
-
     try {
         let orders = await Order.findById(id)
         return {
@@ -50,7 +50,26 @@ exports.getOneOrder = async ({ id }) => {
     } catch (e) {
         throw e;
     }
+}
 
+exports.getOrderByUser = async ( client_id ) => {
+    let verifId = checkObjectId(client_id);
+    if(verifId === false) {
+        return {
+            success: false,
+            message: "Id invalide",
+        }
+    } else {
+        try {
+            let orders = await Order.find({ client_ID: client_id }).sort({_id: -1})
+            return {
+                success: true,
+                order: orders
+            }
+        } catch (e) {
+            throw e;
+        }
+    }
 }
 
 exports.updateOrder = async (id, change ) => {
