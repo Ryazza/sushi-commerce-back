@@ -1,10 +1,11 @@
 const mongoose = require('mongoose');
 const uniqueValidator = require('mongoose-unique-validator');
 
-const ProductsSchema  = new mongoose.Schema({
-    name:  {
+const ProductsSchema = new mongoose.Schema({
+    name: {
         type: String,
-        required: true
+        required: true,
+        unique: true
     },
     category: {
         type: String,
@@ -15,12 +16,12 @@ const ProductsSchema  = new mongoose.Schema({
         required: true
     },
     pictures: {
-        type:Array
-    },
-    events : {
         type: Array
     },
-    createdAt : {
+    events: {
+        type: Array
+    },
+    createdAt: {
         type: Date,
         required: true
     },
@@ -30,7 +31,7 @@ const ProductsSchema  = new mongoose.Schema({
 
     },
     views: {
-      type: Number
+        type: Number
 
     }
 });
