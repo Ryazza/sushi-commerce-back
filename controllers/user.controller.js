@@ -166,7 +166,7 @@ exports.deleteUserById = async (req, res) => {
         })
     }
 }
-
+//ADMIN Modifier le mail par id
 exports.updateMailAdmin = async (req, res) => {
     try {
         let userServiceRes = await UserService.updateMail(req.params.id , req.body);
@@ -185,7 +185,7 @@ exports.updateMailAdmin = async (req, res) => {
         });
     }
 }
-
+// ADMIN modifier le role par id
 exports.updateRole = async (req, res) => {
     try {
         let userServiceRes = await UserService.updateRole(req.params.id , req.body);
