@@ -23,7 +23,7 @@ exports.addUser = async (form) => {
         if (form.password.length < 6) {
             return {
                 success: false,
-                error: "Le mot de passe doit faire au minimum 2 caractères !"
+                error: "Le mot de passe doit faire au minimum 6 caractères !"
             }
         }
         form.password = await bcrypt.hash(form.password, 10);
@@ -111,6 +111,28 @@ exports.getMe = async (id) => {
         user: user
     }
 }
+exports.updateUserPass = async (id, change) => {
+    if (change.newPassword.length < 6) {
+        return {
+            success: false,
+            error: "Le mot de passe doit faire au minimum 6 caractères !"
+        }
+    }
+    let user = await User.findOne({_id: id})
+    let valid = await bcrypt.compare(change.password, user.password)
+    if (!valid) {
+        return {
+            success: false,
+            error: "L'ancien mot de pass ne correspond pas !",
+        };
+    }
+    change.newPassword = await bcrypt.hash(change.newPassword, 10);
+    await User.updateOne({_id: id}, {password: change.newPassword, updateAt: new Date()});
+    return {
+        success: true,
+        message: "Le mot de passe a bien été changer"
+    };
+}
 
 
 exports.allUser = async () => {
@@ -166,28 +188,7 @@ exports.updateMail = async (id, change) => {
         email: change.email
     };
 }
-exports.updateUserPass = async (id, change) => {
-    if (change.newPassword !== change.confPassword) {
-        return {
-            success: false,
-            error: "les nouveaux mots de passes ne sont pas identique",
-        }
-    }
-    let user = await User.findOne({_id: id})
-    let valid = await bcrypt.compare(change.password, user.password)
-    if (!valid) {
-        return {
-            success: false,
-            error: "L'ancien mot de pass ne correspond pas !",
-        };
-    }
-    change.confPassword = await bcrypt.hash(change.confPassword, 10);
-    await User.findOneAndUpdate({_id: id}, {password: change.confPassword, updateAt: new Date()});
-    return {
-        success: true,
-        message: "Le mot de passe a bien été changer"
-    };
-}
+
 
 
 
