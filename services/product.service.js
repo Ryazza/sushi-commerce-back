@@ -47,7 +47,11 @@ exports.searchProductByName = async (keyword) => {
 
 exports.searchOneProduct = async (id) => {
     try {
-        let product = await Product.findOneAndUpdate({_id: id}, {views: +1});
+        let product = await Product.findOneAndUpdate({_id: id}, {
+            $inc: {
+                views: +1
+            }
+        });
 
         return {
             success: true,

@@ -3,9 +3,6 @@
   <component name="ChangeListManager">
     <list default="true" id="cd83a3ea-c1cc-48d0-810c-1a367187fc20" name="Default Changelist" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/controllers/product.controller.js" beforeDir="false" afterPath="$PROJECT_DIR$/controllers/product.controller.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/models/productModel.js" beforeDir="false" afterPath="$PROJECT_DIR$/models/productModel.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/routes/product.routes.js" beforeDir="false" afterPath="$PROJECT_DIR$/routes/product.routes.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/services/product.service.js" beforeDir="false" afterPath="$PROJECT_DIR$/services/product.service.js" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -53,17 +50,6 @@
     </key>
   </component>
   <component name="RunManager">
-    <configuration default="true" type="ArquillianJUnit" factoryName="" nameIsGenerated="true">
-      <option name="arquillianRunConfiguration">
-        <value>
-          <option name="containerStateName" value="" />
-        </value>
-      </option>
-      <option name="TEST_OBJECT" value="class" />
-      <method v="2">
-        <option name="Make" enabled="true" />
-      </method>
-    </configuration>
     <configuration name="start" type="js.build_tools.npm" temporary="true" nameIsGenerated="true">
       <package-json value="$PROJECT_DIR$/package.json" />
       <command value="run" />
@@ -89,6 +75,7 @@
       <option name="presentableId" value="Default" />
       <updated>1626863353407</updated>
       <workItem from="1626863357714" duration="15470000" />
+      <workItem from="1626941082297" duration="210000" />
     </task>
     <servers />
   </component>
@@ -105,5 +92,6 @@
         </entry>
       </map>
     </option>
+    <option name="oldMeFiltersMigrated" value="true" />
   </component>
 </project>
