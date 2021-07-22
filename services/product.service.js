@@ -35,6 +35,18 @@ function checkForm(form) {
             error: "il n'y a pas de stock"
         }
     }
+    if(typeof form.price !== "number"){
+        return {
+            success:false,
+        error: "le prix doit être un nombre"
+        }
+    }
+    if(!form.price){
+        return {
+            success:false,
+        error: "le prix doit être indiqué"
+        }
+    }
 }
 
 exports.addProduct = async (form) => {

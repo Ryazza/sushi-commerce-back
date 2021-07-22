@@ -33,6 +33,10 @@ const ProductsSchema = new mongoose.Schema({
     views: {
         type: Number
 
+    },
+    price: {
+      type: Number,
+      required:true
     }
 });
 
