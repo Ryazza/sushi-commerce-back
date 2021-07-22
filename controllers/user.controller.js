@@ -167,30 +167,9 @@ exports.deleteUserById = async (req, res) => {
     }
 }
 
-exports.updateLoginAdmin = async (req, res) => {
-    try {
-        let userServiceRes = await UserService.updateLogin(req.params.id , req.body);
-
-        if (userServiceRes.success) {
-            res.status(200);
-            res.send(userServiceRes);
-        } else {
-            res.status(400);
-            res.send(userServiceRes);
-        }
-    } catch (e) {
-        res.status(400);
-        res.send({
-            success: false,
-            errors: e.errors
-        });
-    }
-}
-
 exports.updateMailAdmin = async (req, res) => {
     try {
         let userServiceRes = await UserService.updateMail(req.params.id , req.body);
-
         if (userServiceRes.success) {
             res.status(200);
             res.send(userServiceRes);

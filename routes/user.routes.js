@@ -18,7 +18,6 @@ router.put('/password', checkTokenMiddleware.checkToken, userController.updateUs
 
 router.get('/all', checkTokenMiddleware.checkTokenAdmin ,userController.allUser)
 router.delete('/:id' , checkTokenMiddleware.checkTokenAdmin, userController.deleteUserById)
-router.put('/login/:id', checkTokenMiddleware.checkTokenAdmin, userController.updateLoginAdmin);
 router.put('/email/:id', checkTokenMiddleware.checkTokenAdmin, userController.updateMailAdmin);
 router.put('/admin/:id', checkTokenMiddleware.checkTokenAdmin, userController.updateRole);
 
