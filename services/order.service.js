@@ -1,25 +1,34 @@
 const Order = require('../models/orderModel');
+//const Product = require('../models/productModel');
 const { checkObjectId } = require('../helper/dbHelper');
 
 exports.addOrder = async (form) => {
 
     try {
 
-        //console.log(typeof form.client_ID);
-        if (form.articles.length < 1) {
+        let verify = verifyEntry(form);
+
+        if(verify.success === true) {
+
+            // calcul function totalAmount and other;
+            let form = calculate(form);
+
+            const order = new Order({createdAt: new Date(), updateAt: new Date()});
+            Object.assign(order, form);
+
+            await order.save();
             return {
-                success: false,
-                error: "Pas d'article enregistré dans la commande!"
+                success: true
+            };
+
+        } else {
+            return {
+                success: verify.success,
+                message: verify.message,
             }
         }
 
-        const order = new Order({createdAt: new Date(), updateAt: new Date()});
-        Object.assign(order, form);
 
-        await order.save();
-        return {
-            success: true
-        };
     } catch (e) {
         throw e;
     }
@@ -35,7 +44,7 @@ exports.getAllOrder = async () => {
             order: orders
         }
     } catch (e) {
-        trow (e)
+        throw (e)
     }
 
 }
@@ -75,25 +84,37 @@ exports.getOrderByUser = async ( client_id ) => {
 exports.updateOrder = async (id, change ) => {
 
     try {
-        order = await Order.findById(id);
+        let order = await Order.findById(id);
         if (!order) {
             return {
                 success: false,
                 message: "Numero de commande incorrect",
             }
         }
-        console.log(change)
-        await Order.findOneAndUpdate(
-            { _id: id },
-            change,
-            { new: true }
-        )
 
-        return {
-            success: true,
-            message: "Votre Commande a bien été modifié",
-            order: change,
-        };
+        let verify = verifyEntry(change);
+
+        if(verify.success === true) {
+            // calcul function totalAmount and other;
+            let change = calculate(change);
+
+            await Order.findOneAndUpdate(
+                {_id: id},
+                change,
+                {new: true}
+            )
+
+            return {
+                success: true,
+                message: "Votre Commande a bien été modifié",
+                order: change,
+            };
+        } else {
+            return {
+                success: verify.success,
+                message: verify.message,
+            }
+        }
     } catch (e) {
         throw e;
     }
@@ -117,7 +138,7 @@ exports.getAllOrderByStatus = async ( status, order ) => {
     console.log(order)
     try {
         if ((status === "préparation" || status === "envoyé") && (order === "desc" || order === 'asc')) {
-            let inOrder = "";
+            let inOrder;
             order === "desc" ? inOrder = -1 : inOrder = 1;
             let orders = await Order.find({status: status}).sort({_id: inOrder})
             return {
@@ -131,6 +152,128 @@ exports.getAllOrderByStatus = async ( status, order ) => {
             }
         }
     } catch (e) {
-        trow (e)
+        throw (e)
     }
 }
+
+/*----------- function for add updtate order -----------------*/
+
+function calculate(form) {
+
+    let articles = [];
+    let totalAmount = 0;
+    form.test = 5;
+    console.log(form)
+
+    // form.articles.forEach(article => {
+    //     let product = Product.find({_id: article.id});
+    //     let amount = product.price * article.quantity;
+    //     articles.push({article, amount: amount})
+    //     totalAmount += amount;
+    // });
+
+    /*----------------------- A lier au systeme fraix de port -------------------------*/
+    let shipping_fee = 10;
+    /*------------------------------------ End ---------------------------------------*/
+
+    let gift_package;
+
+    if(totalAmount === 200) {
+        gift_package = true;
+    } else {
+        gift_package = false;
+    }
+
+    form.gift_package = gift_package;
+    form.shipping_fee = shipping_fee;
+    form.articles = articles;
+    form.totalAmount = totalAmount + shipping_fee;
+
+    return form;
+}
+
+/*----------- VERIFY --------------*/
+function verifyEntry(order) {
+    let verifId = checkObjectId(order.client_ID);
+
+    if(verifId === false) {
+        return {
+            success: false,
+            message: "Id invalide " + verifId.message,
+        };
+    }
+
+    if(typeof order.articles === "undefined") {
+        return {
+            success: false,
+            message: "Vous devez enregistrez un article pour une commande",
+        };
+    } else {
+        order.articles.forEach(article => {
+            let verifId = checkObjectId(article.id);
+            if(verifId === false) {
+                return {
+                    success: false,
+                    message: "Vous devez enregistrer un id pour votre article " +verifId.message,
+                };
+            }
+            if(typeof article.quantity === "undefined") {
+                return {
+                    success: false,
+                    message: "Vous devez renseigner une quantité à votre article " + article.id + " !",
+                };
+            }
+
+            if(typeof article.quantity !== "number") {
+                return {
+                    success: false,
+                    message: "La quantité de votre article doit être un chiffre !",
+                };
+            }
+        })
+
+        if(typeof order.status === "undefined") {
+            return {
+                success: false,
+                message: "vous devez renseigner un status de commande (préparation ou envoyé)",
+            };
+        }
+
+        if(typeof order.status !== "string") {
+            return {
+                success: false,
+                message: "Le status de votre commande doit être une chaine de caractère",
+            };
+        }
+        return { success: true };
+    }
+}
+
+
+/*------------------------ JSON FULL DELETE AFTER -------------------------------*/
+// {
+//     "client_ID": "60f9287e165b5102c1e8bc50",
+//     "articles": [{
+//     "id": "60",
+//     "quantity": "",
+//     "amount": 20
+// }, {
+//     "id": "60f87058f8856620405eeaa2",
+//     "quantity": 3,
+//     "amount": 40
+// }],
+//     "sendTo": {
+//     "firstname": "toto",
+//         "lastname": "lebreton",
+//         "address": "20 rue du sable",
+//         "additionnal_adress": "",
+//         "postalCode": 35000,
+//         "city": "Rennes",
+//         "country": "France",
+//         "phone": "06-28-52-65-87"
+// },
+//     "gift_package": "true",
+//     "shipping_fee": 10,
+//     "totalAmount": 150,
+//     "status": "préparation"
+// }
