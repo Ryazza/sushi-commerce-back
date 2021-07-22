@@ -23,10 +23,29 @@ exports.createProduct = async (req, res) => {
     }
 
 }
+exports.updateProduct = async (req, res) => {
+    try {
+        console.log("mes couilles")
+        let newProduct = await ProductService.updateProduct(req.body, req.params.id)
+        if (newProduct.success === true) {
+            res.status(201)
+            res.send(newProduct)
+        } else {
+            res.status(400)
+            res.send(newProduct)
+        }
+
+    } catch (e) {
+        res.status(400);
+        res.send({
+            success: false,
+            errors: e.errors
+        })
+    }
+
+}
 exports.getProducts = async (req, res) => {
     try {
-        console.log("controller")
-
         let allUser = await ProductService.allProducts();
         res.status(200);
         res.send(allUser);

@@ -4,7 +4,7 @@ const bcrypt = require('bcrypt')
 const jwt = require('jsonwebtoken');
 
 
-exports.addProduct = async (form) => {
+function checkForm(form) {
     if (form.name.length > 25 || form.name.length < 3) {
         return {
             success: false,
@@ -35,9 +35,35 @@ exports.addProduct = async (form) => {
             error: "il n'y a pas de stock"
         }
     }
+}
 
+exports.addProduct = async (form) => {
+
+    checkForm(form);
     try {
         const product = new Product({createdAt: new Date()});
+        Object.assign(product, form);
+        await product.save();
+        return {
+            success: true
+        };
+    } catch (e) {
+        throw e;
+    }
+}
+
+exports.updateProduct = async (form, id) => {
+    checkForm(form);
+    try {
+        let product = await Product.findOneAndUpdate({_id: id}, {
+                name: form.name,
+                category: form.category,
+                description: form.description ,
+                pictures: form.pictures,
+                events: form.events,
+                stock:form.stock
+            }
+        );
         Object.assign(product, form);
         await product.save();
         return {
