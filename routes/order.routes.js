@@ -20,6 +20,4 @@ router.delete('/:id', checkTokenMiddleware.checkToken, orderController.deleteOrd
 
 router.get('/status/:status/:order', orderController.getAllOrderByStatus)
 
-// reste middleware checkTokenMiddleware.checkToken
-
 module.exports = router;

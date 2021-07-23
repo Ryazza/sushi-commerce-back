@@ -168,7 +168,7 @@ exports.deleteOrderById = async (id) => {
 
 
 exports.getAllOrderByStatus = async ( status, order ) => {
-    //console.log(order)
+
     try {
         if ((status === "préparation" || status === "envoyé") && (order === "desc" || order === 'asc')) {
             let inOrder;
@@ -323,32 +323,3 @@ async function verifyEntry(order, token) {
         return { success: true };
     }
 }
-
-
-/*------------------------ JSON FULL DELETE AFTER -------------------------------*/
-// {
-//     "client_ID": "60f9287e165b5102c1e8bc50",
-//     "articles": [{
-//     "id": "60",
-//     "quantity": "",
-//     "amount": 20
-// }, {
-//     "id": "60f87058f8856620405eeaa2",
-//     "quantity": 3,
-//     "amount": 40
-// }],
-//     "sendTo": {
-//     "firstname": "toto",
-//         "lastname": "lebreton",
-//         "address": "20 rue du sable",
-//         "additionnal_adress": "",
-//         "postalCode": 35000,
-//         "city": "Rennes",
-//         "country": "France",
-//         "phone": "06-28-52-65-87"
-// },
-//     "gift_package": "true",
-//     "shipping_fee": 10,
-//     "totalAmount": 150,
-//     "status": "préparation"
-// }
