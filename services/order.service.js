@@ -1,11 +1,12 @@
 const Order = require('../models/orderModel');
 const Product = require('../models/productModel');
+const User = require('../models/userModel');
 const { checkObjectId } = require('../helper/dbHelper');
 
 exports.addOrder = async (form) => {
 
     try {
-        let verify = verifyEntry(form);
+        let verify = await verifyEntry(form);
 
         if(verify.success === true) {
 
@@ -24,6 +25,7 @@ exports.addOrder = async (form) => {
             return {
                 success: verify.success,
                 message: verify.message,
+                error: verify.error
             }
         }
     } catch (e) {
@@ -88,7 +90,7 @@ exports.updateOrder = async (id, change ) => {
             }
         }
 
-        let verify = verifyEntry(change);
+        let verify = await verifyEntry(change);
 
         if(verify.success === true) {
             // calcul function totalAmount and other;
@@ -187,13 +189,27 @@ async function calculate(form) {
 }
 
 /*----------- VERIFY --------------*/
-function verifyEntry(order) {
+async function verifyEntry(order) {
     let verifId = checkObjectId(order.client_ID);
+    let idExist;
+    // VOIR PROBLEME CHECK OBJECT ID PAS DE RETOUR
 
-    if(verifId === false) {
+
+    if(verifId.success === true) {
+        idExist = await User.findById(order.client_ID);
+    } else {
         return {
             success: false,
-            message: "Id invalide " + verifId.message,
+            message: "Id invalide" + verifId.message,
+            error: "client_ID"
+        };
+    }
+
+    if (!idExist) {
+        return {
+            success: false,
+            message: "Id invalide Client" + order.client_ID,
+            errors: "client_ID"
         };
     }
 
@@ -201,35 +217,53 @@ function verifyEntry(order) {
         return {
             success: false,
             message: "Vous devez enregistrez un article pour une commande",
+            errors: "articles"
         };
     } else {
-        order.articles.forEach(article => {
-            let verifId = checkObjectId(article.id);
-            if(verifId === false) {
+
+        for(let i=0; i < order.articles.length; i++) {
+            let verifId = checkObjectId(order.articles[i].id);
+            let verifProduct;
+            if(verifId.success === true) {
+                verifProduct = await Product.findById(order.articles[i].id);
+            } else {
                 return {
                     success: false,
-                    message: "Vous devez enregistrer un id pour votre article " +verifId.message,
-                };
-            }
-            if(typeof article.quantity === "undefined") {
-                return {
-                    success: false,
-                    message: "Vous devez renseigner une quantité à votre article " + article.id + " !",
+                    message: "Vous devez enregistrer un id correct pour votre article " + verifId.message,
+                    errors: "article.id"
                 };
             }
 
-            if(typeof article.quantity !== "number") {
+            if(!verifProduct) {
+                return {
+                    success: false,
+                    message: "Votre article n'est pas reconnu" + verifId.message,
+                    errors: "article.id"
+                };
+            }
+
+            if(typeof order.articles[i].quantity === "undefined") {
+                return {
+                    success: false,
+                    message: "Vous devez renseigner une quantité à votre article " + order.articles[i].id + " !",
+                    errors: "article.quantity"
+                };
+            }
+
+            if(typeof order.articles[i].quantity !== "number") {
                 return {
                     success: false,
                     message: "La quantité de votre article doit être un chiffre !",
+                    errors: "article.quantity"
                 };
             }
-        })
+        }
 
-        if(typeof order.status === "undefined") {
+        if(typeof order.status === "undefined" || order.status.length < 1) {
             return {
                 success: false,
                 message: "vous devez renseigner un status de commande (préparation ou envoyé)",
+                errors: "status"
             };
         }
 
@@ -237,6 +271,7 @@ function verifyEntry(order) {
             return {
                 success: false,
                 message: "Le status de votre commande doit être une chaine de caractère",
+                errors: "status"
             };
         }
         return { success: true };

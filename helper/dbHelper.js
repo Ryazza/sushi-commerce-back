@@ -7,6 +7,6 @@ module.exports.checkObjectId = (id) => {
             message: id + " !"
         };
     } else {
-        return true;
+        return { success: true };
     }
 }
