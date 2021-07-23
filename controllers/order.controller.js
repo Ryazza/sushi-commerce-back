@@ -1,5 +1,6 @@
 const OrderService = require('../services/order.service')
 const Order = require("../models/orderModel");
+const jwt = require('jsonwebtoken');
 const checkTokenMiddleware = require('../controllers/jwt.controller');
 
 exports.addOrder = async (req, res) => {
@@ -120,12 +121,23 @@ exports.deleteOrder = async ( req, res ) => {
 /*-------------------------- ADMIN -------------------------*/
 
 exports.getAllOrderByStatus = async (req, res) => {
-    console.log(req.params)
 
     try {
-        let allOrder = await OrderService.getAllOrderByStatus(req.params.status, req.params.order);
-        res.status(200);
-        res.send(allOrder);
+        const token = req.headers.authorization && checkTokenMiddleware.extractBearerToken(req.headers.authorization);
+        const decoded = jwt.decode(token, {complete: false});
+
+        if(decoded.admin === true) {
+            let allOrder = await OrderService.getAllOrderByStatus(req.params.status, req.params.order);
+            res.status(200);
+            res.send(allOrder);
+        } else {
+            res.status(403);
+            res.send({
+                success: false,
+                errors: "Vous n'avez pas les droits nécessaires !"
+            });
+        }
+
     } catch (e) {
         res.status(400)
         res.send({

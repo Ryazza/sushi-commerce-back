@@ -87,7 +87,7 @@ exports.updateOrder = async (id, change, token ) => {
 
     try {
         let order = await Order.findById(id);
-        console.log(order.client_ID)
+
         if (!order) {
             return {
                 success: false,
@@ -165,7 +165,7 @@ exports.getAllOrderByStatus = async ( status, order ) => {
 
 /*----------- function for add updtate order -----------------*/
 
-async function calculate(form, token) {
+async function calculate(form) {
 
     let articles = [];
     let totalAmount = 0;
@@ -285,7 +285,8 @@ async function verifyEntry(order, token) {
                 errors: "status"
             };
         }
-        if(order.status !== "préparation" || order.status !== "envoyé") {
+
+        if(order.status !== "préparation" && order.status !== "envoyé") {
             return {
                 success: false,
                 message: "Le status doit être préparation ou envoyé",

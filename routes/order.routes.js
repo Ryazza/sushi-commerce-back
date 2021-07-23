@@ -3,17 +3,17 @@ const router = express.Router();
 const orderController = require('../controllers/order.controller');
 const checkTokenMiddleware = require('../controllers/jwt.controller');
 
-router.post('/', orderController.addOrder)
+router.post('/', checkTokenMiddleware.checkToken, orderController.addOrder)
 
-router.get('/', orderController.getAllOrder)
+router.get('/', checkTokenMiddleware.checkToken, orderController.getAllOrder)
 
-router.get('/:id', orderController.getOneOrder)
+router.get('/:id', checkTokenMiddleware.checkToken, orderController.getOneOrder)
 
-router.get('/byUser/:id', orderController.getOrderByUser)
+router.get('/byUser/:id', checkTokenMiddleware.checkToken, orderController.getOrderByUser)
 
-router.put('/:id', orderController.updateOrder)
+router.put('/:id', checkTokenMiddleware.checkToken, orderController.updateOrder)
 
-router.delete('/:id', orderController.deleteOrder)
+router.delete('/:id', checkTokenMiddleware.checkToken, orderController.deleteOrder)
 
 /*-------------- ADMIN -----------------*/
 
