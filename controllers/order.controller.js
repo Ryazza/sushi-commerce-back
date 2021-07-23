@@ -1,9 +1,12 @@
 const OrderService = require('../services/order.service')
 const Order = require("../models/orderModel");
+const checkTokenMiddleware = require('../controllers/jwt.controller');
 
 exports.addOrder = async (req, res) => {
     try {
-        let newOrder = await OrderService.addOrder(req.body)
+        const token = req.headers.authorization && checkTokenMiddleware.extractBearerToken(req.headers.authorization);
+
+        let newOrder = await OrderService.addOrder(req.body, token)
 
         if (newOrder.success === true) {
             res.status(201)
@@ -72,7 +75,8 @@ exports.getOrderByUser = async (req, res) => {
 
 exports.updateOrder = async (req, res) => {
     try {
-        let orderServiceRes = await OrderService.updateOrder(req.params.id , req.body);
+        const token = req.headers.authorization && checkTokenMiddleware.extractBearerToken(req.headers.authorization);
+        let orderServiceRes = await OrderService.updateOrder(req.params.id , req.body, token);
 
         if (orderServiceRes.success) {
             res.status(200);

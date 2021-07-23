@@ -2,16 +2,20 @@ const Order = require('../models/orderModel');
 const Product = require('../models/productModel');
 const User = require('../models/userModel');
 const { checkObjectId } = require('../helper/dbHelper');
+const jwt = require('jsonwebtoken');
 
-exports.addOrder = async (form) => {
+exports.addOrder = async (form, token) => {
 
     try {
-        let verify = await verifyEntry(form);
+        let verify = await verifyEntry(form , token);
 
         if(verify.success === true) {
 
             // calcul function totalAmount and other;
-            let formValid = await calculate(form);
+            let formValid = await calculate(form, token);
+
+            const decoded = jwt.decode(token, {complete: false})
+            formValid.client_ID = decoded.id;
 
             const order = new Order({createdAt: new Date(), updateAt: new Date()});
             Object.assign(order, formValid);
@@ -79,10 +83,11 @@ exports.getOrderByUser = async ( client_id ) => {
     }
 }
 
-exports.updateOrder = async (id, change ) => {
+exports.updateOrder = async (id, change, token ) => {
 
     try {
         let order = await Order.findById(id);
+        console.log(order.client_ID)
         if (!order) {
             return {
                 success: false,
@@ -90,12 +95,14 @@ exports.updateOrder = async (id, change ) => {
             }
         }
 
-        let verify = await verifyEntry(change);
+        let verify = await verifyEntry(change, token);
 
         if(verify.success === true) {
             // calcul function totalAmount and other;
+
             let changeValid = await calculate(change);
-            //console.log(changeValid);
+
+            changeValid.client_ID = order.client_ID;
 
             await Order.findOneAndUpdate(
                 { _id: id },
@@ -112,6 +119,7 @@ exports.updateOrder = async (id, change ) => {
             return {
                 success: verify.success,
                 message: verify.message,
+                error: verify.errors,
             }
         }
     } catch (e) {
@@ -157,7 +165,7 @@ exports.getAllOrderByStatus = async ( status, order ) => {
 
 /*----------- function for add updtate order -----------------*/
 
-async function calculate(form) {
+async function calculate(form, token) {
 
     let articles = [];
     let totalAmount = 0;
@@ -189,14 +197,17 @@ async function calculate(form) {
 }
 
 /*----------- VERIFY --------------*/
-async function verifyEntry(order) {
-    let verifId = checkObjectId(order.client_ID);
+async function verifyEntry(order, token) {
+
+    const decoded = jwt.decode(token, {complete: false});
+
+    let verifId = checkObjectId(decoded.id);
     let idExist;
     // VOIR PROBLEME CHECK OBJECT ID PAS DE RETOUR
-
+    order.client_ID = decoded.id;
 
     if(verifId.success === true) {
-        idExist = await User.findById(order.client_ID);
+        idExist = await User.findById(decoded.id);
     } else {
         return {
             success: false,
@@ -274,6 +285,14 @@ async function verifyEntry(order) {
                 errors: "status"
             };
         }
+        if(order.status !== "préparation" || order.status !== "envoyé") {
+            return {
+                success: false,
+                message: "Le status doit être préparation ou envoyé",
+                errors: "status"
+            };
+        }
+
         return { success: true };
     }
 }
