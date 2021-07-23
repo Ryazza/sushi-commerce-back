@@ -7,14 +7,14 @@ const jwt = require('jsonwebtoken');
 exports.addOrder = async (form, token) => {
 
     try {
-        let verify = await verifyEntry(form , token);
+        let verify = await verifyEntry(form, token);
 
         if(verify.success === true) {
 
             // calcul function totalAmount and other;
             let formValid = await calculate(form, token);
 
-            const decoded = jwt.decode(token, {complete: false})
+            const decoded = jwt.decode(token, {complete: false});
             formValid.client_ID = decoded.id;
 
             const order = new Order({createdAt: new Date(), updateAt: new Date()});
@@ -29,7 +29,33 @@ exports.addOrder = async (form, token) => {
             return {
                 success: verify.success,
                 message: verify.message,
-                error: verify.error
+                errors: verify.error
+            }
+        }
+    } catch (e) {
+        throw e;
+    }
+}
+
+exports.calculateOrder = async (form, token) => {
+
+    try {
+        let verify = await verifyEntry(form , token);
+
+        if(verify.success === true) {
+
+            // calcul function totalAmount and other;
+            let formValid = await calculate(form, token);
+
+            return {
+                success: true,
+                response: formValid,
+            };
+        } else {
+            return {
+                success: verify.success,
+                message: verify.message,
+                errors: verify.error
             }
         }
     } catch (e) {
@@ -119,7 +145,7 @@ exports.updateOrder = async (id, change, token ) => {
             return {
                 success: verify.success,
                 message: verify.message,
-                error: verify.errors,
+                errors: verify.errors,
             }
         }
     } catch (e) {
@@ -183,7 +209,7 @@ async function calculate(form) {
 
     let gift_package;
 
-    if(totalAmount === 200) {
+    if(totalAmount > 200) {
         gift_package = true;
     } else {
         gift_package = false;
@@ -212,7 +238,7 @@ async function verifyEntry(order, token) {
         return {
             success: false,
             message: "Id invalide" + verifId.message,
-            error: "client_ID"
+            errors: "client_ID"
         };
     }
 

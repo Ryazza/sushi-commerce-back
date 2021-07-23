@@ -4,6 +4,7 @@ const orderController = require('../controllers/order.controller');
 const checkTokenMiddleware = require('../controllers/jwt.controller');
 
 router.post('/', checkTokenMiddleware.checkToken, orderController.addOrder)
+router.post('/calculate', checkTokenMiddleware.checkToken, orderController.calculateOrder);
 
 router.get('/', checkTokenMiddleware.checkToken, orderController.getAllOrder)
 

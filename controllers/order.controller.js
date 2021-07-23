@@ -27,6 +27,30 @@ exports.addOrder = async (req, res) => {
     }
 }
 
+exports.calculateOrder = async (req, res) => {
+    try {
+        const token = req.headers.authorization && checkTokenMiddleware.extractBearerToken(req.headers.authorization);
+
+        let newOrder = await OrderService.calculateOrder(req.body, token)
+
+        if (newOrder.success === true) {
+            res.status(201)
+            res.send(newOrder)
+        } else {
+            res.status(400)
+            res.send(newOrder)
+        }
+
+    } catch (e) {
+        console.log("rentré catch"+ e);
+        res.status(400)
+        res.send({
+            success: false,
+            errors: e.errors
+        })
+    }
+}
+
 exports.getAllOrder = async (req, res) => {
 
     try {
