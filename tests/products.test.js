@@ -13,6 +13,15 @@ const createForm = {
     stock: ["12"],
     price: 22
 }
+const createForm2 = {
+    name: "balancoire",
+    category: "jeu",
+    description: "ila la lo li lu chaud.",
+    pictures: ["image 2"],
+    events: ["blah"],
+    stock: ["12"],
+    price: 22
+}
 
 
 app.use(express.urlencoded({extended: false}));
@@ -25,12 +34,43 @@ test("get all route works", done => {
         // .expect({ name })
         .expect(200, done);
 });
+test("get by views route works", done => {
+    request(app)
+        .get("/product/most_viewed")
+        .expect("Content-Type", /json/)
+        // .expect({ name })
+        .expect(200, done);
+});
+test("get one by id route works", done => {
+    request(app)
+        .get("/product/one/60f825eb9aed8e417e4c7010")
+        .expect("Content-Type", /json/)
+        // .expect({ name })
+        .expect(200, done);
+});
+test("get one by name route works", done => {
+    request(app)
+        .get("/product/search/a")
+        .expect("Content-Type", /json/)
+        // .expect({ name })
+        .expect(200, done);
+});
 
 test("create route works", done => {
     request(app)
         .post("/product/create")
         .type("form")
         .send(createForm)
+        .expect("Content-Type", /json/)
+        .expect(201, done);
+
+});
+
+test("update route works", done => {
+    request(app)
+        .put("/product/update/60f825eb9aed8e417e4c7010")
+        .type("form")
+        .send(createForm2)
         .expect("Content-Type", /json/)
         .expect(201, done);
 
