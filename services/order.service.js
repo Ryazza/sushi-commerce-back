@@ -3,6 +3,9 @@ const Product = require('../models/productModel');
 const User = require('../models/userModel');
 const { checkObjectId } = require('../helper/dbHelper');
 const jwt = require('jsonwebtoken');
+const dayjs = require("dayjs");
+let isBetween = require('dayjs/plugin/isBetween')
+dayjs.extend(isBetween)
 
 exports.addOrder = async (form, token) => {
 
@@ -215,6 +218,14 @@ async function calculate(form) {
         gift_package = false;
     }
 
+    let today = new Date();
+
+    if(today.getMonth() === 11 && today.getDate() > 5) {
+        gift_package = true;
+    } else if (dayjs(dayjs().year()+ "-" + dayjs().get('month')+ "-" +dayjs().get('date')).isBetween(dayjs().year() +'6-15', dayjs().year() +'7-15')) {
+        gift_package = true;
+    }
+
     form.gift_package = gift_package;
     form.shipping_fee = shipping_fee;
     form.articles = articles;
@@ -229,7 +240,7 @@ async function verifyEntry(order, token) {
 
     let verifId = checkObjectId(decoded.id);
     let idExist;
-    // VOIR PROBLEME CHECK OBJECT ID PAS DE RETOUR
+    
     order.client_ID = decoded.id;
 
     if(verifId.success === true) {
@@ -261,12 +272,13 @@ async function verifyEntry(order, token) {
         for(let i=0; i < order.articles.length; i++) {
             let verifId = checkObjectId(order.articles[i].id);
             let verifProduct;
+            let actualNbr = i+1;
             if(verifId.success === true) {
                 verifProduct = await Product.findById(order.articles[i].id);
             } else {
                 return {
                     success: false,
-                    message: "Vous devez enregistrer un id correct pour votre article " + verifId.message,
+                    message: "Vous devez enregistrer un id correct pour votre article " +actualNbr+ ": " + verifId.message,
                     errors: "article.id"
                 };
             }
@@ -274,7 +286,7 @@ async function verifyEntry(order, token) {
             if(!verifProduct) {
                 return {
                     success: false,
-                    message: "Votre article n'est pas reconnu" + verifId.message,
+                    message: "Votre article " +actualNbr+ " n'est pas reconnu " + order.articles[i].id,
                     errors: "article.id"
                 };
             }
