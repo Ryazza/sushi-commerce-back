@@ -261,12 +261,13 @@ async function verifyEntry(order, token) {
         for(let i=0; i < order.articles.length; i++) {
             let verifId = checkObjectId(order.articles[i].id);
             let verifProduct;
+            let actualNbr = i+1;
             if(verifId.success === true) {
                 verifProduct = await Product.findById(order.articles[i].id);
             } else {
                 return {
                     success: false,
-                    message: "Vous devez enregistrer un id correct pour votre article " + verifId.message,
+                    message: "Vous devez enregistrer un id correct pour votre article " +actualNbr+ ": " + verifId.message,
                     errors: "article.id"
                 };
             }
@@ -274,7 +275,7 @@ async function verifyEntry(order, token) {
             if(!verifProduct) {
                 return {
                     success: false,
-                    message: "Votre article n'est pas reconnu" + verifId.message,
+                    message: "Votre article " +actualNbr+ " n'est pas reconnu " + order.articles[i].id,
                     errors: "article.id"
                 };
             }
