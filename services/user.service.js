@@ -11,7 +11,7 @@ function validateEmail(email) {
 function isDate(date) {
     return (new Date(date) !== "Invalid Date") && !isNaN(new Date(date));
 }
-//inscriptio
+//inscription
 exports.addUser = async (form) => {
     try {
         if (!validateEmail(form.email)) {

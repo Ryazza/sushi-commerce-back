@@ -1,9 +1,37 @@
 const OrderService = require('../services/order.service')
 const Order = require("../models/orderModel");
+const jwt = require('jsonwebtoken');
+const checkTokenMiddleware = require('../controllers/jwt.controller');
 
 exports.addOrder = async (req, res) => {
     try {
-        let newOrder = await OrderService.addOrder(req.body)
+        const token = req.headers.authorization && checkTokenMiddleware.extractBearerToken(req.headers.authorization);
+
+        let newOrder = await OrderService.addOrder(req.body, token)
+
+        if (newOrder.success === true) {
+            res.status(201)
+            res.send(newOrder)
+        } else {
+            res.status(400)
+            res.send(newOrder)
+        }
+
+    } catch (e) {
+        console.log("rentré catch"+ e);
+        res.status(400)
+        res.send({
+            success: false,
+            errors: e.errors
+        })
+    }
+}
+
+exports.calculateOrder = async (req, res) => {
+    try {
+        const token = req.headers.authorization && checkTokenMiddleware.extractBearerToken(req.headers.authorization);
+
+        let newOrder = await OrderService.calculateOrder(req.body, token)
 
         if (newOrder.success === true) {
             res.status(201)
@@ -72,7 +100,8 @@ exports.getOrderByUser = async (req, res) => {
 
 exports.updateOrder = async (req, res) => {
     try {
-        let orderServiceRes = await OrderService.updateOrder(req.params.id , req.body);
+        const token = req.headers.authorization && checkTokenMiddleware.extractBearerToken(req.headers.authorization);
+        let orderServiceRes = await OrderService.updateOrder(req.params.id , req.body, token);
 
         if (orderServiceRes.success) {
             res.status(200);
@@ -116,12 +145,23 @@ exports.deleteOrder = async ( req, res ) => {
 /*-------------------------- ADMIN -------------------------*/
 
 exports.getAllOrderByStatus = async (req, res) => {
-    console.log(req.params)
 
     try {
-        let allOrder = await OrderService.getAllOrderByStatus(req.params.status, req.params.order);
-        res.status(200);
-        res.send(allOrder);
+        const token = req.headers.authorization && checkTokenMiddleware.extractBearerToken(req.headers.authorization);
+        const decoded = jwt.decode(token, {complete: false});
+
+        if(decoded.admin === true) {
+            let allOrder = await OrderService.getAllOrderByStatus(req.params.status, req.params.order);
+            res.status(200);
+            res.send(allOrder);
+        } else {
+            res.status(403);
+            res.send({
+                success: false,
+                errors: "Vous n'avez pas les droits nécessaires !"
+            });
+        }
+
     } catch (e) {
         res.status(400)
         res.send({

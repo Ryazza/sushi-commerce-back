@@ -1,20 +1,24 @@
 const Order = require('../models/orderModel');
-//const Product = require('../models/productModel');
+const Product = require('../models/productModel');
+const User = require('../models/userModel');
 const { checkObjectId } = require('../helper/dbHelper');
+const jwt = require('jsonwebtoken');
 
-exports.addOrder = async (form) => {
+exports.addOrder = async (form, token) => {
 
     try {
-
-        let verify = verifyEntry(form);
+        let verify = await verifyEntry(form, token);
 
         if(verify.success === true) {
 
             // calcul function totalAmount and other;
-            let form = calculate(form);
+            let formValid = await calculate(form, token);
+
+            const decoded = jwt.decode(token, {complete: false});
+            formValid.client_ID = decoded.id;
 
             const order = new Order({createdAt: new Date(), updateAt: new Date()});
-            Object.assign(order, form);
+            Object.assign(order, formValid);
 
             await order.save();
             return {
@@ -25,14 +29,38 @@ exports.addOrder = async (form) => {
             return {
                 success: verify.success,
                 message: verify.message,
+                errors: verify.error
             }
         }
-
-
     } catch (e) {
         throw e;
     }
+}
 
+exports.calculateOrder = async (form, token) => {
+
+    try {
+        let verify = await verifyEntry(form , token);
+
+        if(verify.success === true) {
+
+            // calcul function totalAmount and other;
+            let formValid = await calculate(form, token);
+
+            return {
+                success: true,
+                response: formValid,
+            };
+        } else {
+            return {
+                success: verify.success,
+                message: verify.message,
+                errors: verify.error
+            }
+        }
+    } catch (e) {
+        throw e;
+    }
 }
 
 exports.getAllOrder = async () => {
@@ -81,10 +109,11 @@ exports.getOrderByUser = async ( client_id ) => {
     }
 }
 
-exports.updateOrder = async (id, change ) => {
+exports.updateOrder = async (id, change, token ) => {
 
     try {
         let order = await Order.findById(id);
+
         if (!order) {
             return {
                 success: false,
@@ -92,27 +121,31 @@ exports.updateOrder = async (id, change ) => {
             }
         }
 
-        let verify = verifyEntry(change);
+        let verify = await verifyEntry(change, token);
 
         if(verify.success === true) {
             // calcul function totalAmount and other;
-            let change = calculate(change);
+
+            let changeValid = await calculate(change);
+
+            changeValid.client_ID = order.client_ID;
 
             await Order.findOneAndUpdate(
-                {_id: id},
-                change,
-                {new: true}
+                { _id: id },
+                changeValid,
+                { new: true }
             )
 
             return {
                 success: true,
                 message: "Votre Commande a bien été modifié",
-                order: change,
+                order: changeValid,
             };
         } else {
             return {
                 success: verify.success,
                 message: verify.message,
+                errors: verify.errors,
             }
         }
     } catch (e) {
@@ -135,7 +168,7 @@ exports.deleteOrderById = async (id) => {
 
 
 exports.getAllOrderByStatus = async ( status, order ) => {
-    console.log(order)
+
     try {
         if ((status === "préparation" || status === "envoyé") && (order === "desc" || order === 'asc')) {
             let inOrder;
@@ -158,19 +191,17 @@ exports.getAllOrderByStatus = async ( status, order ) => {
 
 /*----------- function for add updtate order -----------------*/
 
-function calculate(form) {
+async function calculate(form) {
 
     let articles = [];
     let totalAmount = 0;
-    form.test = 5;
-    console.log(form)
 
-    // form.articles.forEach(article => {
-    //     let product = Product.find({_id: article.id});
-    //     let amount = product.price * article.quantity;
-    //     articles.push({article, amount: amount})
-    //     totalAmount += amount;
-    // });
+     for(let i=0; i < form.articles.length; i++) {
+        let product = await Product.findById(form.articles[i].id);
+        let amount = product.price * form.articles[i].quantity;
+        articles.push({ id: form.articles[i].id, quantity: form.articles[i].quantity, amount: amount});
+        totalAmount += amount;
+    };
 
     /*----------------------- A lier au systeme fraix de port -------------------------*/
     let shipping_fee = 10;
@@ -178,7 +209,7 @@ function calculate(form) {
 
     let gift_package;
 
-    if(totalAmount === 200) {
+    if(totalAmount > 200) {
         gift_package = true;
     } else {
         gift_package = false;
@@ -188,18 +219,34 @@ function calculate(form) {
     form.shipping_fee = shipping_fee;
     form.articles = articles;
     form.totalAmount = totalAmount + shipping_fee;
-
     return form;
 }
 
 /*----------- VERIFY --------------*/
-function verifyEntry(order) {
-    let verifId = checkObjectId(order.client_ID);
+async function verifyEntry(order, token) {
 
-    if(verifId === false) {
+    const decoded = jwt.decode(token, {complete: false});
+
+    let verifId = checkObjectId(decoded.id);
+    let idExist;
+    // VOIR PROBLEME CHECK OBJECT ID PAS DE RETOUR
+    order.client_ID = decoded.id;
+
+    if(verifId.success === true) {
+        idExist = await User.findById(decoded.id);
+    } else {
         return {
             success: false,
-            message: "Id invalide " + verifId.message,
+            message: "Id invalide" + verifId.message,
+            errors: "client_ID"
+        };
+    }
+
+    if (!idExist) {
+        return {
+            success: false,
+            message: "Id invalide Client" + order.client_ID,
+            errors: "client_ID"
         };
     }
 
@@ -207,35 +254,53 @@ function verifyEntry(order) {
         return {
             success: false,
             message: "Vous devez enregistrez un article pour une commande",
+            errors: "articles"
         };
     } else {
-        order.articles.forEach(article => {
-            let verifId = checkObjectId(article.id);
-            if(verifId === false) {
+
+        for(let i=0; i < order.articles.length; i++) {
+            let verifId = checkObjectId(order.articles[i].id);
+            let verifProduct;
+            if(verifId.success === true) {
+                verifProduct = await Product.findById(order.articles[i].id);
+            } else {
                 return {
                     success: false,
-                    message: "Vous devez enregistrer un id pour votre article " +verifId.message,
-                };
-            }
-            if(typeof article.quantity === "undefined") {
-                return {
-                    success: false,
-                    message: "Vous devez renseigner une quantité à votre article " + article.id + " !",
+                    message: "Vous devez enregistrer un id correct pour votre article " + verifId.message,
+                    errors: "article.id"
                 };
             }
 
-            if(typeof article.quantity !== "number") {
+            if(!verifProduct) {
+                return {
+                    success: false,
+                    message: "Votre article n'est pas reconnu" + verifId.message,
+                    errors: "article.id"
+                };
+            }
+
+            if(typeof order.articles[i].quantity === "undefined") {
+                return {
+                    success: false,
+                    message: "Vous devez renseigner une quantité à votre article " + order.articles[i].id + " !",
+                    errors: "article.quantity"
+                };
+            }
+
+            if(typeof order.articles[i].quantity !== "number") {
                 return {
                     success: false,
                     message: "La quantité de votre article doit être un chiffre !",
+                    errors: "article.quantity"
                 };
             }
-        })
+        }
 
-        if(typeof order.status === "undefined") {
+        if(typeof order.status === "undefined" || order.status.length < 1) {
             return {
                 success: false,
                 message: "vous devez renseigner un status de commande (préparation ou envoyé)",
+                errors: "status"
             };
         }
 
@@ -243,37 +308,18 @@ function verifyEntry(order) {
             return {
                 success: false,
                 message: "Le status de votre commande doit être une chaine de caractère",
+                errors: "status"
             };
         }
+
+        if(order.status !== "préparation" && order.status !== "envoyé") {
+            return {
+                success: false,
+                message: "Le status doit être préparation ou envoyé",
+                errors: "status"
+            };
+        }
+
         return { success: true };
     }
 }
-
-
-/*------------------------ JSON FULL DELETE AFTER -------------------------------*/
-// {
-//     "client_ID": "60f9287e165b5102c1e8bc50",
-//     "articles": [{
-//     "id": "60",
-//     "quantity": "",
-//     "amount": 20
-// }, {
-//     "id": "60f87058f8856620405eeaa2",
-//     "quantity": 3,
-//     "amount": 40
-// }],
-//     "sendTo": {
-//     "firstname": "toto",
-//         "lastname": "lebreton",
-//         "address": "20 rue du sable",
-//         "additionnal_adress": "",
-//         "postalCode": 35000,
-//         "city": "Rennes",
-//         "country": "France",
-//         "phone": "06-28-52-65-87"
-// },
-//     "gift_package": "true",
-//     "shipping_fee": 10,
-//     "totalAmount": 150,
-//     "status": "préparation"
-// }
