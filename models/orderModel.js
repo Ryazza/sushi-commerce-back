@@ -22,11 +22,14 @@ const OrderSchema = new mongoose.Schema({
             }
         },
     ],
+    card_ID: {
+        type: String,
+        required: true,
+    },
     sendTo: {
         type: String,
         required: true
     },
-
     shipping_fee: {
         type: Number,
         required: true,
