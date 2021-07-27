@@ -51,9 +51,9 @@ exports.addUser = async (form) => {
                 error: "Date invalide !"
             }
         }
-        if (form.admin) {
-            form.admin = false;
-        }
+        // if (form.admin) {
+        //     form.admin = false;
+        // }
         if (form.adress) {
             form.adress = []
         }
