@@ -42,8 +42,8 @@ exports.updateProduct = async (req, res) => {
             errors: e.errors
         })
     }
-
 }
+
 exports.getProducts = async (req, res) => {
     try {
         let allUser = await ProductService.allProducts();
@@ -56,8 +56,22 @@ exports.getProducts = async (req, res) => {
             errors: e.errors
         })
     }
-
 }
+
+exports.showStock = async (req, res) => {
+    try {
+        let allProduct = await ProductService.showStock();
+        res.status(200);
+        res.send(allProduct);
+    } catch (e) {
+        res.status(400);
+        res.send({
+            success: false,
+            errors: e.errors
+        })
+    }
+}
+
 exports.searchProductByName = async (req, res) => {
     try {
         let keyword = req.params.keyword;

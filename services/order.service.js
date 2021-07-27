@@ -37,8 +37,8 @@ exports.addOrder = async (form, token) => {
 
                 for(let i=0; i < formValid.changeStock.length; i++) {
                     let product = await Product.findOne({_id: formValid.changeStock[i].id});
-                    product.stock.quantity = formValid.changeStock[i].stock.quantity;
-                    product.stock.available = formValid.changeStock[i].stock.available;
+                    product.quantity = formValid.changeStock[i].quantity;
+                    product.available = formValid.changeStock[i].available;
 
                     await Product.updateOne({_id: formValid.changeStock[i].id}, product);
                 }
@@ -230,7 +230,7 @@ async function calculate(form, token, save) {
 
      for(let i=0; i < form.articles.length; i++) {
          let product = await Product.findById(form.articles[i].id);
-         let oldQuantity = product.stock.quantity;
+         let oldQuantity = product.quantity;
          let newQuantity = oldQuantity - form.articles[i].quantity;
 
          if(newQuantity < 0) {
@@ -243,7 +243,7 @@ async function calculate(form, token, save) {
              canChangeStock = true;
              available = true;
          }
-         changeStock.push({ id: form.articles[i].id, stock: { quantity: newQuantity, available: available}, canChangeStock: canChangeStock })
+         changeStock.push({ id: form.articles[i].id, quantity: newQuantity, available: available, canChangeStock: canChangeStock})
 
          let amount = product.price * form.articles[i].quantity;
          articles.push({ id: form.articles[i].id, quantity: form.articles[i].quantity, amount: amount});

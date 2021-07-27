@@ -140,3 +140,17 @@ exports.searchOneProduct = async (id) => {
     }
 }
 
+/*---------------------- ADMIN -----------------------*/
+
+exports.showStock = async () => {
+    try {
+        let products = await Product.find().sort({quantity: 1});
+        return {
+            success: true,
+            products: products
+        }
+    } catch (e) {
+        throw e;
+    }
+}
+
