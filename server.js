@@ -7,6 +7,8 @@ let logger = require('morgan');
 
 // Import des routes
 let UserRoutes = require('./routes/user.routes');
+let productRoutes = require('./routes/product.routes');
+let OrderRoutes = require('./routes/order.routes');
 
 // -----
 
@@ -18,9 +20,11 @@ app.use(express.static(path.join(__dirname, 'public')));
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(cors());
 
-// Routeso
+// Routes
 app.use('/user', UserRoutes);
+app.use('/order', OrderRoutes);
 
+app.use('/product', productRoutes);
 // -----
 
 // DB
