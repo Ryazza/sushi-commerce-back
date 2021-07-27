@@ -26,13 +26,16 @@ const ProductsSchema = new mongoose.Schema({
         required: true
     },
     stock: {
-        type: Array,
-        required: true
-
+        quantity: {
+            type: Number,
+            required: true
+        },
+        available: {
+            type: Boolean,
+        }
     },
     views: {
         type: Number
-
     },
     price: {
       type: Number,
