@@ -112,6 +112,69 @@ exports.updateStock = async (req, res) => {
     }
 }
 
+exports.deduceStock = async (req, res) => {
+    const token = req.headers.authorization && checkTokenMiddleware.extractBearerToken(req.headers.authorization);
+    const decoded = jwt.decode(token, {complete: false});
+
+    try {
+        if(decoded.admin === true) {
+
+            let newProduct = await ProductService.deduceStock(req.body)
+            if (newProduct.success === true) {
+                res.status(201)
+                res.send(newProduct)
+            } else {
+                res.status(400)
+                res.send(newProduct)
+            }
+        } else {
+            res.status(403);
+            res.send({
+                success: false,
+                errors: "Vous n'avez pas les droits nécessaires !"
+            });
+        }
+    } catch (e) {
+        res.status(400);
+        res.send({
+            success: false,
+            errors: e.errors
+        })
+    }
+}
+
+exports.addStock = async (req, res) => {
+    const token = req.headers.authorization && checkTokenMiddleware.extractBearerToken(req.headers.authorization);
+    const decoded = jwt.decode(token, {complete: false});
+
+    try {
+        if(decoded.admin === true) {
+
+            let newProduct = await ProductService.addStock(req.body)
+            if (newProduct.success === true) {
+                res.status(201)
+                res.send(newProduct)
+            } else {
+                res.status(400)
+                res.send(newProduct)
+            }
+        } else {
+            res.status(403);
+            res.send({
+                success: false,
+                errors: "Vous n'avez pas les droits nécessaires !"
+            });
+        }
+    } catch (e) {
+        res.status(400);
+        res.send({
+            success: false,
+            errors: e.errors
+        })
+    }
+}
+
+
 exports.searchProductByName = async (req, res) => {
     try {
         let keyword = req.params.keyword;
