@@ -71,6 +71,26 @@ exports.showStock = async (req, res) => {
     }
 }
 
+exports.updateStock = async (req, res) => {
+    try {
+        let newProduct = await ProductService.updateStock(req.body, req.params.id)
+        if (newProduct.success === true) {
+            res.status(201)
+            res.send(newProduct)
+        } else {
+            res.status(400)
+            res.send(newProduct)
+        }
+
+    } catch (e) {
+        res.status(400);
+        res.send({
+            success: false,
+            errors: e.errors
+        })
+    }
+}
+
 exports.searchProductByName = async (req, res) => {
     try {
         let keyword = req.params.keyword;
