@@ -49,9 +49,12 @@ function checkForm(form) {
     }
 }
 
-async function checkStockUpdate(form) {
+async function checkStockUpdate(form, id, availableAuto = false) {
 
-    let verifId = checkObjectId(form.id);
+    let verifId = checkObjectId(id);
+    if(availableAuto) {
+        verifId.success = true;
+    }
 
     if (!verifId.success) {
         return {
@@ -60,11 +63,11 @@ async function checkStockUpdate(form) {
         }
     } else {
 
-        let product = await Product.findById(form.id)
+        let product = await Product.findById(id)
         if (!product) {
             return {
                 success: false,
-                error: "Votre produit "+ form.id +" n'existe plus !"
+                error: "Votre produit "+ id +" n'existe plus !"
             }
         }
     }
@@ -81,18 +84,21 @@ async function checkStockUpdate(form) {
             error: "la quantité doit être indiqué"
         }
     }
-    if(typeof form.available !== "boolean"){
-        return {
-            success:false,
-            error: "Disponible doit être définit"
+    if(!availableAuto) {
+        if(typeof form.available !== "boolean"){
+            return {
+                success:false,
+                error: "Disponible doit être définit"
+            }
+        }
+        if(!form.available){
+            return {
+                success:false,
+                error: "Disponible doit être indiqué"
+            }
         }
     }
-    if(!form.available){
-        return {
-            success:false,
-            error: "Disponible doit être indiqué"
-        }
-    }
+
     return { success: true };
 }
 
@@ -213,7 +219,7 @@ exports.updateStock = async (form) => {
         } else {
 
             for (let i=0; i < form.products.length; i++) {
-                let check = await checkStockUpdate(form.products[i]);
+                let check = await checkStockUpdate(form.products[i], form.products[i].id);
 
                 if(check.success === false) {
                     checkAll = false;
@@ -237,6 +243,48 @@ exports.updateStock = async (form) => {
             return {
                 success: false,
                 message: lastCheck.error
+            };
+        }
+
+    } catch (e) {
+        throw e;
+    }
+}
+
+exports.deduceStock = async (form, id) => {
+    try {
+        let check = await checkStockUpdate(form, id, true);
+
+        if(check.success) {
+            let originProduct = await Product.findOne({_id: id});
+            let stayNumber = originProduct.quantity - form.quantity;
+
+            if (stayNumber > -1) {
+                let available = true;
+                if(stayNumber === 0) {
+                    available = false;
+                }
+                let product = await Product.findOneAndUpdate({_id: id}, {
+                        quantity: stayNumber,
+                        available: available,
+                    }
+                );
+
+                await product.save();
+                return {
+                    success: true
+                };
+            } else {
+                return {
+                    success: false,
+                    message: 'Votre produit est déjà épuisé ou la quantité a déduire trop grande!'
+                };
+            }
+
+        } else {
+            return {
+                success: false,
+                message: check.error
             };
         }
 
