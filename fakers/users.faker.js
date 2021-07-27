@@ -704,19 +704,9 @@ const index = require("../server");
 const request = require("supertest");
 const express = require("express");
 const app = express();
+const userController = require('../controllers/user.controller');
 
-users.forEach(user => {
-
-    test("create route works", done => {
-        request(app)
-            .post("/users/")
-            .type("form")
-            .send(user)
-            .expect("Content-Type", /json/)
-            .expect(201, done);
-
-    });
-
-
+const UserService = require('../services/user.service')
+ users.forEach(async user =>  {
+    await UserService.addUser(user);
 })
-
