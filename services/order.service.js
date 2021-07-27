@@ -75,10 +75,16 @@ exports.calculateOrder = async (form, token) => {
 
             // calcul function totalAmount and other;
             let formValid = await calculate(form, token, "noSave");
-
+            let canSend = true;
+            formValid.changeStock.forEach( product => {
+                if(product.canChangeStock === false) {
+                    canSend = false;
+                }
+            });
+            
             return {
                 success: true,
-                response: formValid,
+                response: {formValid , canOrder: canSend},
             };
         } else {
             return {
