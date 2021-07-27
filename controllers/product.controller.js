@@ -58,10 +58,20 @@ exports.getProducts = async (req, res) => {
 }
 
 exports.showStock = async (req, res) => {
+    const token = req.headers.authorization && checkTokenMiddleware.extractBearerToken(req.headers.authorization);
+    const decoded = jwt.decode(token, {complete: false});
     try {
-        let allProduct = await ProductService.showStock();
-        res.status(200);
-        res.send(allProduct);
+        if(decoded.admin === true) {
+            let allProduct = await ProductService.showStock();
+            res.status(200);
+            res.send(allProduct);
+        } else {
+            res.status(403);
+            res.send({
+                success: false,
+                errors: "Vous n'avez pas les droits nécessaires !"
+            });
+        }
     } catch (e) {
         res.status(400);
         res.send({
@@ -72,16 +82,27 @@ exports.showStock = async (req, res) => {
 }
 
 exports.updateStock = async (req, res) => {
-    try {
-        let newProduct = await ProductService.updateStock(req.body, req.params.id)
-        if (newProduct.success === true) {
-            res.status(201)
-            res.send(newProduct)
-        } else {
-            res.status(400)
-            res.send(newProduct)
-        }
+    const token = req.headers.authorization && checkTokenMiddleware.extractBearerToken(req.headers.authorization);
+    const decoded = jwt.decode(token, {complete: false});
 
+    try {
+        if(decoded.admin === true) {
+
+            let newProduct = await ProductService.updateStock(req.body, req.params.id)
+            if (newProduct.success === true) {
+                res.status(201)
+                res.send(newProduct)
+            } else {
+                res.status(400)
+                res.send(newProduct)
+            }
+        } else {
+            res.status(403);
+            res.send({
+                success: false,
+                errors: "Vous n'avez pas les droits nécessaires !"
+            });
+        }
     } catch (e) {
         res.status(400);
         res.send({

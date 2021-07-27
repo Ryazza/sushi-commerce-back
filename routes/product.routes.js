@@ -12,10 +12,10 @@ router.get('/most_viewed' ,ProductController.mostViewedProducts)
 // router.get('/{id}', ProductController.getProduct)
 
 //admin user routes
-router.post('/create' ,ProductController.createProduct)
-router.put('/update/:id' ,ProductController.updateProduct)
-router.get('/verifyStock' ,ProductController.showStock)//le form envoyé doit contenir également le contenu non modifié
-router.post('/updateStock/:id' ,ProductController.updateStock)
+router.post('/create' ,checkTokenMiddleware.checkToken, ProductController.createProduct)
+router.put('/update/:id' , checkTokenMiddleware.checkToken,ProductController.updateProduct)
+router.get('/verifyStock' , checkTokenMiddleware.checkToken, ProductController.showStock)//le form envoyé doit contenir également le contenu non modifié
+router.post('/updateStock/:id' , checkTokenMiddleware.checkToken, ProductController.updateStock)
 // router.delete('/:id' , checkTokenMiddleware.checkTokenAdmin, ProductController.deleteUserById)
 
 // router.put('/login/:id', checkTokenMiddleware.checkTokenAdmin, ProductController.updateLoginAdmin);
