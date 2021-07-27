@@ -2,7 +2,6 @@ const ProductService = require('../services/product.service')
 const jwt = require('jsonwebtoken');
 const checkTokenMiddleware = require('../controllers/jwt.controller');
 
-
 exports.createProduct = async (req, res) => {
     try {
         let newProduct = await ProductService.addProduct(req.body)
@@ -86,7 +85,6 @@ exports.searchProductByName = async (req, res) => {
             errors: e.errors
         })
     }
-
 }
 
 exports.searchOneProduct = async (req, res) => {

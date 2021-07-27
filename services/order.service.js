@@ -81,7 +81,7 @@ exports.calculateOrder = async (form, token) => {
                     canSend = false;
                 }
             });
-            
+
             return {
                 success: true,
                 response: {formValid , canOrder: canSend},
