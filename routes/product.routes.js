@@ -16,8 +16,8 @@ router.post('/create' ,checkTokenMiddleware.checkToken, ProductController.create
 router.put('/update/:id' , checkTokenMiddleware.checkToken,ProductController.updateProduct)
 router.get('/verifyStock' , checkTokenMiddleware.checkToken, ProductController.showStock)//le form envoyé doit contenir également le contenu non modifié
 router.post('/updateStock' , checkTokenMiddleware.checkToken, ProductController.updateStock)
-router.post('/deduceStock' , checkTokenMiddleware.checkToken, ProductController.deduceStock)
-router.post('/addStock' , checkTokenMiddleware.checkToken, ProductController.addStock)
+router.post('/deduceStock/:id' , checkTokenMiddleware.checkToken, ProductController.deduceStock)
+router.post('/addStock/:id' , checkTokenMiddleware.checkToken, ProductController.addStock)
 // router.delete('/:id' , checkTokenMiddleware.checkTokenAdmin, ProductController.deleteUserById)
 
 // router.put('/login/:id', checkTokenMiddleware.checkTokenAdmin, ProductController.updateLoginAdmin);

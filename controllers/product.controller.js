@@ -119,7 +119,7 @@ exports.deduceStock = async (req, res) => {
     try {
         if(decoded.admin === true) {
 
-            let newProduct = await ProductService.deduceStock(req.body)
+            let newProduct = await ProductService.deduceStock(req.body, req.params.id)
             if (newProduct.success === true) {
                 res.status(201)
                 res.send(newProduct)
@@ -150,7 +150,7 @@ exports.addStock = async (req, res) => {
     try {
         if(decoded.admin === true) {
 
-            let newProduct = await ProductService.addStock(req.body)
+            let newProduct = await ProductService.addStock(req.body, req.params.id)
             if (newProduct.success === true) {
                 res.status(201)
                 res.send(newProduct)
