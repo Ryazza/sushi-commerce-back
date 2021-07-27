@@ -184,10 +184,9 @@ exports.showStock = async () => {
 }
 
 exports.updateStock = async (form, id) => {
-    let check = checkStockUpdate(form);
     try {
         let check = checkStockUpdate(form);
-        if(check) {
+        if(check.success) {
             let product = await Product.findOneAndUpdate({_id: id}, {
                     quantity: form.quantity,
                     available: form.available,
