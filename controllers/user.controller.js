@@ -14,6 +14,7 @@ exports.addUser = async (req, res) => {
         }
     } catch (e) {
         res.status(403)
+        console.log(e)
         res.send({
             success: false,
             errors: e.errors

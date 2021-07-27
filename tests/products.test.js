@@ -3,6 +3,15 @@ const index = require("../server");
 const request = require("supertest");
 const express = require("express");
 const app = express();
+let mongoose = require('mongoose');
+let mongoDB = 'mongodb://127.0.0.1/sushi-test';
+
+mongoose.set('useCreateIndex', true)
+mongoose.set('useFindAndModify', false);
+mongoose.connect(mongoDB, {useNewUrlParser: true, useUnifiedTopology: true});
+
+let db = mongoose.connection;
+db.on('error', console.error.bind(console, 'MongoDB connection error:'));
 
 const createForm = {
     name: "voiture",
