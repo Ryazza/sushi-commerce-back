@@ -88,7 +88,7 @@ exports.updateStock = async (req, res) => {
     try {
         if(decoded.admin === true) {
 
-            let newProduct = await ProductService.updateStock(req.body, req.params.id)
+            let newProduct = await ProductService.updateStock(req.body)
             if (newProduct.success === true) {
                 res.status(201)
                 res.send(newProduct)

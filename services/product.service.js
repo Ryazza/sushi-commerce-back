@@ -1,8 +1,8 @@
 const Product = require('../models/productModel.js');
+const { checkObjectId } = require('../helper/dbHelper');
 
 const bcrypt = require('bcrypt')
 const jwt = require('jsonwebtoken');
-
 
 function checkForm(form) {
     if (form.name.length > 25 || form.name.length < 3) {
@@ -49,7 +49,26 @@ function checkForm(form) {
     }
 }
 
-function checkStockUpdate(form) {
+async function checkStockUpdate(form) {
+
+    let verifId = checkObjectId(form.id);
+
+    if (!verifId.success) {
+        return {
+            success: false,
+            error: "Vous devez rentrer un id correct " + verifId.message
+        }
+    } else {
+
+        let product = await Product.findById(form.id)
+        if (!product) {
+            return {
+                success: false,
+                error: "Votre produit "+ form.id +" n'existe plus !"
+            }
+        }
+    }
+
     if(typeof form.quantity !== "number"){
         return {
             success:false,
@@ -74,8 +93,7 @@ function checkStockUpdate(form) {
             error: "Disponible doit être indiqué"
         }
     }
-
-    return true;
+    return { success: true };
 }
 
 exports.addProduct = async (form) => {
@@ -183,24 +201,42 @@ exports.showStock = async () => {
     }
 }
 
-exports.updateStock = async (form, id) => {
+exports.updateStock = async (form) => {
     try {
-        let check = checkStockUpdate(form);
-        if(check.success) {
-            let product = await Product.findOneAndUpdate({_id: id}, {
-                    quantity: form.quantity,
-                    available: form.available,
+        let checkAll = true;
+        let lastCheck = {};
+
+        if(typeof form.products === "undefined") {
+            checkAll = false;
+            lastCheck.success = false;
+            lastCheck.error = "Vous devez renseigner un ou des articles à modifier";
+        } else {
+
+            for (let i=0; i < form.products.length; i++) {
+                let check = await checkStockUpdate(form.products[i]);
+
+                if(check.success === false) {
+                    checkAll = false;
+                    lastCheck.error = check.error;
                 }
-            );
-            Object.assign(product, form);
-            await product.save();
+            }
+        }
+
+        if(checkAll) {
+            for(let i=0; i < form.products.length; i++) {
+                await Product.findOneAndUpdate({_id: form.products[i].id}, {
+                        quantity: form.products[i].quantity,
+                        available: form.products[i].available,
+                    }
+                );
+            }
             return {
                 success: true
             };
         } else {
             return {
                 success: false,
-                message: check.error
+                message: lastCheck.error
             };
         }
 
