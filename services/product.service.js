@@ -49,6 +49,35 @@ function checkForm(form) {
     }
 }
 
+function checkStockUpdate(form) {
+    if(typeof form.quantity !== "number"){
+        return {
+            success:false,
+            error: "la quantité doit être un nombre"
+        }
+    }
+    if(!form.quantity){
+        return {
+            success:false,
+            error: "la quantité doit être indiqué"
+        }
+    }
+    if(typeof form.available !== "boolean"){
+        return {
+            success:false,
+            error: "Disponible doit être définit"
+        }
+    }
+    if(!form.available){
+        return {
+            success:false,
+            error: "Disponible doit être indiqué"
+        }
+    }
+
+    return true;
+}
+
 exports.addProduct = async (form) => {
 
     checkForm(form);
@@ -149,6 +178,33 @@ exports.showStock = async () => {
             success: true,
             products: products
         }
+    } catch (e) {
+        throw e;
+    }
+}
+
+exports.updateStock = async (form, id) => {
+    let check = checkStockUpdate(form);
+    try {
+        let check = checkStockUpdate(form);
+        if(check) {
+            let product = await Product.findOneAndUpdate({_id: id}, {
+                    quantity: form.quantity,
+                    available: form.available,
+                }
+            );
+            Object.assign(product, form);
+            await product.save();
+            return {
+                success: true
+            };
+        } else {
+            return {
+                success: false,
+                message: check.error
+            };
+        }
+
     } catch (e) {
         throw e;
     }
