@@ -27,7 +27,7 @@ exports.addUser = async (form) => {
             }
         }
         form.password = await bcrypt.hash(form.password, 10);
-        if (form.gender.length < 3) {
+        if (form.gender !== "male" && form.gender !== "female" && form.gender !== "other") {
             return {
                 success: false,
                 error: "Genre invalide"
@@ -201,6 +201,7 @@ exports.deleteUserById = async (id) => {
 }
 //ADMIN modification du role de l'utilisateur
 exports.updateRole = async (id, role) => {
+
     await User.updateOne({_id: id}, {admin: role.admin, updateAt: new Date()});
     return {
         success: true,
