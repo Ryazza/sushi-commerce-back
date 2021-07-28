@@ -372,3 +372,17 @@ exports.deleteProducts = async (products) => {
         success: true
     };
 }
+
+exports.updateAvailable = async (products) => {
+   try {
+       for (const product of products) {
+           await Product.updateOne({_id: product.id}, {available: product.available});
+       }
+       return {
+           success: true
+       };
+   }catch(e){
+       throw e;
+   }
+
+}

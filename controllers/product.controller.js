@@ -23,7 +23,6 @@ exports.createProduct = async (req, res) => {
 
 exports.updateProduct = async (req, res) => {
     try {
-        console.log("mes couilles")
         let newProduct = await ProductService.updateProduct(req.body, req.params.id)
         if (newProduct.success === true) {
             res.status(201)
@@ -210,6 +209,19 @@ exports.deleteProduct = async (req,res)=>{
 exports.deleteProducts = async (req,res)=>{
     try {
         let products = await ProductService.deleteProducts(req.body);
+        res.status(200);
+        res.send(products);
+    } catch (e) {
+        res.status(400);
+        res.send({
+            success: false,
+            errors: e
+        })
+    }
+}
+exports.updateAvailable = async (req,res)=>{
+    try {
+        let products = await ProductService.updateAvailable(req.body);
         res.status(200);
         res.send(products);
     } catch (e) {
