@@ -27,7 +27,7 @@ exports.addUser = async (form) => {
             }
         }
         form.password = await bcrypt.hash(form.password, 10);
-        if (form.gender.length < 3) {
+        if (form.gender !== "male" && form.gender !== "female" && form.gender !== "other") {
             return {
                 success: false,
                 error: "Genre invalide"
