@@ -17,7 +17,7 @@ exports.addUser = async (req, res) => {
         console.log(e)
         res.send({
             success: false,
-            errors: e.errors
+            errors: e
         })
     }
 }
@@ -36,7 +36,7 @@ exports.connectUser = async (req, res) => {
         res.status(400)
         res.send({
             success: false,
-            errors: e.errors
+            errors: e
         })
     }
 }
@@ -54,7 +54,7 @@ exports.deleteUser = async (req, res) => {
         res.status(400)
         res.send({
             success: false,
-            errors: e.errors
+            errors: e
         })
     }
 }
@@ -70,7 +70,7 @@ exports.getMe = async (req, res) => {
         res.status(400);
         res.send({
             success: false,
-            errors: e.errors
+            errors: e
         });
     }
 }
@@ -91,7 +91,7 @@ exports.updateUserPass = async (req, res) => {
         res.status(400);
         res.send({
             success: false,
-            errors: e.errors
+            errors: e
         });
     }
 }
@@ -112,7 +112,7 @@ exports.updateMail = async (req, res) => {
         res.status(400);
         res.send({
             success: false,
-            errors: e.errors
+            errors: e
         });
     }
 }
@@ -133,7 +133,7 @@ exports.updateBirth = async (req, res) => {
         res.status(400);
         res.send({
             success: false,
-            errors: e.errors
+            errors: e
         });
     }
 }
@@ -148,7 +148,7 @@ exports.allUser = async (req, res) => {
         res.status(400)
         res.send({
             success: false,
-            errors: e.errors
+            errors: e
         })
     }
 }
@@ -171,7 +171,7 @@ exports.deleteUserById = async (req, res) => {
         res.status(400)
         res.send({
             success: false,
-            errors: e.errors
+            errors: e
         })
     }
 }
@@ -200,7 +200,7 @@ exports.updateMailAdmin = async (req, res) => {
         res.status(400);
         res.send({
             success: false,
-            errors: e.errors
+            errors: e
         });
     }
 }
@@ -229,7 +229,7 @@ exports.updateRole = async (req, res) => {
         res.status(400);
         res.send({
             success: false,
-            errors: e.errors
+            errors: e
         });
     }
 }
