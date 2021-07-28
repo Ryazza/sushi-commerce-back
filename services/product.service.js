@@ -86,21 +86,9 @@ exports.updateProduct = async (form, id) => {
     }
 }
 
-
 exports.allProducts = async () => {
     try {
         let products = await Product.find({})
-        return {
-            success: true,
-            products: products
-        }
-    } catch (e) {
-        throw e;
-    }
-}
-exports.mostViewedProducts = async () => {
-    try {
-        let products = await Product.find({}).sort({views: -1})
         return {
             success: true,
             products: products
@@ -140,3 +128,53 @@ exports.searchOneProduct = async (id) => {
     }
 }
 
+exports.mostViewedProducts = async () => {
+    try {
+        let products = await Product.find({}).sort({views: -1})
+        return {
+            success: true,
+            products: products
+        }
+    } catch (e) {
+        throw e;
+    }
+}
+
+exports.sortProducts = async (type) => {
+    console.log("type", type)
+    if(type==="name") {
+        console.log("dans le name")
+
+        try {
+            let products = await Product.find({}).sort({name: -1})
+            return {
+                success: true,
+                products: products
+            }
+        } catch (e) {
+            throw e;
+        }
+    }
+     if (type ==="category"){
+        try {
+            let products = await Product.find({}).sort({category: -1})
+            return {
+                success: true,
+                products: products
+            }
+        } catch (e) {
+            throw e;
+        }
+    }
+     if (type ==="description"){
+        try {
+            let products = await Product.find({}).sort({description: -1})
+            return {
+                success: true,
+                products: products
+            }
+        } catch (e) {
+            throw e;
+        }
+    }
+}

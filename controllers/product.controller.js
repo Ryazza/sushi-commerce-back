@@ -23,6 +23,7 @@ exports.createProduct = async (req, res) => {
     }
 
 }
+
 exports.updateProduct = async (req, res) => {
     try {
         console.log("mes couilles")
@@ -44,6 +45,7 @@ exports.updateProduct = async (req, res) => {
     }
 
 }
+
 exports.getProducts = async (req, res) => {
     try {
         let allUser = await ProductService.allProducts();
@@ -58,6 +60,7 @@ exports.getProducts = async (req, res) => {
     }
 
 }
+
 exports.searchProductByName = async (req, res) => {
     try {
         let keyword = req.params.keyword;
@@ -91,9 +94,33 @@ exports.searchOneProduct = async (req, res) => {
     }
 
 }
+
 exports.mostViewedProducts = async (req, res) => {
     try {
         let products = await ProductService.mostViewedProducts();
+        res.status(200);
+        res.send(products);
+    } catch (e) {
+        res.status(400);
+        res.send({
+            success: false,
+            errors: e.errors
+        })
+    }
+
+}
+
+exports.sortProducts = async (req, res) => {
+    let type =  req.params.type;
+    if (type !== "name" && type !=="category" && type !== "description"){
+        res.status(400);
+        res.send({
+            success: false,
+            errors: "veuillez préciser 'name', 'category' ou 'description"
+        })
+    }
+    try {
+        let products = await ProductService.sortProducts(type);
         res.status(200);
         res.send(products);
     } catch (e) {
