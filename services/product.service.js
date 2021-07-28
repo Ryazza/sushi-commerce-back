@@ -141,10 +141,7 @@ exports.mostViewedProducts = async () => {
 }
 
 exports.sortProducts = async (type) => {
-    console.log("type", type)
     if(type==="name") {
-        console.log("dans le name")
-
         try {
             let products = await Product.find({}).sort({name: -1})
             return {
