@@ -125,6 +125,23 @@ exports.updateCategory = async (id, change) => {
     }
 }
 
+exports.deleteCategoryById = async (id) => {
+    try {
+        let testCategorie = await Category.findById(id);
+        if(!testCategorie) {
+            return {
+                success: false,
+            }
+        }
+        await Category.deleteOne({_id: id})
+        return {
+            success: true
+        }
+    } catch (e) {
+        throw e;
+    }
+}
+
 /*----------- function for add update category -----------------*/
 
 /*----------- VERIFY --------------*/

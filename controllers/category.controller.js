@@ -87,8 +87,8 @@ exports.updateCategory = async (req, res) => {
 exports.deleteCategory = async ( req, res ) => {
     try {
         const token = req.headers.authorization && checkTokenMiddleware.extractBearerToken(req.headers.authorization);
-        let category = await Category.findByIdAndDelete(req.params.id, token);
-        if (category) {
+        let category = await CategoryService.deleteCategoryById(req.params.id, token);
+        if (category.success) {
             res.status(200);
             res.send({
                 success: true,
