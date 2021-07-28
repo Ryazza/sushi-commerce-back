@@ -364,3 +364,9 @@ exports.deleteProduct = async (id) => {
         success: true
     };
 }
+exports.deleteProducts = async (form) => {
+    await Product.deleteOne({_id: id});
+    return {
+        success: true
+    };
+}

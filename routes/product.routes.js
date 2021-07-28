@@ -18,7 +18,8 @@ router.get('/verifyStock', checkTokenMiddleware.checkTokenAdmin, ProductControll
 router.put('/updateStock', checkTokenMiddleware.checkTokenAdmin, ProductController.updateStock)
 router.put('/deduceStock/:id', checkTokenMiddleware.checkTokenAdmin, ProductController.deduceStock)
 router.put('/addStock/:id', checkTokenMiddleware.checkTokenAdmin, ProductController.addStock)
-router.delete('/:id' , checkTokenMiddleware.checkToken, ProductController.deleteProduct)
+router.delete('/:id' , checkTokenMiddleware.checkTokenAdmin, ProductController.deleteProduct)
+router.delete('/' , checkTokenMiddleware.checkTokenAdmin, ProductController.deleteProducts)
 
 // router.delete('/:id' , checkTokenMiddleware.checkTokenAdmin, ProductController.deleteUserById)
 

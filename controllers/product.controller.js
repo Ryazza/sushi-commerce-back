@@ -207,3 +207,18 @@ exports.deleteProduct = async (req,res)=>{
         })
     }
 }
+exports.deleteProducts = async (req,res)=>{
+    let form=req.body;
+    console.log(form)
+    try {
+        let products = await ProductService.deleteProducts(form);
+        res.status(200);
+        res.send(products);
+    } catch (e) {
+        res.status(400);
+        res.send({
+            success: false,
+            errors: e.errors
+        })
+    }
+}
