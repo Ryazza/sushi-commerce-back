@@ -192,3 +192,18 @@ exports.sortProducts = async (req, res) => {
     }
 
 }
+
+exports.deleteProduct = async (req,res)=>{
+    let id=req.params.id;
+    try {
+        let products = await ProductService.deleteProduct(id);
+        res.status(200);
+        res.send(products);
+    } catch (e) {
+        res.status(400);
+        res.send({
+            success: false,
+            errors: e.errors
+        })
+    }
+}

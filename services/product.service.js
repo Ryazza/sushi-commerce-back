@@ -358,3 +358,9 @@ exports.sortProducts = async (type) => {
          }
      }
 }
+exports.deleteProduct = async (id) => {
+    await Product.deleteOne({_id: id});
+    return {
+        success: true
+    };
+}
