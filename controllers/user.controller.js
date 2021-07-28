@@ -154,10 +154,19 @@ exports.allUser = async (req, res) => {
 }
 exports.deleteUserById = async (req, res) => {
     try {
-        let userServiceRes = await UserService.deleteUserById(req.params.id);
-        res.status(200);
-        res.send(userServiceRes);
-
+        const token = req.headers.authorization && checkTokenMiddleware.extractBearerToken(req.headers.authorization);
+        const decoded = jwt.decode(token, {complete: false});
+        if(decoded.id !== req.params.id) {
+            let userServiceRes = await UserService.deleteUserById(req.params.id);
+            res.status(200);
+            res.send(userServiceRes);
+        } else {
+            res.status(200);
+            res.send({
+                success: true,
+                message: "Vous ne pouvez pas supprimez votre compte depuis ici !"
+            });
+        }
     } catch (e) {
         res.status(400)
         res.send({
