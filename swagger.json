@@ -455,6 +455,24 @@
         }
       }
     },
+    "/product/update_available": {
+      "put": {
+        "tags": [],
+        "description": "",
+        "parameters": [],
+        "responses": {
+          "200": {
+            "description": "OK"
+          },
+          "400": {
+            "description": "Bad Request"
+          },
+          "401": {
+            "description": "Unauthorized"
+          }
+        }
+      }
+    },
     "/product/verifyStock": {
       "get": {
         "tags": [],
