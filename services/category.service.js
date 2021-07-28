@@ -85,7 +85,45 @@ exports.createCategory = async (form) => {
     }
 }
 
+exports.updateCategory = async (id, change) => {
 
+    try {
+        let category = await Category.findById(id);
+
+        if (!category) {
+            return {
+                success: false,
+                message: "Numero de catégorie incorrect",
+            }
+        }
+
+        let verify = await verifyEntry(change, true, id);
+
+        if(verify.success === true) {
+            change.name = change.name.toLowerCase();
+            change.name = change.name.capitalizeFirstLetter();
+
+            await Category.findOneAndUpdate(
+                { _id: id },
+                change,
+                { new: true }
+            )
+            return {
+                success: true,
+                message: "Votre catégorie a bien été modifié",
+                category: change,
+            };
+        } else {
+            return {
+                success: verify.success,
+                message: verify.message,
+                error: verify.errors,
+            }
+        }
+    } catch (e) {
+        throw e;
+    }
+}
 
 /*----------- function for add update category -----------------*/
 
