@@ -259,27 +259,8 @@ exports.deduceStock = async (form, id) => {
             let originProduct = await Product.findOne({_id: id});
             let stayNumber = originProduct.quantity - form.quantity;
 
-            if (stayNumber > -1) {
-                let available = true;
-                if(stayNumber === 0) {
-                    available = false;
-                }
-                let product = await Product.findOneAndUpdate({_id: id}, {
-                        quantity: stayNumber,
-                        available: available,
-                    }
-                );
-
-                await product.save();
-                return {
-                    success: true
-                };
-            } else {
-                return {
-                    success: false,
-                    message: 'Votre produit est déjà épuisé ou la quantité a déduire trop grande!'
-                };
-            }
+            let response = await moreOrLess(id, stayNumber);
+            return response;
 
         } else {
             return {
@@ -290,6 +271,54 @@ exports.deduceStock = async (form, id) => {
 
     } catch (e) {
         throw e;
+    }
+}
+
+exports.addStock = async (form, id) => {
+    try {
+        let check = await checkStockUpdate(form, id, true);
+
+        if(check.success) {
+            let originProduct = await Product.findOne({_id: id});
+            let stayNumber = originProduct.quantity + form.quantity;
+
+            let response = await moreOrLess(id, stayNumber);
+            return response;
+
+        } else {
+            return {
+                success: false,
+                message: check.error
+            };
+        }
+
+    } catch (e) {
+        throw e;
+    }
+}
+
+async function moreOrLess(id, stayNumber) {
+    if (stayNumber > -1) {
+        let available = true;
+        if(stayNumber === 0) {
+            available = false;
+        }
+        let product = await Product.findOneAndUpdate({_id: id}, {
+                quantity: stayNumber,
+                available: available,
+            }
+        );
+
+        await product.save();
+        return {
+            success: true,
+            message: "Votre produit a été mis à jour! nouvelle quantité " + stayNumber
+        };
+    } else {
+        return {
+            success: false,
+            message: 'Votre produit est déjà épuisé ou la quantité a déduire trop grande!'
+        };
     }
 }
 
