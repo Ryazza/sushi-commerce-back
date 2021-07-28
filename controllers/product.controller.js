@@ -15,7 +15,7 @@ exports.createProduct = async (req, res) => {
         res.status(400);
         res.send({
             success: false,
-            errors: e.errors
+            errors: e
         })
     }
 
@@ -37,7 +37,7 @@ exports.updateProduct = async (req, res) => {
         res.status(400);
         res.send({
             success: false,
-            errors: e.errors
+            errors: e
         })
     }
 }
@@ -51,7 +51,7 @@ exports.getProducts = async (req, res) => {
         res.status(400);
         res.send({
             success: false,
-            errors: e.errors
+            errors: e
         })
     }
 }
@@ -67,7 +67,7 @@ exports.showStock = async (req, res) => {
         res.status(400);
         res.send({
             success: false,
-            errors: e.errors
+            errors: e
         })
     }
 }
@@ -88,7 +88,7 @@ exports.updateStock = async (req, res) => {
         res.status(400);
         res.send({
             success: false,
-            errors: e.errors
+            errors: e
         })
     }
 }
@@ -109,7 +109,7 @@ exports.deduceStock = async (req, res) => {
         res.status(400);
         res.send({
             success: false,
-            errors: e.errors
+            errors: e
         })
     }
 }
@@ -130,7 +130,7 @@ exports.addStock = async (req, res) => {
         res.status(400);
         res.send({
             success: false,
-            errors: e.errors
+            errors: e
         })
     }
 }
@@ -147,7 +147,7 @@ exports.searchProductByName = async (req, res) => {
         res.status(400);
         res.send({
             success: false,
-            errors: e.errors
+            errors: e
         })
     }
 }
@@ -163,7 +163,7 @@ exports.searchOneProduct = async (req, res) => {
         res.status(400);
         res.send({
             success: false,
-            errors: e.errors
+            errors: e
         })
     }
 
@@ -187,7 +187,7 @@ exports.sortProducts = async (req, res) => {
         res.status(400);
         res.send({
             success: false,
-            errors: e.errors
+            errors: e
         })
     }
 
@@ -203,22 +203,20 @@ exports.deleteProduct = async (req,res)=>{
         res.status(400);
         res.send({
             success: false,
-            errors: e.errors
+            errors: e
         })
     }
 }
 exports.deleteProducts = async (req,res)=>{
-    let form=req.body;
-    console.log(form)
     try {
-        let products = await ProductService.deleteProducts(form);
+        let products = await ProductService.deleteProducts(req.body);
         res.status(200);
         res.send(products);
     } catch (e) {
         res.status(400);
         res.send({
             success: false,
-            errors: e.errors
+            errors: e
         })
     }
 }
