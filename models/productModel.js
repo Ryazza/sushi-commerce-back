@@ -25,14 +25,16 @@ const ProductsSchema = new mongoose.Schema({
         type: Date,
         required: true
     },
-    stock: {
-        type: Array,
+    quantity: {
+        type: Number,
         required: true
-
+    },
+    available: {
+        type: Boolean,
+        required: true
     },
     views: {
         type: Number
-
     },
     price: {
       type: Number,

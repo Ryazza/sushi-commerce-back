@@ -1,7 +1,4 @@
 const ProductService = require('../services/product.service')
-const jwt = require('jsonwebtoken');
-const checkTokenMiddleware = require('../controllers/jwt.controller');
-
 
 exports.createProduct = async (req, res) => {
     try {
@@ -42,8 +39,8 @@ exports.updateProduct = async (req, res) => {
             errors: e.errors
         })
     }
-
 }
+
 exports.getProducts = async (req, res) => {
     try {
         let allUser = await ProductService.allProducts();
@@ -56,8 +53,88 @@ exports.getProducts = async (req, res) => {
             errors: e.errors
         })
     }
-
 }
+
+exports.showStock = async (req, res) => {
+
+    try {
+        let allProduct = await ProductService.showStock();
+        res.status(200);
+        res.send(allProduct);
+
+    } catch (e) {
+        res.status(400);
+        res.send({
+            success: false,
+            errors: e.errors
+        })
+    }
+}
+
+exports.updateStock = async (req, res) => {
+
+    try {
+        let newProduct = await ProductService.updateStock(req.body)
+        if (newProduct.success === true) {
+            res.status(201)
+            res.send(newProduct)
+        } else {
+            res.status(400)
+            res.send(newProduct)
+        }
+
+    } catch (e) {
+        res.status(400);
+        res.send({
+            success: false,
+            errors: e.errors
+        })
+    }
+}
+
+exports.deduceStock = async (req, res) => {
+
+    try {
+        let newProduct = await ProductService.deduceStock(req.body, req.params.id)
+        if (newProduct.success === true) {
+            res.status(201)
+            res.send(newProduct)
+        } else {
+            res.status(400)
+            res.send(newProduct)
+        }
+
+    } catch (e) {
+        res.status(400);
+        res.send({
+            success: false,
+            errors: e.errors
+        })
+    }
+}
+
+exports.addStock = async (req, res) => {
+
+    try {
+        let newProduct = await ProductService.addStock(req.body, req.params.id)
+        if (newProduct.success === true) {
+            res.status(201)
+            res.send(newProduct)
+        } else {
+            res.status(400)
+            res.send(newProduct)
+        }
+
+    } catch (e) {
+        res.status(400);
+        res.send({
+            success: false,
+            errors: e.errors
+        })
+    }
+}
+
+
 exports.searchProductByName = async (req, res) => {
     try {
         let keyword = req.params.keyword;
@@ -72,7 +149,6 @@ exports.searchProductByName = async (req, res) => {
             errors: e.errors
         })
     }
-
 }
 
 exports.searchOneProduct = async (req, res) => {
