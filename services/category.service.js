@@ -3,10 +3,42 @@ const Category = require('../models/categoryModel');
 const { checkObjectId } = require('../helper/dbHelper');
 const jwt = require('jsonwebtoken');
 
-
-
 /*------------------------- USER ---------------------------*/
 
+exports.getAllCategory = async () => {
+
+    try {
+        let category = await Category.find({})
+
+        if(category.length < 1) {
+            return {
+                success: false,
+                category: "Il n'y a pas encore de catégorie"
+            }
+        } else {
+            return {
+                success: true,
+                category: category
+            }
+        }
+
+    } catch (e) {
+        throw (e)
+    }
+
+}
+
+exports.getOneOrder = async ({ id }) => {
+    try {
+        let categorys = await Order.findById(id)
+        return {
+            success: true,
+            category: categorys
+        }
+    } catch (e) {
+        throw e;
+    }
+}
 
 
 
