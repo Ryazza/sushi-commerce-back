@@ -13,7 +13,7 @@ exports.getAllCategory = async () => {
         if(category.length < 1) {
             return {
                 success: false,
-                category: "Il n'y a pas encore de catégorie"
+                error: "Il n'y a pas encore de catégorie"
             }
         } else {
             return {
@@ -28,12 +28,19 @@ exports.getAllCategory = async () => {
 
 }
 
-exports.getOneOrder = async ({ id }) => {
+exports.getOneCategory = async ({ id }) => {
     try {
-        let categorys = await Order.findById(id)
-        return {
-            success: true,
-            category: categorys
+        let category = await Category.findById(id)
+        if(typeof category !== "object" || !category) {
+            return {
+                success: false,
+                error: "Votre id est incorrect"
+            }
+        } else {
+            return {
+                success: true,
+                category: category
+            }
         }
     } catch (e) {
         throw e;
