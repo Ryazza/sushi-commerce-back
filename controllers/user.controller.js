@@ -139,7 +139,6 @@ exports.updateBirth = async (req, res) => {
 }
 
 
-
 exports.allUser = async (req, res) => {
     try {
         let allUser = await UserService.allUser();
@@ -170,7 +169,7 @@ exports.deleteUserById = async (req, res) => {
 //ADMIN Modifier le mail par id
 exports.updateMailAdmin = async (req, res) => {
     try {
-        let userServiceRes = await UserService.updateMail(req.params.id , req.body);
+        let userServiceRes = await UserService.updateMail(req.params.id, req.body);
         if (userServiceRes.success) {
             res.status(200);
             res.send(userServiceRes);
@@ -189,14 +188,23 @@ exports.updateMailAdmin = async (req, res) => {
 // ADMIN modifier le role par id
 exports.updateRole = async (req, res) => {
     try {
-        let userServiceRes = await UserService.updateRole(req.params.id , req.body);
-
-        if (userServiceRes.success) {
-            res.status(200);
-            res.send(userServiceRes);
+        const token = req.headers.authorization && checkTokenMiddleware.extractBearerToken(req.headers.authorization);
+        const decoded = jwt.decode(token, {complete: false});
+        if (decoded.id !== req.params.id) {
+            let userServiceRes = await UserService.updateRole(req.params.id, req.body);
+            if (userServiceRes.success) {
+                res.status(200);
+                res.send(userServiceRes);
+            } else {
+                res.status(400);
+                res.send(userServiceRes);
+            }
         } else {
             res.status(400);
-            res.send(userServiceRes);
+            res.send({
+                success: true,
+                message: "Vous ne pouvez pas modifié votre rôle !"
+            });
         }
     } catch (e) {
         res.status(400);
