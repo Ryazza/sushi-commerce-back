@@ -143,7 +143,7 @@ exports.mostViewedProducts = async () => {
 exports.sortProducts = async (type) => {
     if(type==="name") {
         try {
-            let products = await Product.find({}).sort({name: -1})
+            let products = await Product.find({}).sort({name: 1})
             return {
                 success: true,
                 products: products
@@ -154,7 +154,7 @@ exports.sortProducts = async (type) => {
     }
      if (type ==="category"){
         try {
-            let products = await Product.find({}).sort({category: -1})
+            let products = await Product.find({}).sort({category: 1})
             return {
                 success: true,
                 products: products
@@ -165,7 +165,7 @@ exports.sortProducts = async (type) => {
     }
      if (type ==="description"){
         try {
-            let products = await Product.find({}).sort({description: -1})
+            let products = await Product.find({}).sort({description: 1})
             return {
                 success: true,
                 products: products

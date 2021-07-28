@@ -4,35 +4,35 @@ const users = [{
     "email": "bfaithfull0@last.fm",
     "password": "TGz6ou3l",
     "birth": "1999/05/06",
-    "gender": "Genderfluid"
+    "gender": "Other"
 }, {
     "firstName": "Sélène",
     "lastName": "Doodson",
     "email": "gdoodson1@hhs.gov",
     "password": "EwremkKst2xj",
     "birth": "1985/07/04",
-    "gender": "Non-binary"
+    "gender": "Other"
 }, {
     "firstName": "Tú",
     "lastName": "Romaine",
     "email": "sromaine2@princeton.edu",
     "password": "6WPnL6",
     "birth": "1982/12/22",
-    "gender": "Polygender"
+    "gender": "Other"
 }, {
     "firstName": "Maïté",
     "lastName": "Bootell",
     "email": "kbootell3@altervista.org",
     "password": "IC38B5",
     "birth": "2000/07/25",
-    "gender": "Polygender"
+    "gender": "Other"
 }, {
     "firstName": "Cloé",
     "lastName": "Treuge",
     "email": "htreuge4@sina.com.cn",
     "password": "iBwZgFE5",
     "birth": "1987/09/24",
-    "gender": "Genderfluid"
+    "gender": "Other"
 }, {
     "firstName": "Sélène",
     "lastName": "Somersett",
@@ -46,7 +46,7 @@ const users = [{
     "email": "abuesden6@abc.net.au",
     "password": "JzqP2jnrt",
     "birth": "1999/02/12",
-    "gender": "Non-binary"
+    "gender": "Other"
 }, {
     "firstName": "Cécilia",
     "lastName": "California",
@@ -60,14 +60,14 @@ const users = [{
     "email": "cwhitwood8@businesswire.com",
     "password": "Lb58VlY0ub",
     "birth": "1998/04/08",
-    "gender": "Genderfluid"
+    "gender": "Other"
 }, {
     "firstName": "André",
     "lastName": "Rubinfeld",
     "email": "mrubinfeld9@msu.edu",
     "password": "SX9HziOUK",
     "birth": "1995/08/08",
-    "gender": "Non-binary"
+    "gender": "Other"
 }, {
     "firstName": "Andréa",
     "lastName": "Crabbe",
@@ -81,56 +81,56 @@ const users = [{
     "email": "dguillermanb@tamu.edu",
     "password": "RMIYN2C8Vn",
     "birth": "2002/03/09",
-    "gender": "Genderqueer"
+    "gender": "Other"
 }, {
     "firstName": "Ophélie",
     "lastName": "Heavy",
     "email": "rheavyc@bloglines.com",
     "password": "JQmMBXa5vPc",
     "birth": "1985/09/19",
-    "gender": "Polygender"
+    "gender": "Other"
 }, {
     "firstName": "Noémie",
     "lastName": "Baumadier",
     "email": "pbaumadierd@omniture.com",
     "password": "tnqv4Ueg4Foy",
     "birth": "1987/06/13",
-    "gender": "Genderqueer"
+    "gender": "Other"
 }, {
     "firstName": "Séréna",
     "lastName": "Theodoris",
     "email": "atheodorise@unicef.org",
     "password": "1zbelK5wYA",
     "birth": "2000/07/23",
-    "gender": "Polygender"
+    "gender": "Other"
 }, {
     "firstName": "Valérie",
     "lastName": "Baden",
     "email": "nbadenf@istockphoto.com",
     "password": "fGvVoIjy",
     "birth": "2001/06/29",
-    "gender": "Genderfluid"
+    "gender": "Other"
 }, {
     "firstName": "Anaël",
-    "lastName": "Fothergill",
-    "email": "ifothergillg@sakura.ne.jp",
+    "lastName": "FOthergill",
+    "email": "ifOthergillg@sakura.ne.jp",
     "password": "dUPQz6iLmy",
     "birth": "1985/01/14",
-    "gender": "Bigender"
+    "gender": "Other"
 }, {
     "firstName": "Anaël",
     "lastName": "Palatini",
     "email": "spalatinih@wikimedia.org",
     "password": "j6H0xti",
     "birth": "1993/10/05",
-    "gender": "Bigender"
+    "gender": "Other"
 }, {
     "firstName": "Méryl",
     "lastName": "Filgate",
     "email": "nfilgatei@reuters.com",
     "password": "JYZ8hEygH4",
     "birth": "1982/09/29",
-    "gender": "Genderfluid"
+    "gender": "Other"
 }, {
     "firstName": "Réservés",
     "lastName": "Carlino",
@@ -172,7 +172,7 @@ const users = [{
     "email": "pruddyo@bravesites.com",
     "password": "FM8HEzurq",
     "birth": "1985/02/18",
-    "gender": "Genderfluid"
+    "gender": "Other"
 }, {
     "firstName": "Cécile",
     "lastName": "Wick",
@@ -186,7 +186,7 @@ const users = [{
     "email": "tdewisq@yandex.ru",
     "password": "o2yF1QU5U",
     "birth": "1996/10/23",
-    "gender": "Polygender"
+    "gender": "Other"
 }, {
     "firstName": "Lorène",
     "lastName": "Joll",
@@ -200,7 +200,7 @@ const users = [{
     "email": "btoons@wiley.com",
     "password": "4VOrPXx04",
     "birth": "1989/01/15",
-    "gender": "Genderqueer"
+    "gender": "Other"
 }, {
     "firstName": "Bérénice",
     "lastName": "Boultwood",
@@ -214,21 +214,21 @@ const users = [{
     "email": "kgilhooleyu@friendfeed.com",
     "password": "uaJpx1BR",
     "birth": "1985/07/04",
-    "gender": "Bigender"
+    "gender": "Other"
 }, {
     "firstName": "Faîtes",
     "lastName": "Fewtrell",
     "email": "ffewtrellv@xing.com",
     "password": "fEcxCU6",
     "birth": "1998/11/09",
-    "gender": "Bigender"
+    "gender": "Other"
 }, {
     "firstName": "Styrbjörn",
     "lastName": "Lorrie",
     "email": "tlorriew@omniture.com",
     "password": "oXTXKDgl",
     "birth": "1990/08/16",
-    "gender": "Agender"
+    "gender": "Female"
 }, {
     "firstName": "Åsa",
     "lastName": "Jinkinson",
@@ -249,28 +249,28 @@ const users = [{
     "email": "hburstowz@mapy.cz",
     "password": "YRMUkMTWBOkW",
     "birth": "1986/09/28",
-    "gender": "Polygender"
+    "gender": "Other"
 }, {
     "firstName": "Åsa",
     "lastName": "Tripet",
     "email": "atripet10@shop-pro.jp",
     "password": "SR6PxE",
     "birth": "1985/01/05",
-    "gender": "Bigender"
+    "gender": "Other"
 }, {
     "firstName": "Marie-josée",
     "lastName": "Bryce",
     "email": "pbryce11@posterous.com",
     "password": "fownEVKI",
     "birth": "2002/06/07",
-    "gender": "Genderfluid"
+    "gender": "Other"
 }, {
     "firstName": "Clémence",
     "lastName": "Anthoine",
     "email": "manthoine12@sciencedaily.com",
     "password": "8iFyTGAlCCr",
     "birth": "1988/01/08",
-    "gender": "Agender"
+    "gender": "Female"
 }, {
     "firstName": "Publicité",
     "lastName": "Cuffe",
@@ -284,21 +284,21 @@ const users = [{
     "email": "emetts14@who.int",
     "password": "eRCyIvrnAW",
     "birth": "2000/06/25",
-    "gender": "Genderfluid"
+    "gender": "Other"
 }, {
     "firstName": "Célia",
     "lastName": "Gemnett",
     "email": "jgemnett15@stanford.edu",
     "password": "0yn1Tfx0f",
     "birth": "1987/12/01",
-    "gender": "Genderfluid"
+    "gender": "Other"
 }, {
     "firstName": "Cécilia",
     "lastName": "Dolton",
     "email": "edolton16@seattletimes.com",
     "password": "xyU5tEspv",
     "birth": "1994/02/08",
-    "gender": "Genderfluid"
+    "gender": "Other"
 }, {
     "firstName": "Mégane",
     "lastName": "Pleace",
@@ -312,14 +312,14 @@ const users = [{
     "email": "kdawley18@hp.com",
     "password": "BZ8BeACH",
     "birth": "1996/03/08",
-    "gender": "Bigender"
+    "gender": "Other"
 }, {
     "firstName": "Eliès",
     "lastName": "Spurdle",
     "email": "cspurdle19@alibaba.com",
     "password": "pyupDF4mttRc",
     "birth": "1996/03/18",
-    "gender": "Bigender"
+    "gender": "Other"
 }, {
     "firstName": "Gérald",
     "lastName": "Osman",
@@ -333,63 +333,63 @@ const users = [{
     "email": "skarpfen1b@friendfeed.com",
     "password": "IU4c8U",
     "birth": "1988/05/10",
-    "gender": "Non-binary"
+    "gender": "Other"
 }, {
     "firstName": "Kévina",
     "lastName": "Kellen",
     "email": "skellen1c@nifty.com",
     "password": "XEbQcOBEFj",
     "birth": "1983/06/14",
-    "gender": "Bigender"
+    "gender": "Other"
 }, {
     "firstName": "Garçon",
     "lastName": "Ierland",
     "email": "hierland1d@t-online.de",
     "password": "gjjxJRfZ",
     "birth": "1993/08/11",
-    "gender": "Genderfluid"
+    "gender": "Other"
 }, {
     "firstName": "Mélodie",
     "lastName": "Cadge",
     "email": "fcadge1e@ucoz.ru",
     "password": "RAxp1c",
     "birth": "1998/07/28",
-    "gender": "Genderfluid"
+    "gender": "Other"
 }, {
     "firstName": "Garçon",
     "lastName": "Dwane",
     "email": "tdwane1f@google.it",
     "password": "ZmjP5clW",
     "birth": "1994/03/31",
-    "gender": "Bigender"
+    "gender": "Other"
 }, {
     "firstName": "Réjane",
     "lastName": "Echelle",
     "email": "jechelle1g@thetimes.co.uk",
     "password": "o2ffqVvQBAZ",
     "birth": "1989/05/29",
-    "gender": "Genderfluid"
+    "gender": "Other"
 }, {
     "firstName": "Erwéi",
     "lastName": "Keneforde",
     "email": "gkeneforde1h@kickstarter.com",
     "password": "jnIoRFr",
     "birth": "1996/01/23",
-    "gender": "Bigender"
+    "gender": "Other"
 }, {
     "firstName": "Yóu",
     "lastName": "Taynton",
     "email": "ltaynton1i@over-blog.com",
     "password": "GIClOKN66Qq",
     "birth": "1999/09/07",
-    "gender": "Bigender"
+    "gender": "Other"
 }, {
     "firstName": "Maëly",
     "lastName": "Forestel",
     "email": "eforestel1j@usa.gov",
     "password": "J5JwId",
     "birth": "1988/05/11",
-    "gender": "Bigender"
+    "gender": "Other"
 }, {
     "firstName": "Clélia",
     "lastName": "Rumford",
@@ -403,28 +403,28 @@ const users = [{
     "email": "rmeasom1l@flickr.com",
     "password": "AIfZlOXz",
     "birth": "1981/05/04",
-    "gender": "Genderfluid"
+    "gender": "Other"
 }, {
     "firstName": "Eléonore",
     "lastName": "Cayser",
     "email": "hcayser1m@reference.com",
     "password": "0gvWU4dRLKz",
     "birth": "1986/12/20",
-    "gender": "Polygender"
+    "gender": "Other"
 }, {
     "firstName": "Adèle",
     "lastName": "Luthwood",
     "email": "rluthwood1n@whitehouse.gov",
     "password": "aWA7ok4Rl",
     "birth": "1995/08/24",
-    "gender": "Non-binary"
+    "gender": "Other"
 }, {
     "firstName": "Gaïa",
     "lastName": "Grotty",
     "email": "xgrotty1o@dmoz.org",
     "password": "WDMcPEyVlD",
     "birth": "1983/07/16",
-    "gender": "Genderfluid"
+    "gender": "Other"
 }, {
     "firstName": "Ruò",
     "lastName": "Rainey",
@@ -438,42 +438,42 @@ const users = [{
     "email": "bstrete1q@cnn.com",
     "password": "JtRH7hhWp",
     "birth": "1997/02/26",
-    "gender": "Bigender"
+    "gender": "Other"
 }, {
     "firstName": "Märta",
     "lastName": "Gellately",
     "email": "ogellately1r@ow.ly",
     "password": "02ex4H",
     "birth": "1995/01/22",
-    "gender": "Bigender"
+    "gender": "Other"
 }, {
     "firstName": "Tú",
     "lastName": "Skentelbury",
     "email": "askentelbury1s@furl.net",
     "password": "3C0C1btArUXp",
     "birth": "1991/05/19",
-    "gender": "Non-binary"
+    "gender": "Other"
 }, {
     "firstName": "Mélodie",
     "lastName": "Elloway",
     "email": "kelloway1t@wordpress.org",
     "password": "isPwYU2jo0H",
     "birth": "1985/06/27",
-    "gender": "Polygender"
+    "gender": "Other"
 }, {
     "firstName": "Maï",
     "lastName": "Baylie",
     "email": "lbaylie1u@nytimes.com",
     "password": "EUxweRXu",
     "birth": "1986/12/05",
-    "gender": "Bigender"
+    "gender": "Other"
 }, {
     "firstName": "Régine",
     "lastName": "Heathcoat",
     "email": "jheathcoat1v@ameblo.jp",
     "password": "Luh74x",
     "birth": "2000/08/07",
-    "gender": "Agender"
+    "gender": "Female"
 }, {
     "firstName": "Léane",
     "lastName": "Madison",
@@ -487,14 +487,14 @@ const users = [{
     "email": "cwhiten1x@liveinternet.ru",
     "password": "8FKbYHm",
     "birth": "1984/10/22",
-    "gender": "Agender"
+    "gender": "Female"
 }, {
     "firstName": "Eléa",
     "lastName": "Jouhandeau",
     "email": "gjouhandeau1y@g.co",
     "password": "JLGbOE0qRXe",
     "birth": "1990/04/28",
-    "gender": "Genderqueer"
+    "gender": "Other"
 }, {
     "firstName": "André",
     "lastName": "Santus",
@@ -508,21 +508,21 @@ const users = [{
     "email": "jrizzillo20@nifty.com",
     "password": "ZJQVhqh",
     "birth": "2002/02/28",
-    "gender": "Genderqueer"
+    "gender": "Other"
 }, {
     "firstName": "Edmée",
     "lastName": "Bernhard",
     "email": "bbernhard21@zimbio.com",
     "password": "6PYNzIk8H",
     "birth": "1982/12/22",
-    "gender": "Non-binary"
+    "gender": "Other"
 }, {
     "firstName": "Björn",
     "lastName": "Clinch",
     "email": "wclinch22@google.pl",
     "password": "OQpPLh",
     "birth": "1988/10/07",
-    "gender": "Genderfluid"
+    "gender": "Other"
 }, {
     "firstName": "Inès",
     "lastName": "Colliard",
@@ -536,7 +536,7 @@ const users = [{
     "email": "djosipovic24@toplist.cz",
     "password": "d3iAe0BcXFA",
     "birth": "1987/09/18",
-    "gender": "Genderqueer"
+    "gender": "Other"
 }, {
     "firstName": "Cécilia",
     "lastName": "Easdon",
@@ -550,28 +550,28 @@ const users = [{
     "email": "hkeston26@accuweather.com",
     "password": "aj3nv4j9LyYt",
     "birth": "1993/10/26",
-    "gender": "Agender"
+    "gender": "Female"
 }, {
     "firstName": "Örjan",
     "lastName": "Nail",
     "email": "cnail27@msu.edu",
     "password": "9TSc8J",
     "birth": "2001/06/23",
-    "gender": "Genderfluid"
+    "gender": "Other"
 }, {
     "firstName": "Pélagie",
     "lastName": "Binden",
     "email": "abinden28@fotki.com",
     "password": "avDZW7b8DxR",
     "birth": "1988/04/01",
-    "gender": "Non-binary"
+    "gender": "Other"
 }, {
     "firstName": "Cécile",
     "lastName": "Basilio",
     "email": "sbasilio29@addthis.com",
     "password": "HENmsjxyoPH",
     "birth": "1988/10/24",
-    "gender": "Polygender"
+    "gender": "Other"
 }, {
     "firstName": "Vénus",
     "lastName": "Jackson",
@@ -585,63 +585,63 @@ const users = [{
     "email": "focleary2b@vinaora.com",
     "password": "WOEKru",
     "birth": "1986/10/05",
-    "gender": "Polygender"
+    "gender": "Other"
 }, {
     "firstName": "Adèle",
     "lastName": "Clapham",
     "email": "iclapham2c@xrea.com",
     "password": "qf6iiC",
     "birth": "1989/02/07",
-    "gender": "Agender"
+    "gender": "Female"
 }, {
     "firstName": "Uò",
     "lastName": "Carvilla",
     "email": "kcarvilla2d@chron.com",
     "password": "gzKPbcGwu5",
     "birth": "2003/01/13",
-    "gender": "Genderqueer"
+    "gender": "Other"
 }, {
     "firstName": "Görel",
     "lastName": "Augar",
     "email": "baugar2e@businesswire.com",
     "password": "MmAv0jc1AXP",
     "birth": "2000/09/27",
-    "gender": "Non-binary"
+    "gender": "Other"
 }, {
     "firstName": "Ophélie",
     "lastName": "Bortolazzi",
     "email": "ybortolazzi2f@google.cn",
     "password": "zh1vZOr4Hw",
     "birth": "1985/07/17",
-    "gender": "Genderqueer"
+    "gender": "Other"
 }, {
     "firstName": "Lorène",
     "lastName": "Domegan",
     "email": "idomegan2g@samsung.com",
     "password": "tj1EyQunTv",
     "birth": "1981/09/17",
-    "gender": "Non-binary"
+    "gender": "Other"
 }, {
     "firstName": "Marylène",
     "lastName": "Olman",
     "email": "wolman2h@harvard.edu",
     "password": "HCFKqdPN",
     "birth": "1998/03/01",
-    "gender": "Genderfluid"
+    "gender": "Other"
 }, {
     "firstName": "Solène",
     "lastName": "Newns",
     "email": "knewns2i@marketwatch.com",
     "password": "Eni7CU0BJv",
     "birth": "1997/12/10",
-    "gender": "Genderfluid"
+    "gender": "Other"
 }, {
     "firstName": "Médiamass",
     "lastName": "Jerrams",
     "email": "jjerrams2j@hugedomains.com",
     "password": "RzeWOrigX",
     "birth": "1999/09/25",
-    "gender": "Bigender"
+    "gender": "Other"
 }, {
     "firstName": "Lóng",
     "lastName": "Eykelhof",
@@ -655,42 +655,42 @@ const users = [{
     "email": "ctudhope2l@mac.com",
     "password": "MrwZ6ql",
     "birth": "1992/11/05",
-    "gender": "Polygender"
+    "gender": "Other"
 }, {
     "firstName": "Marie-hélène",
     "lastName": "Tunno",
     "email": "atunno2m@vkontakte.ru",
     "password": "Oh91DXhHHu",
     "birth": "1987/12/25",
-    "gender": "Polygender"
+    "gender": "Other"
 }, {
     "firstName": "Naëlle",
     "lastName": "Di Franceshci",
     "email": "adifranceshci2n@usatoday.com",
     "password": "JcaH03",
     "birth": "1995/01/17",
-    "gender": "Genderfluid"
+    "gender": "Other"
 }, {
     "firstName": "Lén",
     "lastName": "Templeton",
     "email": "wtempleton2o@simplemachines.org",
     "password": "zNqdhAXt9",
     "birth": "1990/01/29",
-    "gender": "Non-binary"
+    "gender": "Other"
 }, {
     "firstName": "Bénédicte",
     "lastName": "Crackel",
     "email": "mcrackel2p@de.vu",
     "password": "glKZbCt56K",
     "birth": "1989/03/12",
-    "gender": "Non-binary"
+    "gender": "Other"
 }, {
     "firstName": "Görel",
     "lastName": "Lowe",
     "email": "slowe2q@tripod.com",
     "password": "Trg6ZGv86y",
     "birth": "1993/08/06",
-    "gender": "Non-binary"
+    "gender": "Other"
 }, {
     "firstName": "Pélagie",
     "lastName": "Krelle",
@@ -705,8 +705,10 @@ const request = require("supertest");
 const express = require("express");
 const app = express();
 const userController = require('../controllers/user.controller');
+const ProductService = require("../services/product.service");
 
-const UserService = require('../services/user.service')
- users.forEach(async user =>  {
-    await UserService.addUser(user);
-})
+// const UserService = require('../services/user.service')
+//  users.forEach(async user =>  {
+//     await UserService.addUser(user);
+// })
+
