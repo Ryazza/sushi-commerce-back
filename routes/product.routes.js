@@ -12,12 +12,12 @@ router.get('/most_viewed' ,ProductController.mostViewedProducts)
 // router.get('/{id}', ProductController.getProduct)
 
 //admin user routes
-router.post('/create' ,checkTokenMiddleware.checkToken, ProductController.createProduct)
-router.put('/update/:id' , checkTokenMiddleware.checkToken,ProductController.updateProduct)
-router.get('/verifyStock' , checkTokenMiddleware.checkToken, ProductController.showStock)//le form envoyé doit contenir également le contenu non modifié
-router.post('/updateStock' , checkTokenMiddleware.checkToken, ProductController.updateStock)
-router.post('/deduceStock/:id' , checkTokenMiddleware.checkToken, ProductController.deduceStock)
-router.post('/addStock/:id' , checkTokenMiddleware.checkToken, ProductController.addStock)
+router.post('/create', checkTokenMiddleware.checkTokenAdmin, ProductController.createProduct)
+router.put('/update/:id', checkTokenMiddleware.checkTokenAdmin,ProductController.updateProduct)
+router.get('/verifyStock', checkTokenMiddleware.checkTokenAdmin, ProductController.showStock)//le form envoyé doit contenir également le contenu non modifié
+router.put('/updateStock', checkTokenMiddleware.checkTokenAdmin, ProductController.updateStock)
+router.put('/deduceStock/:id', checkTokenMiddleware.checkTokenAdmin, ProductController.deduceStock)
+router.put('/addStock/:id', checkTokenMiddleware.checkTokenAdmin, ProductController.addStock)
 // router.delete('/:id' , checkTokenMiddleware.checkTokenAdmin, ProductController.deleteUserById)
 
 // router.put('/login/:id', checkTokenMiddleware.checkTokenAdmin, ProductController.updateLoginAdmin);
