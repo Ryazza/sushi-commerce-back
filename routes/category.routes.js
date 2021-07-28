@@ -13,7 +13,7 @@ router.post('/', checkTokenMiddleware.checkToken, categoryController.createCateg
 
 router.get('/:id', checkTokenMiddleware.checkToken, categoryController.getOneCategory)
 
-router.put('/:id', checkTokenMiddleware.checkToken, categoryController.updatecategory)
+router.put('/:id', checkTokenMiddleware.checkToken, categoryController.updateCategory)
 
 router.delete('/:id', checkTokenMiddleware.checkToken, categoryController.deleteCategory)
 
