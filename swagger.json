@@ -464,11 +464,18 @@
         }
       }
     },
-    "/product/most_viewed": {
+    "/product/sort/{type}": {
       "get": {
         "tags": [],
         "description": "",
-        "parameters": [],
+        "parameters": [
+          {
+            "name": "type",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          }
+        ],
         "responses": {
           "200": {
             "description": "OK"
