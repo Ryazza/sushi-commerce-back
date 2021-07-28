@@ -5,13 +5,12 @@ const checkTokenMiddleware = require('../controllers/jwt.controller');
 
 /*---------------- USER -----------------*/
 
-router.get('/All', checkTokenMiddleware.checkToken, categoryController.getAllCategory)
+router.get('/All', categoryController.getAllCategory)
+router.get('/:id', categoryController.getOneCategory)
 
 /*--------------- ADMIN -----------------*/
 
 router.post('/', checkTokenMiddleware.checkToken, categoryController.createCategory)
-
-router.get('/:id', checkTokenMiddleware.checkToken, categoryController.getOneCategory)
 
 router.put('/:id', checkTokenMiddleware.checkToken, categoryController.updateCategory)
 
