@@ -178,13 +178,23 @@ exports.deleteUserById = async (req, res) => {
 //ADMIN Modifier le mail par id
 exports.updateMailAdmin = async (req, res) => {
     try {
-        let userServiceRes = await UserService.updateMail(req.params.id, req.body);
-        if (userServiceRes.success) {
-            res.status(200);
-            res.send(userServiceRes);
+        const token = req.headers.authorization && checkTokenMiddleware.extractBearerToken(req.headers.authorization);
+        const decoded = jwt.decode(token, {complete: false});
+        if(decoded.id !== req.params.id) {
+            let userServiceRes = await UserService.updateMail(req.params.id, req.body);
+            if (userServiceRes.success) {
+                res.status(200);
+                res.send(userServiceRes);
+            } else {
+                res.status(400);
+                res.send(userServiceRes);
+            }
         } else {
             res.status(400);
-            res.send(userServiceRes);
+            res.send({
+                success: false,
+                message: "Vous ne pouvez pas modifié votre email d'ici !"
+            });
         }
     } catch (e) {
         res.status(400);
