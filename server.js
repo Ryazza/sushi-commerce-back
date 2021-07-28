@@ -12,7 +12,7 @@ const swaggerDocument = require('./swagger.json');
 let UserRoutes = require('./routes/user.routes');
 let productRoutes = require('./routes/product.routes');
 let OrderRoutes = require('./routes/order.routes');
-
+let AdminRoutes = require('./routes/admin.routes');
 // -----
 
 let app = express();
@@ -30,6 +30,7 @@ app.use('/user', UserRoutes);
 app.use('/order', OrderRoutes);
 
 app.use('/product', productRoutes);
+app.use('/admin', AdminRoutes);
 // -----
 
 // DB
