@@ -15,7 +15,7 @@ exports.addOrder = async (form, token) => {
         if(verify.success === true) {
 
             // calcul function totalAmount and other;
-            let formValid = await calculate(form, token, "save");
+            let formValid = await calculate(form);
 
             const decoded = jwt.decode(token, {complete: false});
             formValid.form.client_ID = decoded.id;
@@ -74,7 +74,7 @@ exports.calculateOrder = async (form, token) => {
         if(verify.success === true) {
 
             // calcul function totalAmount and other;
-            let formValid = await calculate(form, token, "noSave");
+            let formValid = await calculate(form);
             let canSend = true;
             formValid.changeStock.forEach( product => {
                 if(product.canChangeStock === false) {
@@ -99,7 +99,6 @@ exports.calculateOrder = async (form, token) => {
 }
 
 exports.getAllOrder = async () => {
-
     try {
         let orders = await Order.find({})
         return {
@@ -114,10 +113,25 @@ exports.getAllOrder = async () => {
 
 exports.getOneOrder = async ({ id }) => {
     try {
-        let orders = await Order.findById(id)
-        return {
-            success: true,
-            order: orders
+        let verifId = checkObjectId(id);
+        if(verifId.success === false) {
+            return {
+                success: false,
+                message: "Id invalide",
+            }
+        } else {
+            let order = await Order.findById(id)
+            if (order) {
+                return {
+                    success: true,
+                    order: order
+                }
+            } else {
+                return {
+                    success: false,
+                    error: "id invalide"
+                }
+            }
         }
     } catch (e) {
         throw e;
@@ -126,6 +140,7 @@ exports.getOneOrder = async ({ id }) => {
 
 exports.getOrderByUser = async ( client_id ) => {
     let verifId = checkObjectId(client_id);
+
     if(verifId === false) {
         return {
             success: false,
@@ -134,9 +149,16 @@ exports.getOrderByUser = async ( client_id ) => {
     } else {
         try {
             let orders = await Order.find({ client_ID: client_id }).sort({_id: -1})
-            return {
-                success: true,
-                order: orders
+
+            if(typeof orders === "object" && orders.length > 0) {
+                return {
+                    success: true,
+                    order: orders
+                }
+            } else {
+                return {
+                    success: false,
+                }
             }
         } catch (e) {
             throw e;
@@ -161,7 +183,7 @@ exports.updateOrder = async (id, change, token ) => {
         if(verify.success === true) {
             // calcul function totalAmount and other;
 
-            let changeValid = await calculate(change, token, "saveUpdate");
+            let changeValid = await calculate(change);
 
             changeValid.client_ID = order.client_ID;
 
@@ -190,9 +212,24 @@ exports.updateOrder = async (id, change, token ) => {
 
 exports.deleteOrderById = async (id) => {
     try {
-        await Order.deleteOne({_id: id})
-        return {
-            success: true
+        let verifId = checkObjectId(id);
+        if(verifId.success === false) {
+            return {
+                success: false,
+                message: "Id invalide",
+            }
+        } else {
+            let response = await Order.deleteOne({_id: id})
+            console.log(response)
+            if(response) {
+                return {
+                    success: true
+                }
+            } else {
+                return {
+                    success: false
+                }
+            }
         }
     } catch (e) {
         throw e;
@@ -226,7 +263,7 @@ exports.getAllOrderByStatus = async ( status, order ) => {
 
 /*----------- function for add updtate order -----------------*/
 
-async function calculate(form, token, save) {
+async function calculate(form) {
 
     let articles = [];
     let changeStock = [];
