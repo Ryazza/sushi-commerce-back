@@ -128,17 +128,7 @@ exports.searchOneProduct = async (id) => {
     }
 }
 
-exports.mostViewedProducts = async () => {
-    try {
-        let products = await Product.find({}).sort({views: -1})
-        return {
-            success: true,
-            products: products
-        }
-    } catch (e) {
-        throw e;
-    }
-}
+
 
 exports.sortProducts = async (type) => {
     if(type==="name") {
@@ -174,4 +164,15 @@ exports.sortProducts = async (type) => {
             throw e;
         }
     }
+     if (type === "views"){
+         try {
+             let products = await Product.find({}).sort({views: -1})
+             return {
+                 success: true,
+                 products: products
+             }
+         } catch (e) {
+             throw e;
+         }
+     }
 }
