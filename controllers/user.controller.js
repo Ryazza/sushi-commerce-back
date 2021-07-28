@@ -161,9 +161,9 @@ exports.deleteUserById = async (req, res) => {
             res.status(200);
             res.send(userServiceRes);
         } else {
-            res.status(200);
+            res.status(400);
             res.send({
-                success: true,
+                success: false,
                 message: "Vous ne pouvez pas supprimez votre compte depuis ici !"
             });
         }
@@ -211,7 +211,7 @@ exports.updateRole = async (req, res) => {
         } else {
             res.status(400);
             res.send({
-                success: true,
+                success: false,
                 message: "Vous ne pouvez pas modifié votre rôle !"
             });
         }
