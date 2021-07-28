@@ -201,6 +201,7 @@ exports.deleteUserById = async (id) => {
 }
 //ADMIN modification du role de l'utilisateur
 exports.updateRole = async (id, role) => {
+
     await User.updateOne({_id: id}, {admin: role.admin, updateAt: new Date()});
     return {
         success: true,
