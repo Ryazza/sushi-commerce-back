@@ -1,5 +1,5 @@
 const Product = require('../models/productModel.js');
-const { checkObjectId } = require('../helper/dbHelper');
+const {checkObjectId} = require('../helper/dbHelper');
 
 
 function checkForm(form) {
@@ -33,16 +33,16 @@ function checkForm(form) {
             error: "il n'y a pas de stock"
         }
     }
-    if(typeof form.price !== "number"){
+    if (typeof form.price !== "number") {
         return {
-            success:false,
-        error: "le prix doit être un nombre"
+            success: false,
+            error: "le prix doit être un nombre"
         }
     }
-    if(!form.price){
+    if (!form.price) {
         return {
-            success:false,
-        error: "le prix doit être indiqué"
+            success: false,
+            error: "le prix doit être indiqué"
         }
     }
 }
@@ -50,7 +50,7 @@ function checkForm(form) {
 async function checkStockUpdate(form, id, availableAuto = false) {
 
     let verifId = checkObjectId(id);
-    if(availableAuto) {
+    if (availableAuto) {
         verifId.success = true;
     }
 
@@ -65,39 +65,39 @@ async function checkStockUpdate(form, id, availableAuto = false) {
         if (!product) {
             return {
                 success: false,
-                error: "Votre produit "+ id +" n'existe plus !"
+                error: "Votre produit " + id + " n'existe plus !"
             }
         }
     }
 
-    if(typeof form.quantity !== "number"){
+    if (typeof form.quantity !== "number") {
         return {
-            success:false,
+            success: false,
             error: "la quantité doit être un nombre"
         }
     }
-    if(!form.quantity){
+    if (!form.quantity) {
         return {
-            success:false,
+            success: false,
             error: "la quantité doit être indiqué"
         }
     }
-    if(!availableAuto) {
-        if(typeof form.available !== "boolean"){
+    if (!availableAuto) {
+        if (typeof form.available !== "boolean") {
             return {
-                success:false,
+                success: false,
                 error: "Disponible doit être définit"
             }
         }
-        if(!form.available){
+        if (!form.available) {
             return {
-                success:false,
+                success: false,
                 error: "Disponible doit être indiqué"
             }
         }
     }
 
-    return { success: true };
+    return {success: true};
 }
 
 exports.addProduct = async (form) => {
@@ -121,10 +121,10 @@ exports.updateProduct = async (form, id) => {
         let product = await Product.findOneAndUpdate({_id: id}, {
                 name: form.name,
                 category: form.category,
-                description: form.description ,
+                description: form.description,
                 pictures: form.pictures,
                 events: form.events,
-                stock:form.stock
+                stock: form.stock
             }
         );
         Object.assign(product, form);
@@ -198,24 +198,24 @@ exports.updateStock = async (form) => {
         let checkAll = true;
         let lastCheck = {};
 
-        if(typeof form.products === "undefined") {
+        if (typeof form.products === "undefined") {
             checkAll = false;
             lastCheck.success = false;
             lastCheck.error = "Vous devez renseigner un ou des articles à modifier";
         } else {
 
-            for (let i=0; i < form.products.length; i++) {
+            for (let i = 0; i < form.products.length; i++) {
                 let check = await checkStockUpdate(form.products[i], form.products[i].id);
 
-                if(check.success === false) {
+                if (check.success === false) {
                     checkAll = false;
                     lastCheck.error = check.error;
                 }
             }
         }
 
-        if(checkAll) {
-            for(let i=0; i < form.products.length; i++) {
+        if (checkAll) {
+            for (let i = 0; i < form.products.length; i++) {
                 await Product.findOneAndUpdate({_id: form.products[i].id}, {
                         quantity: form.products[i].quantity,
                         available: form.products[i].available,
@@ -241,7 +241,7 @@ exports.deduceStock = async (form, id) => {
     try {
         let check = await checkStockUpdate(form, id, true);
 
-        if(check.success) {
+        if (check.success) {
             let originProduct = await Product.findOne({_id: id});
             let stayNumber = originProduct.quantity - form.quantity;
 
@@ -264,7 +264,7 @@ exports.addStock = async (form, id) => {
     try {
         let check = await checkStockUpdate(form, id, true);
 
-        if(check.success) {
+        if (check.success) {
             let originProduct = await Product.findOne({_id: id});
             let stayNumber = originProduct.quantity + form.quantity;
 
@@ -286,7 +286,7 @@ exports.addStock = async (form, id) => {
 async function moreOrLess(id, stayNumber) {
     if (stayNumber > -1) {
         let available = true;
-        if(stayNumber === 0) {
+        if (stayNumber === 0) {
             available = false;
         }
         let product = await Product.findOneAndUpdate({_id: id}, {
@@ -309,9 +309,8 @@ async function moreOrLess(id, stayNumber) {
 }
 
 
-
 exports.sortProducts = async (type) => {
-    if(type==="name") {
+    if (type === "name") {
         try {
             let products = await Product.find({}).sort({name: 1})
             return {
@@ -322,7 +321,7 @@ exports.sortProducts = async (type) => {
             throw e;
         }
     }
-     if (type ==="category"){
+    if (type === "category") {
         try {
             let products = await Product.find({}).sort({category: 1})
             return {
@@ -333,7 +332,7 @@ exports.sortProducts = async (type) => {
             throw e;
         }
     }
-     if (type ==="description"){
+    if (type === "description") {
         try {
             let products = await Product.find({}).sort({description: 1})
             return {
@@ -344,17 +343,17 @@ exports.sortProducts = async (type) => {
             throw e;
         }
     }
-     if (type === "views"){
-         try {
-             let products = await Product.find({}).sort({views: -1})
-             return {
-                 success: true,
-                 products: products
-             }
-         } catch (e) {
-             throw e;
-         }
-     }
+    if (type === "views") {
+        try {
+            let products = await Product.find({}).sort({views: -1})
+            return {
+                success: true,
+                products: products
+            }
+        } catch (e) {
+            throw e;
+        }
+    }
 }
 exports.deleteProduct = async (id) => {
     await Product.deleteOne({_id: id});
@@ -372,53 +371,56 @@ exports.deleteProducts = async (products) => {
 }
 
 exports.updateAvailable = async (products) => {
-   try {
-       for (const product of products) {
-           await Product.updateOne({_id: product.id}, {available: product.available});
-       }
-       return {
-           success: true
-       };
-   }catch(e){
-       throw e;
-   }
+    try {
+        for (const product of products) {
+            await Product.updateOne({_id: product.id}, {available: product.available});
+        }
+        return {
+            success: true
+        };
+    } catch (e) {
+        throw e;
+    }
 
 }
 
-exports.updateEvent = async (products) => {
-   try {
-       console.log("entree dans le service")
-       products.forEach((product) => {
-           if(!product.id){
-               throw {
-                   success: false,
-                   error: "chaque objet doit avoir un id"
-               }
-           }
-       })
-       for (const product of products) {
+exports.updateEvent = async (products, eventType) => {
+    try {
+        console.log("entree dans le service")
+        products.forEach((product) => {
+            if (!product.id) {
+                throw {
+                    success: false,
+                    error: "chaque objet doit avoir un id"
+                }
+            }
+        })
+        for (const product of products) {
 
-           try{
-               let productToChange = await Product.findOne({_id:product.id})
-               let event = productToChange.events
-               console.log("event", event)
-               // console.log("id = ", product.id)
-               console.log("discount", product.discount)
-               event.discount = product.discount;
-               console.log("event modifié", event)
-               await Product.updateOne({_id: product.id}, {events: event })
-               // console.log("request", request)
-           }catch(e){
-               console.log(e);
-           }
-       }
-       return {
-           success: true,
-           message: "toto"
-       };
-   }catch(e){
-       throw e;
-   }
+            try {
+                let productToChange = await Product.findOne({_id: product.id})
+                let event = productToChange.events
+                if (eventType === "discount") {
+                    event.discount = product.discount;
+                }
+                if (eventType === "new") {
+                    event.new = product.new;
+                }
+                if (eventType === "endOfSerie") {
+                    event.endOfSerie = product.endOfSerie;
+                }
+                await Product.updateOne({_id: product.id}, {events: event})
+            } catch (e) {
+                console.log(e);
+            }
+        }
+        return {
+            success: true,
+            message: "toto"
+        };
+    } catch (e) {
+        throw e;
+    }
 
 }
 
