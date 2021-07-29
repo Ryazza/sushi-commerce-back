@@ -65,7 +65,7 @@ exports.createCategory = async (req, res) => {
 exports.updateCategory = async (req, res) => {
     try {
         const token = req.headers.authorization && checkTokenMiddleware.extractBearerToken(req.headers.authorization);
-        
+
         let categoryServiceRes = await CategoryService.updateCategory(req.params.id , req.body, token);
 
         if (categoryServiceRes.success) {
@@ -87,6 +87,7 @@ exports.updateCategory = async (req, res) => {
 
 exports.deleteCategory = async ( req, res ) => {
     try {
+
         const token = req.headers.authorization && checkTokenMiddleware.extractBearerToken(req.headers.authorization);
         let category = await CategoryService.deleteCategoryById(req.params.id, token);
         if (category.success) {

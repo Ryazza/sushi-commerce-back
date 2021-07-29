@@ -118,6 +118,20 @@ exports.updateCategory = async (id, change) => {
 
 exports.deleteCategoryById = async (id) => {
     try {
+        let verifId = checkObjectId(id);
+
+        if(verifId.success === true) {
+            let idExist = await Category.findById(id);
+            if(!idExist) {
+                return {
+                    success: false,
+                }
+            }
+        } else {
+            return {
+                success: false,
+            }
+        }
         let testCategorie = await Category.findById(id);
         if(!testCategorie) {
             return {
