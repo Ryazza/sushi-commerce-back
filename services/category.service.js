@@ -97,7 +97,7 @@ exports.updateCategory = async (id, change) => {
             )
             return {
                 success: true,
-                message: "Votre catégorie a bien été modifié",
+                message: "Votre catégorie a bien été modifiée",
                 category: change,
             };
         } else {
@@ -156,13 +156,13 @@ async function verifyEntry(category, checkValue = null, id=null) {
             if(!idExist) {
                 return {
                     success: false,
-                    message: "Votre categorie n'existe pas!"
+                    message: "Votre catégorie n'existe pas!"
                 }
             }
         } else {
             return {
                 success: false,
-                message: "Votre categorie n'existe pas!"
+                message: "Votre catégorie n'existe pas!"
             }
         }
     }
@@ -171,14 +171,14 @@ async function verifyEntry(category, checkValue = null, id=null) {
         if(typeof category.name === "undefined") {
             return {
                 success: false,
-                message: "Vous devez definir une catégorie",
+                message: "Vous devez définir une catégorie",
                 error: "name"
             };
 
         } else if (typeof category.name !== "string") {
             return {
                 success: false,
-                message: "Vous devez rentrez des caractères alphabétiques pour votre catégorie",
+                message: "Vous devez rentrer des caractères alphabétiques pour votre catégorie",
                 error: "name"
             };
         } else if (category.name.length < 3) {
@@ -203,13 +203,13 @@ async function verifyEntry(category, checkValue = null, id=null) {
         if(typeof category.description === "undefined") {
             return {
                 success: false,
-                message: "Vous devez definir une description"
+                message: "Vous devez définir une description"
             };
 
         } else if (typeof category.description !== "string") {
             return {
                 success: false,
-                message: "Vous devez rentrez des caractères alphabétiques pour votre description",
+                message: "Vous devez rentrer des caractères alphabétiques pour votre description",
                 error: "name"
             };
         } else if (category.description.length < 5 || category.description.length > 100) {

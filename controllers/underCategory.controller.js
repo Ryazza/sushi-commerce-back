@@ -93,7 +93,7 @@ exports.deleteUnderCategory = async ( req, res ) => {
             res.status(200);
             res.send({
                 success: true,
-                errors: "Sous catégorie supprimé avec succès!"
+                errors: "Sous catégorie supprimée avec succès!"
             })
 
         } else {

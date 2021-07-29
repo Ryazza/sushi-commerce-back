@@ -1,7 +1,6 @@
 const CategoryService = require('../services/category.service')
 const checkTokenMiddleware = require('../controllers/jwt.controller');
 
-
 /*------------------------ USER -------------------------------*/
 
 exports.getAllCategory = async (req, res) => {
@@ -93,14 +92,14 @@ exports.deleteCategory = async ( req, res ) => {
             res.status(200);
             res.send({
                 success: true,
-                errors: "Catégorie supprimé avec succès!"
+                errors: "Sous catégorie supprimée avec succès!"
             })
 
         } else {
             res.status(400)
             res.send({
                 success: false,
-                errors: "Catégorie non valide!"
+                errors: "Sous catégorie non valide!"
             })
         }
     } catch (e) {
