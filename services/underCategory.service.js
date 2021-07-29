@@ -29,7 +29,7 @@ exports.getAllUnderCategory = async () => {
 
 exports.getOneUnderCategory = async ({ id }) => {
     try {
-        let underCategory = await UnderCategory.findById(id)
+        let underCategory = await UnderCategory.findById(id).populate("parent", "name description");
         if(typeof underCategory !== "object" || !underCategory) {
             return {
                 success: false,

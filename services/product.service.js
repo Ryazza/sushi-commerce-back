@@ -151,6 +151,67 @@ exports.allProducts = async () => {
     }
 }
 
+exports.getOneProduct = async (id) => {
+
+    try {
+        let verifId = checkObjectId(id);
+
+        if(!verifId.success) {
+            return {
+                success: false,
+                message: "Votre produit n'existe pas!"
+            }
+        }
+
+        let product = await Product.findById(id).populate({ path: "subCategoryId", populate: { path: "parent"} });
+
+        if(!product) {
+            return {
+                success: false,
+                error: "id incorrect"
+            }
+        }
+        //*********** A SUPPRIMER AU FUR ET A MESURE UNE FOIS CHAMP OK *****************
+        product.brand = "FutureBrand";
+        product.avis = "test";
+        product.sale = 150;
+        product.view = 5;
+        product.bigPicture = "https://www.topachat.com/boutique/img/in/in2000/in20009184/in2000918402@2x.jpg"
+        product.events.new = true,
+        product.events.solde = true,
+        product.events.serialEnding = true
+        //****************************** FIN A SUPPRIMER ******************************
+        let redoProduct = {
+            _id: product.id,
+            name: product.name,
+            marque: product.brand,
+            category: product.subCategoryId.parent.name,
+            subCategory: product.subCategoryId.name,
+            description: product.description,
+            bigPicture: product.bigPicture,
+            pictures: product.pictures,
+            events: { // a modifier par product.events
+                new : product.events.new,
+                solde: product.events.solde,
+                serialEnding: product.events.serialEnding
+            },
+            quantity: product.quantity,
+            available: product.available,
+            price: product.price,
+            view: product.view,
+            sale: product.sale,
+            createdAt: product.createdAt,
+            avis: product.avis
+        }
+        return {
+            success: true,
+            products: redoProduct
+        }
+    } catch (e) {
+        throw e;
+    }
+}
+
 exports.searchProductByName = async (keyword) => {
     try {
         let products = await Product.find({name: {$regex: keyword, $options: "i"}})
