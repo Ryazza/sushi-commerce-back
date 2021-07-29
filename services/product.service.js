@@ -397,13 +397,16 @@ exports.updateEvent = async (products) => {
            }
        })
        for (const product of products) {
-           console.log(product.id)
-           let request= await Product.updateOne({_id: product.id}, {event: product.event});
-           console.log("request", request)
+           try{
+               console.log("id = ", product.id)
+               let request = await Product.updateOne({_id: product.id}, {events: product.event});
+               console.log("request", request)
+           }catch(e){
+               console.log(e);
+           }
        }
        return {
            success: true,
-           message: "toto"
        };
    }catch(e){
        throw e;
