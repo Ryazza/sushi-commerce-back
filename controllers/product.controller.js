@@ -232,3 +232,21 @@ exports.updateAvailable = async (req,res)=>{
         })
     }
 }
+exports.updateEvent = async (req,res)=>{
+    console.log("entrée dans le controller")
+    let products = req.body;
+
+    try {
+
+        let result = await ProductService.updateEvent(req.body);
+        res.status(200);
+        res.send(result);
+    } catch (e) {
+        res.status(400);
+        res.send({
+            success: false,
+            errors: e,
+            toto: "toto"
+        })
+    }
+}

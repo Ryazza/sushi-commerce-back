@@ -19,7 +19,7 @@ const ProductsSchema = new mongoose.Schema({
         type: Array
     },
     events: {
-        type: Array
+        type: Object
     },
     createdAt: {
         type: Date,

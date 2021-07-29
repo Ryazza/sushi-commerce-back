@@ -15,6 +15,7 @@ router.get('/sort/:type' ,ProductController.sortProducts)
 router.post('/create', checkTokenMiddleware.checkTokenAdmin, ProductController.createProduct)
 router.put('/update/:id', checkTokenMiddleware.checkTokenAdmin,ProductController.updateProduct)
 router.put('/update_available', checkTokenMiddleware.checkTokenAdmin, ProductController.updateAvailable)
+router.put('/update_event', checkTokenMiddleware.checkTokenAdmin, ProductController.updateEvent)
 router.get('/verifyStock', checkTokenMiddleware.checkTokenAdmin, ProductController.showStock)//le form envoyé doit contenir également le contenu non modifié
 router.put('/updateStock', checkTokenMiddleware.checkTokenAdmin, ProductController.updateStock)
 router.put('/deduceStock/:id', checkTokenMiddleware.checkTokenAdmin, ProductController.deduceStock)

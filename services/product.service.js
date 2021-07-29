@@ -1,8 +1,6 @@
 const Product = require('../models/productModel.js');
 const { checkObjectId } = require('../helper/dbHelper');
 
-const bcrypt = require('bcrypt')
-const jwt = require('jsonwebtoken');
 
 function checkForm(form) {
     if (form.name.length > 25 || form.name.length < 3) {
@@ -386,3 +384,30 @@ exports.updateAvailable = async (products) => {
    }
 
 }
+
+exports.updateEvent = async (products) => {
+   try {
+       console.log("entree dans le service")
+       products.forEach((product) => {
+           if(!product.id){
+               throw {
+                   success: false,
+                   error: "chaque objet doit avoir un id"
+               }
+           }
+       })
+       for (const product of products) {
+           console.log(product.id)
+           let request= await Product.updateOne({_id: product.id}, {event: product.event});
+           console.log("request", request)
+       }
+       return {
+           success: true,
+           message: "toto"
+       };
+   }catch(e){
+       throw e;
+   }
+
+}
+
