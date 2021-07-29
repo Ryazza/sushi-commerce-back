@@ -88,18 +88,9 @@ exports.createCategory = async (form) => {
 exports.updateCategory = async (id, change) => {
 
     try {
-        let category = await Category.findById(id);
-
-        if (!category) {
-            return {
-                success: false,
-                message: "Numero de catégorie incorrect",
-            }
-        }
-
         let verify = await verifyEntry(change, true, id);
-
         if(verify.success === true) {
+
             change.name = change.name.toLowerCase();
             change.name = change.name.capitalizeFirstLetter();
 
@@ -150,13 +141,18 @@ async function verifyEntry(category, checkValue = null, id=null) {
     if(id !== null) {
         let verifId = checkObjectId(id);
 
-        if(verifId.success === false) {
+        if(verifId.success === true) {
             let idExist = await Category.findById(id);
             if(!idExist) {
                 return {
                     success: false,
                     message: "Votre categorie n'existe pas!"
                 }
+            }
+        } else {
+            return {
+                success: false,
+                message: "Votre categorie n'existe pas!"
             }
         }
     }
@@ -181,6 +177,17 @@ async function verifyEntry(category, checkValue = null, id=null) {
                 message: "3 caractères minimum pour votre catégorie",
                 error: "name"
             };
+        }
+
+        category.name = category.name.toLowerCase();
+        category.name = category.name.capitalizeFirstLetter();
+        let nameExist = await Category.find({ name: category.name});
+        console.log(nameExist)
+        if(nameExist.length > 0) {
+            return {
+                success: false,
+                message: "Votre nom de catégorie existe déjà !",
+            }
         }
 
         if(typeof category.description === "undefined") {
