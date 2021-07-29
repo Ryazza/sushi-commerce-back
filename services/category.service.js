@@ -1,7 +1,5 @@
-const User = require('../models/userModel');
 const Category = require('../models/categoryModel');
 const { checkObjectId } = require('../helper/dbHelper');
-const jwt = require('jsonwebtoken');
 
 /*------------------------- USER ---------------------------*/
 
@@ -46,8 +44,6 @@ exports.getOneCategory = async ({ id }) => {
         throw e;
     }
 }
-
-
 
 /*-------------------------- ADMIN ---------------------------*/
 
