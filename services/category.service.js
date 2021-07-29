@@ -182,6 +182,26 @@ async function verifyEntry(category, checkValue = null, id=null) {
                 error: "name"
             };
         }
+
+        if(typeof category.description === "undefined") {
+            return {
+                success: false,
+                message: "Vous devez definir une description"
+            };
+
+        } else if (typeof category.description !== "string") {
+            return {
+                success: false,
+                message: "Vous devez rentrez des caractères alphabétiques pour votre description",
+                error: "name"
+            };
+        } else if (category.description.length < 5 || category.description.length > 100) {
+            return {
+                success: false,
+                message: "5 à 100 caractères pour votre description",
+                error: "name"
+            };
+        }
     }
     return { success: true };
 }
