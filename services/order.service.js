@@ -20,7 +20,9 @@ exports.addOrder = async (form, token) => {
             const decoded = jwt.decode(token, {complete: false});
             formValid.form.client_ID = decoded.id;
 
+
             const order = new Order({createdAt: new Date(), updateAt: new Date()});
+
             Object.assign(order, formValid.form);
             let canSave = true;
             let insufficientStock = '';
@@ -220,7 +222,7 @@ exports.deleteOrderById = async (id) => {
             }
         } else {
             let response = await Order.deleteOne({_id: id})
-            console.log(response)
+
             if(response) {
                 return {
                     success: true
@@ -289,7 +291,17 @@ async function calculate(form) {
          changeStock.push({ id: form.articles[i].id, quantity: newQuantity, available: available, canChangeStock: canChangeStock})
 
          let amount = product.price * form.articles[i].quantity;
-         articles.push({ id: form.articles[i].id, quantity: form.articles[i].quantity, amount: amount});
+         articles.push({
+             id: product.id,
+             pictures: product.pictures,
+             name: product.name,
+             events: product.events,
+             category: product.category,
+             description: product.description,
+             price: product.price,
+             quantityBuy: form.articles[i].quantity,
+             amount: amount
+         });
          totalAmount += amount;
     };
 
