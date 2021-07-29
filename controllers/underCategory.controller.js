@@ -1,15 +1,15 @@
-const CategoryService = require('../services/category.service')
+const underCategoryService = require('../services/underCategory.service')
 const checkTokenMiddleware = require('../controllers/jwt.controller');
 
 
 /*------------------------ USER -------------------------------*/
 
-exports.getAllCategory = async (req, res) => {
+exports.getAllUnderCategory = async (req, res) => {
 
     try {
-        let allCategory = await CategoryService.getAllCategory();
+        let allUnderCategory = await underCategoryService.getAllUnderCategory();
         res.status(200);
-        res.send(allCategory);
+        res.send(allUnderCategory);
     } catch (e) {
         res.status(400)
         res.send({
@@ -19,11 +19,11 @@ exports.getAllCategory = async (req, res) => {
     }
 }
 
-exports.getOneCategory = async (req, res) => {
+exports.getOneUnderCategory = async (req, res) => {
     try {
-        let oneCategory = await CategoryService.getOneCategory(req.params);
+        let oneUnderCategory = await underCategoryService.getOneUnderCategory(req.params);
         res.status(200);
-        res.send(oneCategory);
+        res.send(oneUnderCategory);
     } catch (e) {
 
         console.log("catch" + e);
@@ -37,18 +37,18 @@ exports.getOneCategory = async (req, res) => {
 
 /*------------------------ ADMIN -------------------------------*/
 
-exports.createCategory = async (req, res) => {
+exports.createUnderCategory = async (req, res) => {
     try {
         const token = req.headers.authorization && checkTokenMiddleware.extractBearerToken(req.headers.authorization);
 
-        let newCategory = await CategoryService.createCategory(req.body, token)
+        let newUnderCategory = await underCategoryService.createUnderCategory(req.body, token)
 
-        if (newCategory.success === true) {
+        if (newUnderCategory.success === true) {
             res.status(201)
-            res.send(newCategory)
+            res.send(newUnderCategory)
         } else {
             res.status(400)
-            res.send(newCategory)
+            res.send(newUnderCategory)
         }
 
     } catch (e) {
@@ -61,18 +61,18 @@ exports.createCategory = async (req, res) => {
     }
 }
 
-exports.updateCategory = async (req, res) => {
+exports.updateUnderCategory = async (req, res) => {
     try {
         const token = req.headers.authorization && checkTokenMiddleware.extractBearerToken(req.headers.authorization);
 
-        let categoryServiceRes = await CategoryService.updateCategory(req.params.id , req.body, token);
+        let underCategoryServiceRes = await underCategoryService.updateUnderCategory(req.params.id , req.body, token);
 
-        if (categoryServiceRes.success) {
+        if (underCategoryServiceRes.success) {
             res.status(200);
-            res.send(categoryServiceRes);
+            res.send(underCategoryServiceRes);
         } else {
             res.status(400);
-            res.send(categoryServiceRes);
+            res.send(underCategoryServiceRes);
         }
     } catch (e) {
         console.log("catch " + e)
@@ -84,23 +84,23 @@ exports.updateCategory = async (req, res) => {
     }
 }
 
-exports.deleteCategory = async ( req, res ) => {
+exports.deleteUnderCategory = async ( req, res ) => {
     try {
 
         const token = req.headers.authorization && checkTokenMiddleware.extractBearerToken(req.headers.authorization);
-        let category = await CategoryService.deleteCategoryById(req.params.id, token);
-        if (category.success) {
+        let underCategory = await underCategoryService.deleteUnderCategoryById(req.params.id, token);
+        if (underCategory.success) {
             res.status(200);
             res.send({
                 success: true,
-                errors: "Catégorie supprimé avec succès!"
+                errors: "Sous catégorie supprimé avec succès!"
             })
 
         } else {
             res.status(400)
             res.send({
                 success: false,
-                errors: "Catégorie non valide!"
+                errors: "Sous catégorie non valide!"
             })
         }
     } catch (e) {
