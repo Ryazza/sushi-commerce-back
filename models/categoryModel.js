@@ -1,7 +1,12 @@
 const mongoose = require('mongoose');
 const uniqueValidator = require('mongoose-unique-validator');
+const {Schema} = require('mongoose');
 
 const CategorySchema = new mongoose.Schema({
+    children: [{
+        type: Schema.Types.ObjectId,
+        ref: 'subCategory',
+    }],
     name: {
         type: String,
         required: true,

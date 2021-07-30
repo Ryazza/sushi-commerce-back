@@ -7,7 +7,7 @@ exports.getAllCategory = async () => {
 
     try {
 
-        let category = await Category.find();
+        let category = await Category.find().populate({ path: "children"});
 
         if(category.length < 1) {
             return {
