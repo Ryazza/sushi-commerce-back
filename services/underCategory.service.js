@@ -53,7 +53,6 @@ exports.createUnderCategory = async (form) => {
         let verify = await verifyEntry(form, true);
 
         if(verify.success === true) {
-
             form.name = form.name.toLowerCase();
             form.name = form.name.capitalizeFirstLetter();
             let testCategorie = await UnderCategory.find({name: form.name});
@@ -65,7 +64,9 @@ exports.createUnderCategory = async (form) => {
             } else {
                 const underCategory = new UnderCategory({createdAt: new Date(), updateAt: new Date()});
                 Object.assign(underCategory, form);
-                await underCategory.save();
+                let response = await underCategory.save();
+                await Category.findOneAndUpdate({ _id: form.parent}, { $push: { children: response.id }} );
+
                 return {
                     success: true
                 };

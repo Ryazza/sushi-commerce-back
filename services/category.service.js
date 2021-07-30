@@ -7,7 +7,7 @@ exports.getAllCategory = async () => {
 
     try {
 
-        let category = await Category.find();
+        let category = await Category.find().populate("children", "id name description img", null, {sort: { name: 1}}).sort({name: 1});
 
         if(category.length < 1) {
             return {
