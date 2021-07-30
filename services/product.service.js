@@ -117,7 +117,7 @@ exports.updateProduct = async (form, id) => {
         let product = await Product.findOneAndUpdate({_id: id}, {
             name: form.name,
             brand: form.brand,
-            category: form.subCategoryId.parent.name,
+            category: form.subCategoryId.subCategory.name,
             subCategory: form.subCategoryId.name,
             description: form.description,
             bigPicture: form.bigPicture,
@@ -165,7 +165,7 @@ exports.getOneProduct = async (id) => {
             }
         }
 
-        let product = await Product.findById(id).populate({ path: "subCategoryId", populate: { path: "parent"} });
+        let product = await Product.findById(id).populate({ path: "subCategoryId", populate: { path: "category"} });
 
         if(!product) {
             return {
@@ -178,8 +178,8 @@ exports.getOneProduct = async (id) => {
             _id: product.id,
             name: product.name,
             brand: product.brand,
-            categoryId: product.subCategoryId.parent.id,
-            category: product.subCategoryId.parent.name,
+            categoryId: product.subCategoryId.category.id,
+            category: product.subCategoryId.category.name,
             subCategoryId: product.subCategoryId.id,
             subCategory: product.subCategoryId.name,
             description: product.description,

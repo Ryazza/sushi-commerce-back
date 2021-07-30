@@ -3,7 +3,7 @@ const uniqueValidator = require('mongoose-unique-validator');
 const {Schema} = require('mongoose');
 
 const CategorySchema = new mongoose.Schema({
-    children: [{
+    subCategory: [{
         type: Schema.Types.ObjectId,
         ref: 'subCategory',
     }],
