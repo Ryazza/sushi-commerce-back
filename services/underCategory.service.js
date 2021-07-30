@@ -57,7 +57,7 @@ exports.getOneSubCategoryAndProduct = async ({ id }) => {
                 message: "Votre sous categorie n'existe pas!"
             }
         }
-        let underCategory = await Product.find({subCategoryId: id});
+        let underCategory = await Product.find({subCategoryId: id}).sort({name: 1});
         if(typeof underCategory !== "object" || !underCategory || underCategory.length < 1) {
             return {
                 success: false,
