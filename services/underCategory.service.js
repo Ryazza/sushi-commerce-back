@@ -39,7 +39,7 @@ exports.getOneUnderCategory = async ({ id }) => {
         } else {
             return {
                 success: true,
-                underCategory: underCategory
+                subCategory: underCategory
             }
         }
     } catch (e) {
@@ -66,7 +66,7 @@ exports.getOneSubCategoryAndProduct = async ({ id }) => {
         } else {
             return {
                 success: true,
-                underCategory: underCategory
+                products: underCategory
             }
         }
     } catch (e) {
@@ -128,7 +128,7 @@ exports.updateUnderCategory = async (id, change) => {
             return {
                 success: true,
                 message: "Votre sous catégorie a bien été modifiée",
-                underCategory: change,
+                subCategory: change,
             };
         } else {
             return {
