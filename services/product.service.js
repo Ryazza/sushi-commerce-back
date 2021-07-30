@@ -383,20 +383,42 @@ exports.updateAvailable = async (products) => {
     }
 
 }
+checkId = async (products) => {
+    let result={
+        success: true
+    };
+    for (const product of products) {
+        if (!product.id) {
+            result += {
+                success: false,
+                error: "chaque objet doit avoir un id"
+            }
+        }
+        let search = await Product.exists({_id: product.id})
+        if (!search) {
+            result = {
+                success: false,
+                error:  "au moins une id n'existe pas"
+            }
+        }
+
+    }
+    return result;
+
+}
 
 exports.updateEvent = async (products, eventType) => {
     try {
-        console.log("entree dans le service")
-        products.forEach((product) => {
-            if (!product.id) {
-                throw {
-                    success: false,
-                    error: "chaque objet doit avoir un id"
-                }
+      let check = await checkId(products);
+        if(check.success=== false){
+            return {
+                success: false,
+                error: check.error
             }
-        })
+        }
+        let result = [];
         for (const product of products) {
-
+            let request
             try {
                 let productToChange = await Product.findOne({_id: product.id})
                 let event = productToChange.events
@@ -409,14 +431,25 @@ exports.updateEvent = async (products, eventType) => {
                 if (eventType === "endOfSerie") {
                     event.endOfSerie = product.endOfSerie;
                 }
-                await Product.updateOne({_id: product.id}, {events: event})
+                request = await Product.updateOne({_id: product.id}, {events: event})
+                result.push(request)
             } catch (e) {
                 console.log(e);
             }
         }
+        let message="";
+        result.forEach(item => {
+            if (item.nModified ===0){
+                message= "Base de donnée non modifiée"
+            }
+            else{
+                message = "base de donnée modifiée avec succès"
+            }
+        })
         return {
             success: true,
-            message: "toto"
+
+            message: message,
         };
     } catch (e) {
         throw e;

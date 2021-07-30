@@ -233,7 +233,6 @@ exports.updateAvailable = async (req,res)=>{
     }
 }
 exports.updateEvent = async (req,res)=>{
-    console.log("entrée dans le controller")
     if (req.params.event !== "new" && req.params.event !=="discount" && req.params.event !== "endOfSerie"){
         res.status(400);
         res.send({
