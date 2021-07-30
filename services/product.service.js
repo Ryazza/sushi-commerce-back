@@ -11,12 +11,6 @@ function checkForm(form) {
             error: "le nom du produit doit comprendre entre 3 et 25 caractères"
         }
     }
-    if (form.category.length > 25 || form.category.length < 3) {
-        return {
-            success: false,
-            error: "le nom de catégorie doit comprendre entre 3 et 25 caractères"
-        }
-    }
     if (form.description.length > 255) {
         return {
             success: false,
@@ -121,12 +115,20 @@ exports.updateProduct = async (form, id) => {
     checkForm(form);
     try {
         let product = await Product.findOneAndUpdate({_id: id}, {
-                name: form.name,
-                category: form.category,
-                description: form.description ,
-                pictures: form.pictures,
-                events: form.events,
-                stock:form.stock
+            name: form.name,
+            brand: form.brand,
+            category: form.subCategoryId.parent.name,
+            subCategory: form.subCategoryId.name,
+            description: form.description,
+            bigPicture: form.bigPicture,
+            pictures: form.pictures,
+            events: form.events,
+            quantity: form.quantity,
+            available: form.available,
+            price: form.price,
+            view: form.view,
+            sale: form.sale,
+            comment: form.comment,
             }
         );
         Object.assign(product, form);
@@ -145,6 +147,54 @@ exports.allProducts = async () => {
         return {
             success: true,
             products: products
+        }
+    } catch (e) {
+        throw e;
+    }
+}
+
+exports.getOneProduct = async (id) => {
+
+    try {
+        let verifId = checkObjectId(id);
+
+        if(!verifId.success) {
+            return {
+                success: false,
+                message: "Votre produit n'existe pas!"
+            }
+        }
+
+        let product = await Product.findById(id).populate({ path: "subCategoryId", populate: { path: "parent"} });
+
+        if(!product) {
+            return {
+                success: false,
+                error: "id incorrect"
+            }
+        }
+
+        let redoProduct = {
+            _id: product.id,
+            name: product.name,
+            brand: product.brand,
+            category: product.subCategoryId.parent.name,
+            subCategory: product.subCategoryId.name,
+            description: product.description,
+            bigPicture: product.bigPicture,
+            pictures: product.pictures,
+            events: product.events,
+            quantity: product.quantity,
+            available: product.available,
+            price: product.price,
+            view: product.view,
+            sale: product.sale,
+            createdAt: product.createdAt,
+            comment: product.comment
+        }
+        return {
+            success: true,
+            products: redoProduct
         }
     } catch (e) {
         throw e;
