@@ -3,7 +3,7 @@ const {Schema} = require('mongoose');
 const uniqueValidator = require('mongoose-unique-validator');
 
 const UnderCategorySchema = new mongoose.Schema({
-    parent: {
+    category: {
         type: Schema.Types.ObjectId,
         ref: 'category',
         required: true

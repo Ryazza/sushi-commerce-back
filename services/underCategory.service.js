@@ -1,4 +1,5 @@
 const UnderCategory = require('../models/underCategoryModel');
+const Product = require('../models/productModel');
 const Category = require('../models/categoryModel');
 const { checkObjectId } = require('../helper/dbHelper');
 
@@ -7,7 +8,7 @@ const { checkObjectId } = require('../helper/dbHelper');
 exports.getAllUnderCategory = async () => {
 
     try {
-        let underCategory = await UnderCategory.find().populate('parent', "id name description");
+        let underCategory = await UnderCategory.find().populate('category', "id name description");
 
         if(underCategory.length < 1) {
             return {
@@ -29,7 +30,7 @@ exports.getAllUnderCategory = async () => {
 
 exports.getOneUnderCategory = async ({ id }) => {
     try {
-        let underCategory = await UnderCategory.findById(id).populate("parent", "name description");
+        let underCategory = await UnderCategory.findById(id).populate("category", "name description");
         if(typeof underCategory !== "object" || !underCategory) {
             return {
                 success: false,
@@ -38,7 +39,34 @@ exports.getOneUnderCategory = async ({ id }) => {
         } else {
             return {
                 success: true,
-                underCategory: underCategory
+                subCategory: underCategory
+            }
+        }
+    } catch (e) {
+        throw e;
+    }
+}
+
+exports.getOneSubCategoryAndProduct = async ({ id }) => {
+    try {
+        let verifId = checkObjectId(id);
+
+        if(verifId.success === false) {
+            return {
+                success: false,
+                message: "Votre sous categorie n'existe pas!"
+            }
+        }
+        let underCategory = await Product.find({subCategoryId: id}).sort({name: 1});
+        if(typeof underCategory !== "object" || !underCategory || underCategory.length < 1) {
+            return {
+                success: false,
+                error: "Cette catégorie n'existe pas ou n'a pas encore de produits"
+            }
+        } else {
+            return {
+                success: true,
+                products: underCategory
             }
         }
     } catch (e) {
@@ -65,7 +93,7 @@ exports.createUnderCategory = async (form) => {
                 const underCategory = new UnderCategory({createdAt: new Date(), updateAt: new Date()});
                 Object.assign(underCategory, form);
                 let response = await underCategory.save();
-                await Category.findOneAndUpdate({ _id: form.parent}, { $push: { children: response.id }} );
+                await Category.findOneAndUpdate({ _id: form.category}, { $push: { subCategory: response.id }} );
 
                 return {
                     success: true
@@ -100,7 +128,7 @@ exports.updateUnderCategory = async (id, change) => {
             return {
                 success: true,
                 message: "Votre sous catégorie a bien été modifiée",
-                underCategory: change,
+                subCategory: change,
             };
         } else {
             return {
@@ -171,11 +199,11 @@ async function verifyEntry(underCategory, checkValue = null, id=null, update= fa
 
     if (checkValue !== null) {
 
-        if(typeof underCategory.parent !== "undefined") {
-            let verifId = checkObjectId(underCategory.parent);
+        if(typeof underCategory.category !== "undefined") {
+            let verifId = checkObjectId(underCategory.category);
 
             if(verifId.success === true) {
-                let idExist = await Category.findById(underCategory.parent);
+                let idExist = await Category.findById(underCategory.category);
                 if(!idExist) {
                     return {
                         success: false,
@@ -191,7 +219,7 @@ async function verifyEntry(underCategory, checkValue = null, id=null, update= fa
         } else {
             return {
                 success: false,
-                message: "Le champ parent doit être remplis!"
+                message: "Le champ category doit être remplis!"
             }
         }
 
