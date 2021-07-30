@@ -56,6 +56,26 @@ exports.getProducts = async (req, res) => {
     }
 }
 
+exports.getOneProduct = async (req, res) => {
+    try {
+        let oneProduct = await ProductService.getOneProduct(req.params.id);
+        if(oneProduct.success === false) {
+            res.status(400);
+            res.send(oneProduct);
+        } else {
+            res.status(200);
+            res.send(oneProduct);
+        }
+
+    } catch (e) {
+        res.status(400);
+        res.send({
+            success: false,
+            errors: e
+        })
+    }
+}
+
 exports.showStock = async (req, res) => {
 
     try {

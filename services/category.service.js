@@ -6,7 +6,8 @@ const { checkObjectId } = require('../helper/dbHelper');
 exports.getAllCategory = async () => {
 
     try {
-        let category = await Category.find({})
+
+        let category = await Category.find().populate("children", "id name description img", null, {sort: { name: 1}}).sort({name: 1});
 
         if(category.length < 1) {
             return {
@@ -28,7 +29,7 @@ exports.getAllCategory = async () => {
 
 exports.getOneCategory = async ({ id }) => {
     try {
-        let category = await Category.findById(id)
+        let category = await Category.findById(id).populate("subCategory", "name description");
         if(typeof category !== "object" || !category) {
             return {
                 success: false,
@@ -192,7 +193,7 @@ async function verifyEntry(category, checkValue = null, id=null) {
         category.name = category.name.toLowerCase();
         category.name = category.name.capitalizeFirstLetter();
         let nameExist = await Category.find({ name: category.name});
-        console.log(nameExist)
+
         if(nameExist.length > 0) {
             return {
                 success: false,
