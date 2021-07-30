@@ -11,12 +11,6 @@ function checkForm(form) {
             error: "le nom du produit doit comprendre entre 3 et 25 caractères"
         }
     }
-    if (form.category.length > 25 || form.category.length < 3) {
-        return {
-            success: false,
-            error: "le nom de catégorie doit comprendre entre 3 et 25 caractères"
-        }
-    }
     if (form.description.length > 255) {
         return {
             success: false,
@@ -121,12 +115,20 @@ exports.updateProduct = async (form, id) => {
     checkForm(form);
     try {
         let product = await Product.findOneAndUpdate({_id: id}, {
-                name: form.name,
-                category: form.category,
-                description: form.description ,
-                pictures: form.pictures,
-                events: form.events,
-                stock:form.stock
+            name: form.name,
+            brand: form.brand,
+            category: form.subCategoryId.parent.name,
+            subCategory: form.subCategoryId.name,
+            description: form.description,
+            bigPicture: form.bigPicture,
+            pictures: form.pictures,
+            events: form.events,
+            quantity: form.quantity,
+            available: form.available,
+            price: form.price,
+            view: form.view,
+            sale: form.sale,
+            comment: form.comment,
             }
         );
         Object.assign(product, form);
@@ -171,37 +173,24 @@ exports.getOneProduct = async (id) => {
                 error: "id incorrect"
             }
         }
-        //*********** A SUPPRIMER AU FUR ET A MESURE UNE FOIS CHAMP OK *****************
-        product.brand = "FutureBrand";
-        product.avis = "test";
-        product.sale = 150;
-        product.view = 5;
-        product.bigPicture = "https://www.topachat.com/boutique/img/in/in2000/in20009184/in2000918402@2x.jpg"
-        product.events.new = true,
-        product.events.solde = true,
-        product.events.serialEnding = true
-        //****************************** FIN A SUPPRIMER ******************************
+
         let redoProduct = {
             _id: product.id,
             name: product.name,
-            marque: product.brand,
+            brand: product.brand,
             category: product.subCategoryId.parent.name,
             subCategory: product.subCategoryId.name,
             description: product.description,
             bigPicture: product.bigPicture,
             pictures: product.pictures,
-            events: { // a modifier par product.events
-                new : product.events.new,
-                solde: product.events.solde,
-                serialEnding: product.events.serialEnding
-            },
+            events: product.events,
             quantity: product.quantity,
             available: product.available,
             price: product.price,
             view: product.view,
             sale: product.sale,
             createdAt: product.createdAt,
-            avis: product.avis
+            comment: product.comment
         }
         return {
             success: true,

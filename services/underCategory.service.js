@@ -7,7 +7,7 @@ const { checkObjectId } = require('../helper/dbHelper');
 exports.getAllUnderCategory = async () => {
 
     try {
-        let underCategory = await UnderCategory.find({})
+        let underCategory = await UnderCategory.find().populate('parent', "id name description");
 
         if(underCategory.length < 1) {
             return {
@@ -17,7 +17,7 @@ exports.getAllUnderCategory = async () => {
         } else {
             return {
                 success: true,
-                underCategory: underCategory
+                subCategory: underCategory
             }
         }
 

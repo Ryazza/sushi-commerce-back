@@ -13,13 +13,15 @@ const ProductsSchema = new mongoose.Schema({
         required: true,
         unique: true
     },
-    category: {
+    brand: {
         type: String,
-        required: true
     },
     description: {
         type: String,
         required: true
+    },
+    bigPicture: {
+        type: String,
     },
     pictures: {
         type: Array
@@ -45,7 +47,18 @@ const ProductsSchema = new mongoose.Schema({
     price: {
       type: Number,
       required:true
-    }
+    },
+    sale: {
+        type: Number,
+    },
+    comment: [{
+        title: {
+            type: String,
+        },
+        content: {
+            type: String,
+        }
+    }]
 });
 
 ProductsSchema.plugin(uniqueValidator);
