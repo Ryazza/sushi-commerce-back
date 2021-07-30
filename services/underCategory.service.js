@@ -1,4 +1,5 @@
 const UnderCategory = require('../models/underCategoryModel');
+const Product = require('../models/productModel');
 const Category = require('../models/categoryModel');
 const { checkObjectId } = require('../helper/dbHelper');
 
@@ -34,6 +35,33 @@ exports.getOneUnderCategory = async ({ id }) => {
             return {
                 success: false,
                 error: "Votre id est incorrect"
+            }
+        } else {
+            return {
+                success: true,
+                underCategory: underCategory
+            }
+        }
+    } catch (e) {
+        throw e;
+    }
+}
+
+exports.getOneSubCategoryAndProduct = async ({ id }) => {
+    try {
+        let verifId = checkObjectId(id);
+
+        if(verifId.success === false) {
+            return {
+                success: false,
+                message: "Votre sous categorie n'existe pas!"
+            }
+        }
+        let underCategory = await Product.find({subCategoryId: id});
+        if(typeof underCategory !== "object" || !underCategory || underCategory.length < 1) {
+            return {
+                success: false,
+                error: "Cette catégorie n'existe pas ou n'a pas encore de produits"
             }
         } else {
             return {
