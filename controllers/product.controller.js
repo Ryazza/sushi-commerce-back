@@ -15,7 +15,7 @@ exports.createProduct = async (req, res) => {
         res.status(400);
         res.send({
             success: false,
-            errors: e.errors
+            errors: e
         })
     }
 
@@ -23,7 +23,6 @@ exports.createProduct = async (req, res) => {
 
 exports.updateProduct = async (req, res) => {
     try {
-        console.log("mes couilles")
         let newProduct = await ProductService.updateProduct(req.body, req.params.id)
         if (newProduct.success === true) {
             res.status(201)
@@ -37,7 +36,7 @@ exports.updateProduct = async (req, res) => {
         res.status(400);
         res.send({
             success: false,
-            errors: e.errors
+            errors: e
         })
     }
 }
@@ -51,7 +50,7 @@ exports.getProducts = async (req, res) => {
         res.status(400);
         res.send({
             success: false,
-            errors: e.errors
+            errors: e
         })
     }
 }
@@ -87,7 +86,7 @@ exports.showStock = async (req, res) => {
         res.status(400);
         res.send({
             success: false,
-            errors: e.errors
+            errors: e
         })
     }
 }
@@ -108,7 +107,7 @@ exports.updateStock = async (req, res) => {
         res.status(400);
         res.send({
             success: false,
-            errors: e.errors
+            errors: e
         })
     }
 }
@@ -129,7 +128,7 @@ exports.deduceStock = async (req, res) => {
         res.status(400);
         res.send({
             success: false,
-            errors: e.errors
+            errors: e
         })
     }
 }
@@ -150,7 +149,7 @@ exports.addStock = async (req, res) => {
         res.status(400);
         res.send({
             success: false,
-            errors: e.errors
+            errors: e
         })
     }
 }
@@ -167,7 +166,7 @@ exports.searchProductByName = async (req, res) => {
         res.status(400);
         res.send({
             success: false,
-            errors: e.errors
+            errors: e
         })
     }
 }
@@ -183,7 +182,7 @@ exports.searchOneProduct = async (req, res) => {
         res.status(400);
         res.send({
             success: false,
-            errors: e.errors
+            errors: e
         })
     }
 
@@ -207,8 +206,72 @@ exports.sortProducts = async (req, res) => {
         res.status(400);
         res.send({
             success: false,
-            errors: e.errors
+            errors: e
         })
     }
 
+}
+
+exports.deleteProduct = async (req,res)=>{
+    let id=req.params.id;
+    try {
+        let products = await ProductService.deleteProduct(id);
+        res.status(200);
+        res.send(products);
+    } catch (e) {
+        res.status(400);
+        res.send({
+            success: false,
+            errors: e
+        })
+    }
+}
+exports.deleteProducts = async (req,res)=>{
+    try {
+        let products = await ProductService.deleteProducts(req.body);
+        res.status(200);
+        res.send(products);
+    } catch (e) {
+        res.status(400);
+        res.send({
+            success: false,
+            errors: e
+        })
+    }
+}
+exports.updateAvailable = async (req,res)=>{
+    try {
+        let products = await ProductService.updateAvailable(req.body);
+        res.status(200);
+        res.send(products);
+    } catch (e) {
+        res.status(400);
+        res.send({
+            success: false,
+            errors: e
+        })
+    }
+}
+exports.updateEvent = async (req,res)=>{
+    console.log("entrée dans le controller")
+    if (req.params.event !== "new" && req.params.event !=="discount" && req.params.event !== "endOfSerie"){
+        res.status(400);
+        res.send({
+            success: false,
+            errors: "veuillez préciser 'name', 'category', 'views ou 'description"
+        })
+    }
+    try {
+
+        let result = await ProductService.updateEvent(req.body, req.params.event);
+        res.status(200);
+        res.send(result);
+    } catch (e) {
+        res.status(400);
+        res.send({
+            success: false,
+            errors: e,
+            toto: "toto"
+        })
+    }
 }
