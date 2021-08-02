@@ -85,7 +85,7 @@ exports.createCategory = async (form) => {
 exports.updateCategory = async (id, change) => {
 
     try {
-        let verify = await verifyEntry(change, true, id);
+        let verify = await verifyEntry(change, true, id, true);
         if(verify.success === true) {
 
             change.name = change.name.toLowerCase();
@@ -147,7 +147,7 @@ exports.deleteCategoryById = async (id) => {
 /*----------- function for add update category -----------------*/
 
 /*----------- VERIFY --------------*/
-async function verifyEntry(category, checkValue = null, id=null) {
+async function verifyEntry(category, checkValue = null, id=null, update = false) {
 
     if(id !== null) {
         let verifId = checkObjectId(id);
@@ -192,12 +192,22 @@ async function verifyEntry(category, checkValue = null, id=null) {
 
         category.name = category.name.toLowerCase();
         category.name = category.name.capitalizeFirstLetter();
+
         let nameExist = await Category.find({ name: category.name});
 
-        if(nameExist.length > 0) {
+        if(nameExist.length > 0 && update === false ) {
             return {
                 success: false,
                 message: "Votre nom de catégorie existe déjà !",
+            }
+        } else if(update === true && nameExist.length > 0) {
+            let updatedCategory = await Category.findById(id);
+
+            if(updatedCategory.name !== category.name ) {
+                return {
+                    success: false,
+                    message: "Votre nom de catégorie existe déjà !",
+                }
             }
         }
 

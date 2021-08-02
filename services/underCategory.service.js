@@ -180,19 +180,19 @@ async function verifyEntry(underCategory, checkValue = null, id=null, update= fa
 
     if(id !== null) {
         let verifId = checkObjectId(id);
-
+        console.log(id)
         if(verifId.success === true) {
             let idExist = await UnderCategory.findById(id);
             if(!idExist) {
                 return {
                     success: false,
-                    message: "Votre categorie n'existe pas!"
+                    message: "Votre sous catégorie n'existe pas!"
                 }
             }
         } else {
             return {
                 success: false,
-                message: "Votre categorie n'existe pas!"
+                message: "Votre sous catégorie n'existe pas!"
             }
         }
     }
@@ -203,14 +203,19 @@ async function verifyEntry(underCategory, checkValue = null, id=null, update= fa
             let verifId = checkObjectId(underCategory.category);
 
             if(verifId.success === true) {
+                console.log(underCategory.category)
                 let idExist = await Category.findById(underCategory.category);
+
                 if(!idExist) {
+                    console.log(idExist)
+                    console.log("rentré sous 1")
                     return {
                         success: false,
-                        message: "Votre catégorie n'existe pas!"
+                        message: "Votre catégorie n'existe pas!",
                     }
                 }
             } else {
+                console.log("rentré encore sous 1")
                 return {
                     success: false,
                     message: "Votre catégorie n'existe pas!"
@@ -246,19 +251,18 @@ async function verifyEntry(underCategory, checkValue = null, id=null, update= fa
 
         underCategory.name = underCategory.name.toLowerCase();
         underCategory.name = underCategory.name.capitalizeFirstLetter();
+
         let nameExist = await UnderCategory.find({ name: underCategory.name});
 
-        if(nameExist.length > 0) {
-            if(update === true) {
-                let checkLastName = await UnderCategory.findById(id);
-                if(checkLastName !== underCategory.name) {
-                    return {
-                        success: false,
-                        message: "Votre nom de sous catégorie existe déjà !",
-                    }
-                }
+        if(nameExist.length > 0 && update === false ) {
+            return {
+                success: false,
+                message: "Votre nom de sous catégorie existe déjà !",
             }
-            if(update === false) {
+        } else if(update === true && nameExist.length > 0) {
+            let updatedSubCategory = await UnderCategory.findById(id);
+
+            if(updatedSubCategory.name !== underCategory.name ) {
                 return {
                     success: false,
                     message: "Votre nom de sous catégorie existe déjà !",
