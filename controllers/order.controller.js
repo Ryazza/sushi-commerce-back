@@ -17,7 +17,7 @@ exports.addOrder = async (req, res) => {
         }
 
     } catch (e) {
-        console.log("rentré catch"+ e);
+        console.log("addOrder catch", e);
         res.status(400)
         res.send({
             success: false,
@@ -41,7 +41,7 @@ exports.calculateOrder = async (req, res) => {
         }
 
     } catch (e) {
-        console.log("rentré catch"+ e);
+        console.log("calculOrder catch", e);
         res.status(400)
         res.send({
             success: false,
@@ -81,7 +81,7 @@ exports.getOneOrder = async (req, res) => {
 
     } catch (e) {
 
-        console.log("catch" + e);
+        console.log("getOneOrder catch", e);
         res.status(400)
         res.send({
             success: false,

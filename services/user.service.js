@@ -23,7 +23,7 @@ exports.addUser = async (form) => {
         if (form.password.length < 6) {
             return {
                 success: false,
-                error: "Le mot de passe doit faire au minimum 6 caractères !"
+                error: "Le mot de passe doit contenir au minimum 6 caractères !"
             }
         }
         form.password = await bcrypt.hash(form.password, 10);
@@ -36,13 +36,13 @@ exports.addUser = async (form) => {
         if (form.firstName.length < 2 || form.firstName.length > 200) {
             return {
                 success: false,
-                error: "Le prénom doit faire entre 2 et 200 caractères !"
+                error: "Le prénom doit contenir entre 2 et 200 caractères !"
             }
         }
         if (form.lastName.length < 2 || form.lastName.length > 200) {
             return {
                 success: false,
-                error: "Le nom doit faire entre 2 et 200 caractères !"
+                error: "Le nom doit contenir entre 2 et 200 caractères !"
             }
         }
         if (!isDate(form.birth)) {
@@ -76,14 +76,14 @@ exports.logUser = async (form) => {
     if (!user) {
         return {
             success: false,
-            error: "Vos identifiants sont incorect !"
+            error: "Vos identifiants sont incorects !"
         }
     } else {
         let valid = await bcrypt.compare(form.password, user.password)
         if (!valid) {
             return {
                 success: false,
-                error: "Vos identifiants sont incorect !"
+                error: "Vos identifiants sont incorects !"
             }
         } else {
             const token = jwt.sign({
@@ -119,7 +119,7 @@ exports.updateUserPass = async (id, change) => {
     if (change.newPassword.length < 6) {
         return {
             success: false,
-            error: "Le mot de passe doit faire au minimum 6 caractères !"
+            error: "Le mot de passe doit contenir au minimum 6 caractères !"
         }
     }
     let user = await User.findOne({_id: id})
@@ -127,14 +127,14 @@ exports.updateUserPass = async (id, change) => {
     if (!valid) {
         return {
             success: false,
-            error: "L'ancien mot de pass ne correspond pas !",
+            error: "L'ancien mot de passe ne correspond pas !",
         };
     }
     change.newPassword = await bcrypt.hash(change.newPassword, 10);
     await User.updateOne({_id: id}, {password: change.newPassword, updateAt: new Date()});
     return {
         success: true,
-        message: "Le mot de passe a bien été changer"
+        message: "Le mot de passe a bien été changé"
     };
 }
 // Modifier mon adress mail
@@ -149,14 +149,14 @@ exports.updateMail = async (id, change) => {
     if (user.email === change.email) {
         return {
             success: true,
-            message: "Aucun changement n'a été effectuer",
+            message: "Aucun changement n'a été effectué",
             email: change.email
         }
     }
     await User.findOneAndUpdate({_id: id}, {email: change.email, updateAt: new Date()});
     return {
         success: true,
-        message: "Votre email a bien été modifier",
+        message: "Votre email a bien été modifié",
         email: change.email
     };
 }
@@ -173,14 +173,14 @@ exports.updateBirth = async (id, change) => {
     if (user.birth.getTime() === newDate.getTime()) {
         return {
             success: true,
-            message: "Aucun changement n'a été effectuer",
+            message: "Aucun changement n'a été effectué",
             email: change.email
         }
     }
     await User.findOneAndUpdate({_id: id}, {birth: change.birth, updateAt: new Date()});
     return {
         success: true,
-        message: "Votre date de naissance a bien été modifier",
+        message: "Votre date de naissance a bien été modifié",
         birth: new Date(change.birth)
     };
 }
@@ -205,6 +205,6 @@ exports.updateRole = async (id, role) => {
     await User.updateOne({_id: id}, {admin: role.admin, updateAt: new Date()});
     return {
         success: true,
-        message: "Le role a été modifié"
+        message: "Le rôle a été modifié"
     };
 }
