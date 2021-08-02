@@ -15,18 +15,46 @@ exports.addOrder = async (form, token) => {
         if(verify.success === true) {
 
             // calcul function totalAmount and other;
-            let formValid = await calculate(form, token);
+            let formValid = await calculate(form);
 
             const decoded = jwt.decode(token, {complete: false});
-            formValid.client_ID = decoded.id;
+            formValid.form.client_ID = decoded.id;
+
 
             const order = new Order({createdAt: new Date(), updateAt: new Date()});
-            Object.assign(order, formValid);
 
-            await order.save();
-            return {
-                success: true
-            };
+            Object.assign(order, formValid.form);
+            let canSave = true;
+            let insufficientStock = '';
+
+            formValid.changeStock.forEach( product => {
+                if(product.canChangeStock === false) {
+                    insufficientStock += product.id + ' ';
+                    canSave = false;
+                }
+            });
+
+            if(canSave) {
+                await order.save();
+
+                for(let i=0; i < formValid.changeStock.length; i++) {
+                    let product = await Product.findOne({_id: formValid.changeStock[i].id});
+                    product.quantity = formValid.changeStock[i].quantity;
+                    product.available = formValid.changeStock[i].available;
+
+                    await Product.updateOne({_id: formValid.changeStock[i].id}, product);
+                }
+
+                return {
+                    success: true
+                };
+
+            } else {
+                return {
+                    success: false,
+                    message: "Les produits suivants n'ont pas le stock suffisant " + insufficientStock + "!"
+                };
+            }
 
         } else {
             return {
@@ -48,11 +76,17 @@ exports.calculateOrder = async (form, token) => {
         if(verify.success === true) {
 
             // calcul function totalAmount and other;
-            let formValid = await calculate(form, token);
+            let formValid = await calculate(form);
+            let canSend = true;
+            formValid.changeStock.forEach( product => {
+                if(product.canChangeStock === false) {
+                    canSend = false;
+                }
+            });
 
             return {
                 success: true,
-                response: formValid,
+                response: {formValid , canOrder: canSend},
             };
         } else {
             return {
@@ -67,7 +101,6 @@ exports.calculateOrder = async (form, token) => {
 }
 
 exports.getAllOrder = async () => {
-
     try {
         let orders = await Order.find({})
         return {
@@ -82,10 +115,25 @@ exports.getAllOrder = async () => {
 
 exports.getOneOrder = async ({ id }) => {
     try {
-        let orders = await Order.findById(id)
-        return {
-            success: true,
-            order: orders
+        let verifId = checkObjectId(id);
+        if(verifId.success === false) {
+            return {
+                success: false,
+                message: "Id invalide",
+            }
+        } else {
+            let order = await Order.findById(id)
+            if (order) {
+                return {
+                    success: true,
+                    order: order
+                }
+            } else {
+                return {
+                    success: false,
+                    error: "id invalide"
+                }
+            }
         }
     } catch (e) {
         throw e;
@@ -94,6 +142,7 @@ exports.getOneOrder = async ({ id }) => {
 
 exports.getOrderByUser = async ( client_id ) => {
     let verifId = checkObjectId(client_id);
+
     if(verifId === false) {
         return {
             success: false,
@@ -102,9 +151,16 @@ exports.getOrderByUser = async ( client_id ) => {
     } else {
         try {
             let orders = await Order.find({ client_ID: client_id }).sort({_id: -1})
-            return {
-                success: true,
-                order: orders
+
+            if(typeof orders === "object" && orders.length > 0) {
+                return {
+                    success: true,
+                    order: orders
+                }
+            } else {
+                return {
+                    success: false,
+                }
             }
         } catch (e) {
             throw e;
@@ -158,9 +214,24 @@ exports.updateOrder = async (id, change, token ) => {
 
 exports.deleteOrderById = async (id) => {
     try {
-        await Order.deleteOne({_id: id})
-        return {
-            success: true
+        let verifId = checkObjectId(id);
+        if(verifId.success === false) {
+            return {
+                success: false,
+                message: "Id invalide",
+            }
+        } else {
+            let response = await Order.deleteOne({_id: id})
+
+            if(response) {
+                return {
+                    success: true
+                }
+            } else {
+                return {
+                    success: false
+                }
+            }
         }
     } catch (e) {
         throw e;
@@ -197,13 +268,41 @@ exports.getAllOrderByStatus = async ( status, order ) => {
 async function calculate(form) {
 
     let articles = [];
+    let changeStock = [];
+    let available;
+    let canChangeStock;
     let totalAmount = 0;
 
      for(let i=0; i < form.articles.length; i++) {
-        let product = await Product.findById(form.articles[i].id);
-        let amount = product.price * form.articles[i].quantity;
-        articles.push({ id: form.articles[i].id, quantity: form.articles[i].quantity, amount: amount});
-        totalAmount += amount;
+         let product = await Product.findById(form.articles[i].id);
+         let oldQuantity = product.quantity;
+         let newQuantity = oldQuantity - form.articles[i].quantity;
+
+         if(newQuantity < 0) {
+             canChangeStock = false;
+             available = false;
+         } else if (newQuantity === 0) {
+             canChangeStock = true;
+             available = false;
+         } else {
+             canChangeStock = true;
+             available = true;
+         }
+         changeStock.push({ id: form.articles[i].id, quantity: newQuantity, available: available, canChangeStock: canChangeStock})
+
+         let amount = product.price * form.articles[i].quantity;
+         articles.push({
+             id: product.id,
+             pictures: product.pictures,
+             name: product.name,
+             events: product.events,
+             category: product.category,
+             description: product.description,
+             price: product.price,
+             quantityBuy: form.articles[i].quantity,
+             amount: amount
+         });
+         totalAmount += amount;
     };
 
     /*----------------------- A lier au systeme fraix de port -------------------------*/
@@ -230,7 +329,7 @@ async function calculate(form) {
     form.shipping_fee = shipping_fee;
     form.articles = articles;
     form.totalAmount = totalAmount + shipping_fee;
-    return form;
+    return {form: form, changeStock: changeStock};
 }
 
 /*----------- VERIFY --------------*/
@@ -240,7 +339,7 @@ async function verifyEntry(order, token) {
 
     let verifId = checkObjectId(decoded.id);
     let idExist;
-    
+
     order.client_ID = decoded.id;
 
     if(verifId.success === true) {

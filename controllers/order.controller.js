@@ -1,5 +1,4 @@
 const OrderService = require('../services/order.service')
-const Order = require("../models/orderModel");
 const jwt = require('jsonwebtoken');
 const checkTokenMiddleware = require('../controllers/jwt.controller');
 
@@ -69,8 +68,17 @@ exports.getAllOrder = async (req, res) => {
 exports.getOneOrder = async (req, res) => {
     try {
         let oneOrder = await OrderService.getOneOrder(req.params);
-        res.status(200);
-        res.send(oneOrder);
+        if(oneOrder.success) {
+            res.status(200);
+            res.send(oneOrder);
+        } else {
+            res.status(400);
+            res.send({
+                success: false,
+                errors: 'id invalide!'
+            });
+        }
+
     } catch (e) {
 
         console.log("catch" + e);
@@ -85,8 +93,16 @@ exports.getOneOrder = async (req, res) => {
 exports.getOrderByUser = async (req, res) => {
     try {
         let oneOrder = await OrderService.getOrderByUser(req.params.id);
-        res.status(200);
-        res.send(oneOrder);
+        if(typeof oneOrder === "object" && oneOrder.length > 0) {
+            res.status(200);
+            res.send(oneOrder);
+        } else {
+            res.status(400);
+            res.send({
+                success:false,
+                errors: "Id Invalide ou pas de commande"
+            });
+        }
     } catch (e) {
 
         console.log("catch" + e);
@@ -122,8 +138,9 @@ exports.updateOrder = async (req, res) => {
 
 exports.deleteOrder = async ( req, res ) => {
     try {
-        let order = await Order.findByIdAndDelete(req.params.id);
-        if (order) {
+
+        let order = await OrderService.deleteOrderById(req.params.id);
+        if (order.success) {
             res.status(200);
             res.send({
                 success: true,

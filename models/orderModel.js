@@ -12,7 +12,29 @@ const OrderSchema = new mongoose.Schema({
                 type: String,
                 required: true,
             },
-            quantity: {
+            name: {
+                type: String,
+                required: true,
+            },
+            category: {
+                type: String,
+                required: true,
+            },
+            description: {
+                type: String,
+                required: true,
+            },
+            pictures: {
+                type: Array
+            },
+            events: {
+                type: Array,
+            },
+            price: {
+                type: Number,
+                required: true,
+            },
+            quantityBuy: {
                 type: Number,
                 required: true,
             },
