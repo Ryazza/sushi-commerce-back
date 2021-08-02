@@ -53,7 +53,7 @@ exports.checkTokenAdmin = async function(req, res, next) {
     if (user.admin) {
         return next()
     } else {
-        res.status(400).json({ message: 'Error. Bad token' })
+        res.status(400).json({ message: 'Error. Bad admin token' })
     }
 
 }

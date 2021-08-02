@@ -52,7 +52,7 @@ exports.addOrder = async (form, token) => {
             } else {
                 return {
                     success: false,
-                    message: "Les produits suivants n'ont pas le stock suffisant " + insufficientStock + "!"
+                    message: "Les produits suivants n'ont pas de stock suffisant " + insufficientStock + "!"
                 };
             }
 
@@ -119,7 +119,7 @@ exports.getOneOrder = async ({ id }) => {
         if(verifId.success === false) {
             return {
                 success: false,
-                message: "Id invalide",
+                message: "ID invalide",
             }
         } else {
             let order = await Order.findById(id)
@@ -131,7 +131,7 @@ exports.getOneOrder = async ({ id }) => {
             } else {
                 return {
                     success: false,
-                    error: "id invalide"
+                    error: "ID invalide"
                 }
             }
         }
@@ -146,7 +146,7 @@ exports.getOrderByUser = async ( client_id ) => {
     if(verifId === false) {
         return {
             success: false,
-            message: "Id invalide",
+            message: "ID invalide",
         }
     } else {
         try {
@@ -176,7 +176,7 @@ exports.updateOrder = async (id, change, token ) => {
         if (!order) {
             return {
                 success: false,
-                message: "Numero de commande incorrect",
+                message: "Numéro de commande incorrect",
             }
         }
 
@@ -197,7 +197,7 @@ exports.updateOrder = async (id, change, token ) => {
 
             return {
                 success: true,
-                message: "Votre Commande a bien été modifié",
+                message: "Votre Commande a bien été modifiée",
                 order: changeValid,
             };
         } else {
@@ -218,7 +218,7 @@ exports.deleteOrderById = async (id) => {
         if(verifId.success === false) {
             return {
                 success: false,
-                message: "Id invalide",
+                message: "ID invalide",
             }
         } else {
             let response = await Order.deleteOne({_id: id})
@@ -347,7 +347,7 @@ async function verifyEntry(order, token) {
     } else {
         return {
             success: false,
-            message: "Id invalide" + verifId.message,
+            message: "ID invalide" + verifId.message,
             errors: "client_ID"
         };
     }
@@ -355,7 +355,7 @@ async function verifyEntry(order, token) {
     if (!idExist) {
         return {
             success: false,
-            message: "Id invalide Client" + order.client_ID,
+            message: "ID invalide Client" + order.client_ID,
             errors: "client_ID"
         };
     }
@@ -363,7 +363,7 @@ async function verifyEntry(order, token) {
     if(typeof order.articles === "undefined") {
         return {
             success: false,
-            message: "Vous devez enregistrez un article pour une commande",
+            message: "Vous devez enregistrer un article pour une commande",
             errors: "articles"
         };
     } else {
@@ -410,7 +410,7 @@ async function verifyEntry(order, token) {
         if(typeof order.status === "undefined" || order.status.length < 1) {
             return {
                 success: false,
-                message: "vous devez renseigner un status de commande (préparation ou envoyé)",
+                message: "vous devez renseigner un statut de commande ('préparation' ou 'envoyé')",
                 errors: "status"
             };
         }
@@ -426,7 +426,7 @@ async function verifyEntry(order, token) {
         if(order.status !== "préparation" && order.status !== "envoyé") {
             return {
                 success: false,
-                message: "Le status doit être préparation ou envoyé",
+                message: "Le status doit être 'préparation' ou 'envoyé'",
                 errors: "status"
             };
         }

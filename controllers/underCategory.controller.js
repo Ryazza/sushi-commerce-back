@@ -26,7 +26,7 @@ exports.getOneUnderCategory = async (req, res) => {
         res.send(oneUnderCategory);
     } catch (e) {
 
-        console.log("catch" + e);
+        console.log( e);
         res.status(400)
         res.send({
             success: false,
@@ -42,7 +42,7 @@ exports.getOneSubCategoryAndProduct = async (req, res) => {
         res.send(oneUnderCategory);
     } catch (e) {
 
-        console.log("catch" + e);
+        console.log(e);
         res.status(400)
         res.send({
             success: false,
@@ -68,7 +68,7 @@ exports.createUnderCategory = async (req, res) => {
         }
 
     } catch (e) {
-        console.log("rentré catch"+ e);
+        console.log(e);
         res.status(400)
         res.send({
             success: false,
@@ -91,7 +91,7 @@ exports.updateUnderCategory = async (req, res) => {
             res.send(underCategoryServiceRes);
         }
     } catch (e) {
-        console.log("catch " + e)
+        console.log(e)
         res.status(400);
         res.send({
             success: false,

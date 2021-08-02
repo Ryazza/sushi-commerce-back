@@ -51,7 +51,7 @@ exports.createCategory = async (req, res) => {
         }
 
     } catch (e) {
-        console.log("rentré catch"+ e);
+        console.log("create category catch", e);
         res.status(400)
         res.send({
             success: false,
@@ -74,7 +74,7 @@ exports.updateCategory = async (req, res) => {
             res.send(categoryServiceRes);
         }
     } catch (e) {
-        console.log("catch " + e)
+        console.log("update category catch " , e)
         res.status(400);
         res.send({
             success: false,
@@ -92,14 +92,14 @@ exports.deleteCategory = async ( req, res ) => {
             res.status(200);
             res.send({
                 success: true,
-                errors: "Sous catégorie supprimée avec succès!"
+                errors: "Sous-catégorie supprimée avec succès!"
             })
 
         } else {
             res.status(400)
             res.send({
                 success: false,
-                errors: "Sous catégorie non valide!"
+                errors: "Sous-catégorie non valide!"
             })
         }
     } catch (e) {
