@@ -6,7 +6,7 @@ function checkForm(form) {
     if (form.name.length > 25 || form.name.length < 3) {
         return {
             success: false,
-            error: "le nom du produit doit comprendre entre 3 et 25 caractères"
+            error: "le nom du produit doit contenir entre 3 et 25 caractères"
         }
     }
     if (form.description.length > 255) {
@@ -67,26 +67,26 @@ async function checkStockUpdate(form, id, availableAuto = false) {
     if (typeof form.quantity !== "number") {
         return {
             success: false,
-            error: "la quantité doit être un nombre"
+            error: "La quantité doit être un nombre"
         }
     }
     if (!form.quantity) {
         return {
             success: false,
-            error: "la quantité doit être indiqué"
+            error: "La quantité doit être indiquée"
         }
     }
     if (!availableAuto) {
         if (typeof form.available !== "boolean") {
             return {
                 success: false,
-                error: "Disponible doit être définit"
+                error: "'Disponible' doit être définit"
             }
         }
         if (!form.available) {
             return {
                 success: false,
-                error: "Disponible doit être indiqué"
+                error: "'Disponible' doit être indiqué"
             }
         }
     }
@@ -168,7 +168,7 @@ exports.getOneProduct = async (id) => {
         if(!product) {
             return {
                 success: false,
-                error: "id incorrect"
+                error: "ID incorrect"
             }
         }
 
@@ -350,7 +350,7 @@ async function moreOrLess(id, stayNumber) {
         await product.save();
         return {
             success: true,
-            message: "Votre produit a été mis à jour! nouvelle quantité " + stayNumber
+            message: "Votre produit a été mis à jour! nouvelle quantité :" + stayNumber
         };
     } else {
         return {
@@ -443,14 +443,14 @@ checkId = async (products) => {
         if (!product.id) {
             result += {
                 success: false,
-                error: "chaque objet doit avoir un id"
+                error: "Chaque objet doit avoir un id"
             }
         }
         let search = await Product.exists({_id: product.id})
         if (!search) {
             result = {
                 success: false,
-                error:  "au moins une id n'existe pas"
+                error:  "Au moins une id n'existe pas"
             }
         }
 
@@ -495,7 +495,7 @@ exports.updateEvent = async (products, eventType) => {
                 message= "Base de donnée non modifiée"
             }
             else{
-                message = "base de donnée modifiée avec succès"
+                message = "Base de donnée modifiée avec succès"
             }
         })
         return {

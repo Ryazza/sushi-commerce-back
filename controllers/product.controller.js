@@ -270,7 +270,6 @@ exports.updateEvent = async (req,res)=>{
         res.send({
             success: false,
             errors: e,
-            toto: "toto"
         })
     }
 }
