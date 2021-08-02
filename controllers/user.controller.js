@@ -193,7 +193,7 @@ exports.updateMailAdmin = async (req, res) => {
             res.status(400);
             res.send({
                 success: false,
-                message: "Vous ne pouvez pas modifié votre email d'ici !"
+                message: "Vous ne pouvez pas modifier votre email d'ici !"
             });
         }
     } catch (e) {
@@ -222,7 +222,7 @@ exports.updateRole = async (req, res) => {
             res.status(400);
             res.send({
                 success: false,
-                message: "Vous ne pouvez pas modifié votre rôle !"
+                message: "Vous ne pouvez pas modifier votre rôle !"
             });
         }
     } catch (e) {

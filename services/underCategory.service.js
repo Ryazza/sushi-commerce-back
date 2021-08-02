@@ -54,7 +54,7 @@ exports.getOneSubCategoryAndProduct = async ({ id }) => {
         if(verifId.success === false) {
             return {
                 success: false,
-                message: "Votre sous categorie n'existe pas!"
+                message: "Votre sous-catégorie n'existe pas!"
             }
         }
         let underCategory = await Product.find({subCategoryId: id}).sort({name: 1});
@@ -87,7 +87,7 @@ exports.createUnderCategory = async (form) => {
             if(testCategorie.length > 0) {
                 return {
                     success: false,
-                    message: "La sous catégorie existe déjà"
+                    message: "La sous-catégorie existe déjà"
                 }
             } else {
                 const underCategory = new UnderCategory({createdAt: new Date(), updateAt: new Date()});
@@ -127,7 +127,7 @@ exports.updateUnderCategory = async (id, change) => {
             )
             return {
                 success: true,
-                message: "Votre sous catégorie a bien été modifiée",
+                message: "Votre sous-catégorie a bien été modifiée",
                 subCategory: change,
             };
         } else {
@@ -186,13 +186,13 @@ async function verifyEntry(underCategory, checkValue = null, id=null, update= fa
             if(!idExist) {
                 return {
                     success: false,
-                    message: "Votre categorie n'existe pas!"
+                    message: "Votre catégorie n'existe pas!"
                 }
             }
         } else {
             return {
                 success: false,
-                message: "Votre categorie n'existe pas!"
+                message: "Votre catégorie n'existe pas!"
             }
         }
     }
@@ -219,27 +219,27 @@ async function verifyEntry(underCategory, checkValue = null, id=null, update= fa
         } else {
             return {
                 success: false,
-                message: "Le champ category doit être remplis!"
+                message: "Le champ 'category' doit être remplis!"
             }
         }
 
         if(typeof underCategory.name === "undefined") {
             return {
                 success: false,
-                message: "Vous devez définir une sous catégorie",
+                message: "Vous devez définir une sous-catégorie",
                 error: "name"
             };
 
         } else if (typeof underCategory.name !== "string") {
             return {
                 success: false,
-                message: "Vous devez rentrer des caractères alphabétiques pour votre sous catégorie",
+                message: "Vous devez rentrer des caractères alphabétiques pour votre sous-catégorie",
                 error: "name"
             };
         } else if (underCategory.name.length < 3) {
             return {
                 success: false,
-                message: "3 caractères minimum pour votre sous catégorie",
+                message: "3 caractères minimum pour votre sous-catégorie",
                 error: "name"
             };
         }
@@ -254,14 +254,14 @@ async function verifyEntry(underCategory, checkValue = null, id=null, update= fa
                 if(checkLastName !== underCategory.name) {
                     return {
                         success: false,
-                        message: "Votre nom de sous catégorie existe déjà !",
+                        message: "Votre nom de sous-catégorie existe déjà !",
                     }
                 }
             }
             if(update === false) {
                 return {
                     success: false,
-                    message: "Votre nom de sous catégorie existe déjà !",
+                    message: "Votre nom de sous-catégorie existe déjà !",
                 }
             }
         }

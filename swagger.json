@@ -233,7 +233,6 @@
         }
       },
       "delete": {
-<<<<<<< HEAD
         "tags": [],
         "description": "",
         "parameters": [
@@ -259,8 +258,6 @@
     },
     "/order/byUser/{id}": {
       "get": {
-=======
->>>>>>> 63-finir-le-crud-product
         "tags": [],
         "description": "",
         "parameters": [
@@ -284,53 +281,7 @@
         }
       }
     },
-<<<<<<< HEAD
     "/order/status/{status}/{order}": {
-=======
-    "/order/byUser/{id}": {
->>>>>>> 63-finir-le-crud-product
-      "get": {
-        "tags": [],
-        "description": "",
-        "parameters": [
-          {
-<<<<<<< HEAD
-            "name": "status",
-            "in": "path",
-            "required": true,
-            "type": "string"
-          },
-          {
-            "name": "order",
-=======
-            "name": "id",
->>>>>>> 63-finir-le-crud-product
-            "in": "path",
-            "required": true,
-            "type": "string"
-          }
-        ],
-        "responses": {
-          "200": {
-            "description": "OK"
-          },
-          "400": {
-            "description": "Bad Request"
-          },
-          "401": {
-            "description": "Unauthorized"
-          },
-          "403": {
-            "description": "Forbidden"
-          }
-        }
-      }
-    },
-<<<<<<< HEAD
-    "/product/": {
-=======
-    "/order/status/{status}/{order}": {
->>>>>>> 63-finir-le-crud-product
       "get": {
         "tags": [],
         "description": "",
@@ -354,120 +305,18 @@
           },
           "400": {
             "description": "Bad Request"
-          }
-        }
-      }
-    },
-    "/product/{id}": {
-      "get": {
-        "tags": [],
-        "description": "",
-        "parameters": [
-          {
-            "name": "id",
-            "in": "path",
-            "required": true,
-            "type": "string"
-          }
-        ],
-        "responses": {
-          "200": {
-            "description": "OK"
           },
-<<<<<<< HEAD
-          "400": {
-            "description": "Bad Request"
-<<<<<<< HEAD
-=======
           "401": {
             "description": "Unauthorized"
           },
           "403": {
             "description": "Forbidden"
->>>>>>> 63-finir-le-crud-product
-=======
-          },
-          "401": {
-            "description": "Unauthorized"
->>>>>>> preDev
           }
         }
       }
     },
-<<<<<<< HEAD
-    "/product/search/{keyword}": {
-      "get": {
-        "tags": [],
-        "description": "",
-        "parameters": [
-          {
-            "name": "keyword",
-            "in": "path",
-            "required": true,
-            "type": "string"
-          }
-        ],
-        "responses": {
-          "200": {
-            "description": "OK"
-          },
-          "400": {
-            "description": "Bad Request"
-          }
-        }
-      }
-    },
-    "/product/one/{id}": {
-      "get": {
-        "tags": [],
-        "description": "",
-        "parameters": [
-          {
-            "name": "id",
-            "in": "path",
-            "required": true,
-            "type": "string"
-          }
-        ],
-        "responses": {
-          "200": {
-            "description": "OK"
-          },
-          "400": {
-            "description": "Bad Request"
-          }
-        }
-      }
-    },
-    "/product/sort/{type}": {
-      "get": {
-        "tags": [],
-        "description": "",
-        "parameters": [
-          {
-            "name": "type",
-            "in": "path",
-            "required": true,
-            "type": "string"
-          }
-        ],
-        "responses": {
-          "200": {
-            "description": "OK"
-          },
-          "400": {
-            "description": "Bad Request"
-<<<<<<< HEAD
-          }
-        }
-      }
-    },
-    "/product/create": {
-      "post": {
-=======
     "/product/": {
       "get": {
->>>>>>> 63-finir-le-crud-product
         "tags": [],
         "description": "",
         "parameters": [],
@@ -497,13 +346,53 @@
         }
       }
     },
-<<<<<<< HEAD
-    "/product/update/{id}": {
-      "put": {
-=======
+    "/product/{id}": {
+      "get": {
+        "tags": [],
+        "description": "",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          },
+          "400": {
+            "description": "Bad Request"
+          }
+        }
+      },
+      "delete": {
+        "tags": [],
+        "description": "",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          },
+          "400": {
+            "description": "Bad Request"
+          },
+          "401": {
+            "description": "Unauthorized"
+          }
+        }
+      }
+    },
     "/product/search/{keyword}": {
       "get": {
->>>>>>> 63-finir-le-crud-product
         "tags": [],
         "description": "",
         "parameters": [
@@ -515,24 +404,6 @@
           }
         ],
         "responses": {
-          "201": {
-            "description": "Created"
-          },
-          "400": {
-            "description": "Bad Request"
-          },
-          "401": {
-            "description": "Unauthorized"
-          }
-        }
-      }
-    },
-    "/product/verifyStock": {
-      "get": {
-        "tags": [],
-        "description": "",
-        "parameters": [],
-        "responses": {
           "200": {
             "description": "OK"
           },
@@ -542,13 +413,8 @@
         }
       }
     },
-<<<<<<< HEAD
-    "/product/deduceStock/{id}": {
-      "put": {
-=======
     "/product/one/{id}": {
       "get": {
->>>>>>> 63-finir-le-crud-product
         "tags": [],
         "description": "",
         "parameters": [
@@ -560,8 +426,8 @@
           }
         ],
         "responses": {
-          "201": {
-            "description": "Created"
+          "200": {
+            "description": "OK"
           },
           "400": {
             "description": "Bad Request"
@@ -569,13 +435,8 @@
         }
       }
     },
-<<<<<<< HEAD
-    "/product/addStock/{id}": {
-      "put": {
-=======
     "/product/sort/{type}": {
       "get": {
->>>>>>> 63-finir-le-crud-product
         "tags": [],
         "description": "",
         "parameters": [
@@ -587,31 +448,11 @@
           }
         ],
         "responses": {
-          "201": {
-            "description": "Created"
-          },
-          "400": {
-            "description": "Bad Request"
-          },
-          "401": {
-            "description": "Unauthorized"
-          }
-        }
-      }
-    },
-    "/admin/all": {
-      "get": {
-        "tags": [],
-        "description": "",
-        "parameters": [],
-        "responses": {
           "200": {
             "description": "OK"
           },
           "400": {
             "description": "Bad Request"
-=======
->>>>>>> preDev
           }
         }
       }
@@ -634,20 +475,8 @@
         }
       }
     },
-<<<<<<< HEAD
-<<<<<<< HEAD
-    "/admin/{id}": {
-      "delete": {
-=======
     "/product/update/{id}": {
       "put": {
->>>>>>> 63-finir-le-crud-product
-=======
-    "/product/create": {
-      "post": {
-    "/product/update/{id}": {
-      "put": {
->>>>>>> preDev
         "tags": [],
         "description": "",
         "parameters": [
@@ -661,11 +490,6 @@
         "responses": {
           "201": {
             "description": "Created"
-<<<<<<< HEAD
-=======
-          "201": {
-            "description": "Created"
->>>>>>> preDev
           },
           "400": {
             "description": "Bad Request"
@@ -694,25 +518,13 @@
         }
       }
     },
-<<<<<<< HEAD
-<<<<<<< HEAD
-    "/admin/email/{id}": {
-=======
     "/product/update_event/{event}": {
->>>>>>> 63-finir-le-crud-product
-=======
-    "/product/update/{id}": {
-      "put": {
-    "/product/update_event/{event}": {
->>>>>>> preDev
       "put": {
         "tags": [],
         "description": "",
         "parameters": [
           {
-<<<<<<< HEAD
-<<<<<<< HEAD
-            "name": "id",
+            "name": "event",
             "in": "path",
             "required": true,
             "type": "string"
@@ -731,43 +543,7 @@
         }
       }
     },
-    "/admin/role/{id}": {
-      "put": {
-        "tags": [],
-        "description": "",
-        "parameters": [
-          {
-            "name": "id",
-=======
-            "name": "event",
->>>>>>> 63-finir-le-crud-product
-=======
-            "name": "id",
-            "name": "event",
->>>>>>> preDev
-            "in": "path",
-            "required": true,
-            "type": "string"
-          }
-        ],
-        "responses": {
-          "200": {
-            "description": "OK"
-          },
-          "400": {
-            "description": "Bad Request"
-          },
-          "401": {
-            "description": "Unauthorized"
-          }
-        }
-      }
-    },
-<<<<<<< HEAD
-    "/category/All": {
-=======
     "/product/verifyStock": {
->>>>>>> 63-finir-le-crud-product
       "get": {
         "tags": [],
         "description": "",
@@ -785,13 +561,8 @@
         }
       }
     },
-<<<<<<< HEAD
-    "/category/{id}": {
-      "get": {
-=======
     "/product/deduceStock/{id}": {
       "put": {
->>>>>>> 63-finir-le-crud-product
         "tags": [],
         "description": "",
         "parameters": [
@@ -813,10 +584,6 @@
             "description": "Unauthorized"
           }
         }
-<<<<<<< HEAD
-      },
-      "put": {
-=======
       }
     },
     "/product/addStock/{id}": {
@@ -844,52 +611,11 @@
         }
       }
     },
-<<<<<<< HEAD
-    "/product/{id}": {
-      "delete": {
->>>>>>> 63-finir-le-crud-product
-=======
     "/admin/all": {
       "get": {
->>>>>>> preDev
         "tags": [],
         "description": "",
         "parameters": [],
-        "responses": {
-          "200": {
-            "description": "OK"
-          },
-          "400": {
-            "description": "Bad Request"
-          },
-          "401": {
-            "description": "Unauthorized"
-          }
-        }
-<<<<<<< HEAD
-      },
-      "delete": {
-=======
-      }
-    },
-<<<<<<< HEAD
-    "/admin/all": {
-      "get": {
->>>>>>> 63-finir-le-crud-product
-=======
-    "/product/{id}": {
-      "delete": {
->>>>>>> preDev
-        "tags": [],
-        "description": "",
-        "parameters": [
-          {
-            "name": "id",
-            "in": "path",
-            "required": true,
-            "type": "string"
-          }
-        ],
         "responses": {
           "200": {
             "description": "OK"
@@ -905,11 +631,6 @@
     },
     "/admin/{id}": {
       "delete": {
-<<<<<<< HEAD
-=======
-    "/admin/all": {
-      "get": {
->>>>>>> preDev
         "tags": [],
         "description": "",
         "parameters": [
@@ -933,13 +654,8 @@
         }
       }
     },
-<<<<<<< HEAD
-    "/category/": {
-      "post": {
-=======
     "/admin/email/{id}": {
       "put": {
->>>>>>> 63-finir-le-crud-product
         "tags": [],
         "description": "",
         "parameters": [
@@ -963,12 +679,159 @@
         }
       }
     },
-<<<<<<< HEAD
+    "/admin/role/{id}": {
+      "put": {
+        "tags": [],
+        "description": "",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          },
+          "400": {
+            "description": "Bad Request"
+          },
+          "401": {
+            "description": "Unauthorized"
+          }
+        }
+      }
+    },
+    "/category/All": {
+      "get": {
+        "tags": [],
+        "description": "",
+        "parameters": [],
+        "responses": {
+          "200": {
+            "description": "OK"
+          },
+          "400": {
+            "description": "Bad Request"
+          }
+        }
+      }
+    },
+    "/category/{id}": {
+      "get": {
+        "tags": [],
+        "description": "",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          },
+          "400": {
+            "description": "Bad Request"
+          }
+        }
+      },
+      "put": {
+        "tags": [],
+        "description": "",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          },
+          "400": {
+            "description": "Bad Request"
+          },
+          "401": {
+            "description": "Unauthorized"
+          }
+        }
+      },
+      "delete": {
+        "tags": [],
+        "description": "",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          },
+          "400": {
+            "description": "Bad Request"
+          },
+          "401": {
+            "description": "Unauthorized"
+          }
+        }
+      }
+    },
+    "/category/": {
+      "post": {
+        "tags": [],
+        "description": "",
+        "parameters": [],
+        "responses": {
+          "201": {
+            "description": "Created"
+          },
+          "400": {
+            "description": "Bad Request"
+          },
+          "401": {
+            "description": "Unauthorized"
+          }
+        }
+      }
+    },
     "/underCategory/All": {
       "get": {
         "tags": [],
         "description": "",
         "parameters": [],
+        "responses": {
+          "200": {
+            "description": "OK"
+          },
+          "400": {
+            "description": "Bad Request"
+          }
+        }
+      }
+    },
+    "/underCategory/{id}/products": {
+      "get": {
+        "tags": [],
+        "description": "",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          }
+        ],
         "responses": {
           "200": {
             "description": "OK"
@@ -1000,9 +863,6 @@
           }
         }
       },
-=======
-    "/admin/role/{id}": {
->>>>>>> 63-finir-le-crud-product
       "put": {
         "tags": [],
         "description": "",
@@ -1017,7 +877,6 @@
         "responses": {
           "200": {
             "description": "OK"
-<<<<<<< HEAD
           },
           "400": {
             "description": "Bad Request"
@@ -1059,8 +918,6 @@
         "responses": {
           "201": {
             "description": "Created"
-=======
->>>>>>> 63-finir-le-crud-product
           },
           "400": {
             "description": "Bad Request"
