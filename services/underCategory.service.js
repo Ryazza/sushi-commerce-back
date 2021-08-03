@@ -1,4 +1,4 @@
-const UnderCategory = require('../models/underCategoryModel');
+const UnderCategory = require('../models/subCategoryModel');
 const Product = require('../models/productModel');
 const Category = require('../models/categoryModel');
 const mongoose = require('mongoose');
