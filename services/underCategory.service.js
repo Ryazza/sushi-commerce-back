@@ -1,6 +1,7 @@
 const UnderCategory = require('../models/underCategoryModel');
 const Product = require('../models/productModel');
 const Category = require('../models/categoryModel');
+const mongoose = require('mongoose');
 const { checkObjectId } = require('../helper/dbHelper');
 
 /*------------------------- USER ---------------------------*/
@@ -115,6 +116,7 @@ exports.updateUnderCategory = async (id, change) => {
 
     try {
         let verify = await verifyEntry(change, true, id, true);
+        console.log(verify)
         if(verify.success === true) {
 
             change.name = change.name.toLowerCase();
@@ -125,6 +127,23 @@ exports.updateUnderCategory = async (id, change) => {
                 change,
                 { new: true }
             )
+            if(verify.changeCategory) {
+                await Category.findOneAndUpdate(
+                    { _id: verify.newIdCategory },
+                    { subCategory: mongoose.Types.ObjectId(id) },
+                    { new: true }
+                )
+                await Category.findOneAndUpdate(
+                    { _id: verify.oldIdCategory },
+                    {
+                        $pull: {
+                            subCategory: mongoose.Types.ObjectId(id)
+                        }
+                    },
+                    { new: true }
+                )
+
+            }
             return {
                 success: true,
                 message: "Votre sous-catégorie a bien été modifiée",
@@ -180,7 +199,6 @@ async function verifyEntry(underCategory, checkValue = null, id=null, update= fa
 
     if(id !== null) {
         let verifId = checkObjectId(id);
-        console.log(id)
         if(verifId.success === true) {
             let idExist = await UnderCategory.findById(id);
             if(!idExist) {
@@ -197,25 +215,27 @@ async function verifyEntry(underCategory, checkValue = null, id=null, update= fa
         }
     }
 
+    let oldIdCategory = "";
+    let newIdCategory = ""; // si update recuperation du nouveau id pour comparaison a l ancien
+
     if (checkValue !== null) {
 
         if(typeof underCategory.category !== "undefined") {
             let verifId = checkObjectId(underCategory.category);
 
+
             if(verifId.success === true) {
-                console.log(underCategory.category)
                 let idExist = await Category.findById(underCategory.category);
+                newIdCategory = idExist._id; // recuperation du futur id pour comparaison
 
                 if(!idExist) {
-                    console.log(idExist)
-                    console.log("rentré sous 1")
                     return {
                         success: false,
                         message: "Votre catégorie n'existe pas!",
                     }
                 }
+
             } else {
-                console.log("rentré encore sous 1")
                 return {
                     success: false,
                     message: "Votre catégorie n'existe pas!"
@@ -224,7 +244,7 @@ async function verifyEntry(underCategory, checkValue = null, id=null, update= fa
         } else {
             return {
                 success: false,
-                message: "Le champ 'category' doit être remplis!"
+                message: "Le champ 'categorie' doit être remplis!"
             }
         }
 
@@ -247,6 +267,12 @@ async function verifyEntry(underCategory, checkValue = null, id=null, update= fa
                 message: "3 caractères minimum pour votre sous-catégorie",
                 error: "name"
             };
+        }
+
+
+        if(update) {
+            let currentSubCat = await UnderCategory.findById(id);
+            oldIdCategory = currentSubCat.category;
         }
 
         underCategory.name = underCategory.name.toLowerCase();
@@ -290,7 +316,26 @@ async function verifyEntry(underCategory, checkValue = null, id=null, update= fa
             };
         }
     }
-    return { success: true };
+    if(update === true) {
+        if(JSON.stringify(newIdCategory) !== JSON.stringify(oldIdCategory)) {
+            console.log("pas bon la")
+            return {
+                success: true,
+                changeCategory: true,
+                newIdCategory: newIdCategory,
+                oldIdCategory: oldIdCategory
+            }
+        } else {
+            return {
+                success: true,
+                changeCategory: false
+            };
+        }
+
+    } else {
+        return { success: true }
+    }
+
 }
 
 String.prototype.capitalizeFirstLetter = function() {
