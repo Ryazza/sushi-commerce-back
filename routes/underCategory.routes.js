@@ -5,9 +5,9 @@ const checkTokenMiddleware = require('../controllers/jwt.controller');
 
 /*---------------- USER -----------------*/
 
-router.get('/All', underCategoryController.getAllUnderCategory)
-router.get('/:id/products', underCategoryController.getOneSubCategoryAndProduct)
-router.get('/:id', underCategoryController.getOneUnderCategory)
+router.get('/All', underCategoryController.getAllUnderCategory);
+router.get('/:id/products', underCategoryController.getOneSubCategoryAndProduct);
+router.get('/:id', underCategoryController.getOneUnderCategory);
 
 
 /*--------------- ADMIN -----------------*/
