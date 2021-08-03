@@ -1,4 +1,4 @@
-const UnderCategory = require('../models/subCategoryModel');
+const SubCategory = require('../models/subCategoryModel');
 const Product = require('../models/productModel');
 const Category = require('../models/categoryModel');
 const mongoose = require('mongoose');
@@ -6,12 +6,12 @@ const { checkObjectId } = require('../helper/dbHelper');
 
 /*------------------------- USER ---------------------------*/
 
-exports.getAllUnderCategory = async () => {
+exports.getAllSubCategory = async () => {
 
     try {
-        let underCategory = await UnderCategory.find().populate('category', "id name description");
+        let subCategory = await SubCategory.find().populate('category', "id name description");
 
-        if(underCategory.length < 1) {
+        if(subCategory.length < 1) {
             return {
                 success: false,
                 error: "Il n'y a pas encore de catégorie"
@@ -19,7 +19,7 @@ exports.getAllUnderCategory = async () => {
         } else {
             return {
                 success: true,
-                subCategory: underCategory
+                subCategory: subCategory
             }
         }
 
@@ -29,10 +29,10 @@ exports.getAllUnderCategory = async () => {
 
 }
 
-exports.getOneUnderCategory = async ({ id }) => {
+exports.getOneSubCategory = async ({ id }) => {
     try {
-        let underCategory = await UnderCategory.findById(id).populate("category", "name description");
-        if(typeof underCategory !== "object" || !underCategory) {
+        let subCategory = await SubCategory.findById(id).populate("category", "name description");
+        if(typeof subCategory !== "object" || !subCategory) {
             return {
                 success: false,
                 error: "Votre id est incorrect"
@@ -40,7 +40,7 @@ exports.getOneUnderCategory = async ({ id }) => {
         } else {
             return {
                 success: true,
-                subCategory: underCategory
+                subCategory: subCategory
             }
         }
     } catch (e) {
@@ -58,8 +58,8 @@ exports.getOneSubCategoryAndProduct = async ({ id }) => {
                 message: "Votre sous-catégorie n'existe pas!"
             }
         }
-        let underCategory = await Product.find({subCategoryId: id}).sort({name: 1});
-        if(typeof underCategory !== "object" || !underCategory || underCategory.length < 1) {
+        let subCategory = await Product.find({subCategoryId: id}).sort({name: 1});
+        if(typeof subCategory !== "object" || !subCategory || subCategory.length < 1) {
             return {
                 success: false,
                 error: "Cette catégorie n'existe pas ou n'a pas encore de produits"
@@ -67,7 +67,7 @@ exports.getOneSubCategoryAndProduct = async ({ id }) => {
         } else {
             return {
                 success: true,
-                products: underCategory
+                products: subCategory
             }
         }
     } catch (e) {
@@ -77,23 +77,23 @@ exports.getOneSubCategoryAndProduct = async ({ id }) => {
 
 /*-------------------------- ADMIN ---------------------------*/
 
-exports.createUnderCategory = async (form) => {
+exports.createSubCategory = async (form) => {
     try {
         let verify = await verifyEntry(form, true);
 
         if(verify.success === true) {
             form.name = form.name.toLowerCase();
             form.name = form.name.capitalizeFirstLetter();
-            let testCategorie = await UnderCategory.find({name: form.name});
+            let testCategorie = await SubCategory.find({name: form.name});
             if(testCategorie.length > 0) {
                 return {
                     success: false,
                     message: "La sous-catégorie existe déjà"
                 }
             } else {
-                const underCategory = new UnderCategory({createdAt: new Date(), updateAt: new Date()});
-                Object.assign(underCategory, form);
-                let response = await underCategory.save();
+                const subCategory = new SubCategory({createdAt: new Date(), updateAt: new Date()});
+                Object.assign(subCategory, form);
+                let response = await subCategory.save();
                 await Category.findOneAndUpdate({ _id: form.category}, { $push: { subCategory: response.id }} );
 
                 return {
@@ -112,7 +112,7 @@ exports.createUnderCategory = async (form) => {
     }
 }
 
-exports.updateUnderCategory = async (id, change) => {
+exports.updateSubCategory = async (id, change) => {
 
     try {
         let verify = await verifyEntry(change, true, id, true);
@@ -122,7 +122,7 @@ exports.updateUnderCategory = async (id, change) => {
             change.name = change.name.toLowerCase();
             change.name = change.name.capitalizeFirstLetter();
 
-            await UnderCategory.findOneAndUpdate(
+            await SubCategory.findOneAndUpdate(
                 { _id: id },
                 change,
                 { new: true }
@@ -161,12 +161,12 @@ exports.updateUnderCategory = async (id, change) => {
     }
 }
 
-exports.deleteUnderCategoryById = async (id) => {
+exports.deleteSubCategoryById = async (id) => {
     try {
         let verifId = checkObjectId(id);
 
         if(verifId.success === true) {
-            let idExist = await UnderCategory.findById(id);
+            let idExist = await SubCategory.findById(id);
             if(!idExist) {
                 return {
                     success: false,
@@ -177,13 +177,13 @@ exports.deleteUnderCategoryById = async (id) => {
                 success: false,
             }
         }
-        let testUnderCategorie = await UnderCategory.findById(id);
-        if(!testUnderCategorie) {
+        let testSubCategorie = await SubCategory.findById(id);
+        if(!testSubCategorie) {
             return {
                 success: false,
             }
         }
-        await UnderCategory.deleteOne({_id: id})
+        await SubCategory.deleteOne({_id: id})
         return {
             success: true
         }
@@ -192,15 +192,15 @@ exports.deleteUnderCategoryById = async (id) => {
     }
 }
 
-/*----------- function for add update underCategory -----------------*/
+/*----------- function for add update subCategory -----------------*/
 
 /*----------- VERIFY --------------*/
-async function verifyEntry(underCategory, checkValue = null, id=null, update= false) {
+async function verifyEntry(subCategory, checkValue = null, id=null, update= false) {
 
     if(id !== null) {
         let verifId = checkObjectId(id);
         if(verifId.success === true) {
-            let idExist = await UnderCategory.findById(id);
+            let idExist = await SubCategory.findById(id);
             if(!idExist) {
                 return {
                     success: false,
@@ -220,12 +220,12 @@ async function verifyEntry(underCategory, checkValue = null, id=null, update= fa
 
     if (checkValue !== null) {
 
-        if(typeof underCategory.category !== "undefined") {
-            let verifId = checkObjectId(underCategory.category);
+        if(typeof subCategory.category !== "undefined") {
+            let verifId = checkObjectId(subCategory.category);
 
 
             if(verifId.success === true) {
-                let idExist = await Category.findById(underCategory.category);
+                let idExist = await Category.findById(subCategory.category);
                 newIdCategory = idExist._id; // recuperation du futur id pour comparaison
 
                 if(!idExist) {
@@ -248,20 +248,20 @@ async function verifyEntry(underCategory, checkValue = null, id=null, update= fa
             }
         }
 
-        if(typeof underCategory.name === "undefined") {
+        if(typeof subCategory.name === "undefined") {
             return {
                 success: false,
                 message: "Vous devez définir une sous-catégorie",
                 error: "name"
             };
 
-        } else if (typeof underCategory.name !== "string") {
+        } else if (typeof subCategory.name !== "string") {
             return {
                 success: false,
                 message: "Vous devez rentrer des caractères alphabétiques pour votre sous-catégorie",
                 error: "name"
             };
-        } else if (underCategory.name.length < 3) {
+        } else if (subCategory.name.length < 3) {
             return {
                 success: false,
                 message: "3 caractères minimum pour votre sous-catégorie",
@@ -271,14 +271,14 @@ async function verifyEntry(underCategory, checkValue = null, id=null, update= fa
 
 
         if(update) {
-            let currentSubCat = await UnderCategory.findById(id);
+            let currentSubCat = await SubCategory.findById(id);
             oldIdCategory = currentSubCat.category;
         }
 
-        underCategory.name = underCategory.name.toLowerCase();
-        underCategory.name = underCategory.name.capitalizeFirstLetter();
+        subCategory.name = subCategory.name.toLowerCase();
+        subCategory.name = subCategory.name.capitalizeFirstLetter();
 
-        let nameExist = await UnderCategory.find({ name: underCategory.name});
+        let nameExist = await SubCategory.find({ name: subCategory.name});
 
         if(nameExist.length > 0 && update === false ) {
             return {
@@ -286,9 +286,9 @@ async function verifyEntry(underCategory, checkValue = null, id=null, update= fa
                 message: "Votre nom de sous catégorie existe déjà !",
             }
         } else if(update === true && nameExist.length > 0) {
-            let updatedSubCategory = await UnderCategory.findById(id);
+            let updatedSubCategory = await SubCategory.findById(id);
 
-            if(updatedSubCategory.name !== underCategory.name ) {
+            if(updatedSubCategory.name !== subCategory.name ) {
                 return {
                     success: false,
                     message: "Votre nom de sous-catégorie existe déjà !",
@@ -296,22 +296,22 @@ async function verifyEntry(underCategory, checkValue = null, id=null, update= fa
             }
         }
 
-        if(typeof underCategory.description === "undefined") {
+        if(typeof subCategory.description === "undefined") {
             return {
                 success: false,
                 message: "Vous devez définir une description"
             };
 
-        } else if (typeof underCategory.description !== "string") {
+        } else if (typeof subCategory.description !== "string") {
             return {
                 success: false,
                 message: "Vous devez rentrer des caractères alphabétiques pour votre description",
                 error: "name"
             };
-        } else if (underCategory.description.length < 5 || underCategory.description.length > 100) {
+        } else if (subCategory.description.length < 5 || subCategory.description.length > 255) {
             return {
                 success: false,
-                message: "5 à 100 caractères pour votre description",
+                message: "5 à 255 caractères pour votre description",
                 error: "name"
             };
         }

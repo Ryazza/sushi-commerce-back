@@ -40,7 +40,7 @@ exports.createCategory = async (req, res) => {
     try {
         const token = req.headers.authorization && checkTokenMiddleware.extractBearerToken(req.headers.authorization);
 
-        let newCategory = await CategoryService.createCategory(req.body, token)
+        let newCategory = await CategoryService.createCategory(req.body)
 
         if (newCategory.success === true) {
             res.status(201)

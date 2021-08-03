@@ -1,0 +1,273 @@
+[{
+  "_id": {
+    "$oid": "61095114b24da43eb2616c00"
+  },
+  "createdAt": {
+    "$date": "2021-08-03T14:22:12.339Z"
+  },
+  "category": {
+    "$oid": "610950c2e889783e643ab725"
+  },
+  "name": "Pc portables",
+  "img": "https://www.topachat.com/boutique/img/in/in2000/in20008857/in2000885701.jpg",
+  "description": "des ordinateurs portables",
+  "updatedAt": {
+    "$date": "2021-08-03T14:22:12.339Z"
+  },
+  "__v": 0
+},{
+  "_id": {
+    "$oid": "61095114b24da43eb2616c03"
+  },
+  "createdAt": {
+    "$date": "2021-08-03T14:22:12.345Z"
+  },
+  "category": {
+    "$oid": "610950c2e889783e643ab725"
+  },
+  "name": "Tablettes",
+  "img": "https://www.topachat.com/boutique/img/in/in2000/in20005844/in2000584401.jpg",
+  "description": "Une tablette tactile un matériel multimédia très compact composé d'une pièce unique.",
+  "updatedAt": {
+    "$date": "2021-08-03T14:22:12.345Z"
+  },
+  "__v": 0
+},{
+  "_id": {
+    "$oid": "61095114b24da43eb2616c06"
+  },
+  "createdAt": {
+    "$date": "2021-08-03T14:22:12.347Z"
+  },
+  "category": {
+    "$oid": "610950c2e889783e643ab725"
+  },
+  "name": "Ordinateurs montés",
+  "img": "https://www.topachat.com/boutique/img/in/in2000/in20008912/in2000891201.jpg",
+  "description": "ordinateur monté, c'est la solution idéale quand on ne sait pas trop comment faire pour en monter un soi-même.",
+  "updatedAt": {
+    "$date": "2021-08-03T14:22:12.347Z"
+  },
+  "__v": 0
+},{
+  "_id": {
+    "$oid": "61095114b24da43eb2616c09"
+  },
+  "createdAt": {
+    "$date": "2021-08-03T14:22:12.348Z"
+  },
+  "category": {
+    "$oid": "610950c2e889783e643ab725"
+  },
+  "name": "Accessoires",
+  "img": "https://www.topachat.com/boutique/img/in/in2000/in20005463/in2000546301.jpg",
+  "description": "Ces accessoires, à l'image de la sacoche ordinateur portable, vont très vite devenir indispensables. ",
+  "updatedAt": {
+    "$date": "2021-08-03T14:22:12.348Z"
+  },
+  "__v": 0
+},{
+  "_id": {
+    "$oid": "61095114b24da43eb2616c0c"
+  },
+  "createdAt": {
+    "$date": "2021-08-03T14:22:12.349Z"
+  },
+  "category": {
+    "$oid": "610950c2e889783e643ab727"
+  },
+  "name": "Processeurs",
+  "img": "https://www.topachat.com/boutique/img/in/in2000/in20008411/in2000841101.jpg",
+  "description": "Le processeur occupe une place centrale dans le fonctionnement de ton PC. Il a pour mission d'exécuter et de traiter les données des programmes.",
+  "updatedAt": {
+    "$date": "2021-08-03T14:22:12.349Z"
+  },
+  "__v": 0
+},{
+  "_id": {
+    "$oid": "61095114b24da43eb2616c0f"
+  },
+  "createdAt": {
+    "$date": "2021-08-03T14:22:12.351Z"
+  },
+  "category": {
+    "$oid": "610950c2e889783e643ab727"
+  },
+  "name": "Cartes mères",
+  "img": "https://www.topachat.com/images/interface/category/w_/w_cm_1151/w_cm_1151-200x200.jpg",
+  "description": "La carte mère est le composant central de l'ordinateur. Le choix du processeur détermine le choix de la carte mère ou vice-versa. ",
+  "updatedAt": {
+    "$date": "2021-08-03T14:22:12.351Z"
+  },
+  "__v": 0
+},{
+  "_id": {
+    "$oid": "61095114b24da43eb2616c12"
+  },
+  "createdAt": {
+    "$date": "2021-08-03T14:22:12.352Z"
+  },
+  "category": {
+    "$oid": "610950c2e889783e643ab727"
+  },
+  "name": "Cartes graphiques",
+  "img": "https://www.topachat.com/images/interface/category/wg/wgfx_pcie/wgfx_pcie-60x60.jpg",
+  "description": "a carte graphique est le principal composant qui détermine la qualité d'affichage des jeux. Si vous souhaitez utiliser des jeux récents, nous vous conseillons une carte graphique performante.",
+  "updatedAt": {
+    "$date": "2021-08-03T14:22:12.352Z"
+  },
+  "__v": 0
+},{
+  "_id": {
+    "$oid": "61095114b24da43eb2616c15"
+  },
+  "createdAt": {
+    "$date": "2021-08-03T14:22:12.353Z"
+  },
+  "category": {
+    "$oid": "610950c2e889783e643ab729"
+  },
+  "name": "Ecrans pc",
+  "img": "https://www.topachat.com/images/interface/category/w_/w_moni/w_moni-60x60.jpg",
+  "description": "Les écrans plats disposent de multiples caractéristiques afin de se plier à vos besoins. Au-delà de la taille, il est important de tenir compte de la dalle en fonction de l'utilisation que vous ferez de votre moniteur.",
+  "updatedAt": {
+    "$date": "2021-08-03T14:22:12.353Z"
+  },
+  "__v": 0
+},{
+  "_id": {
+    "$oid": "61095114b24da43eb2616c18"
+  },
+  "createdAt": {
+    "$date": "2021-08-03T14:22:12.354Z"
+  },
+  "category": {
+    "$oid": "610950c2e889783e643ab729"
+  },
+  "name": "Fauteuils",
+  "img": "https://www.topachat.com/images/interface/category/wg/wg_faut/wg_faut-60x60.jpg",
+  "description": "Le fauteuil est le point final de ton setup gaming, c'est lui qui te permettra de rester des heures devant ton pc sur mesure que ce soit pour travailler ou jouer sans craindre l'arrivé du mal de dos.",
+  "updatedAt": {
+    "$date": "2021-08-03T14:22:12.354Z"
+  },
+  "__v": 0
+},{
+  "_id": {
+    "$oid": "61095114b24da43eb2616c1b"
+  },
+  "createdAt": {
+    "$date": "2021-08-03T14:22:12.356Z"
+  },
+  "category": {
+    "$oid": "610950c2e889783e643ab729"
+  },
+  "name": "Claviers et souris",
+  "img": "https://www.topachat.com/images/interface/category/w_/w_cla_sou/w_cla_sou-60x60.jpg",
+  "description": "Si vous désirez acquérir un ordinateur de bureau, vous devrez également acheter une souris et un clavier, ces deux appareils électroniques étant indispensables.",
+  "updatedAt": {
+    "$date": "2021-08-03T14:22:12.356Z"
+  },
+  "__v": 0
+},{
+  "_id": {
+    "$oid": "61095114b24da43eb2616c1e"
+  },
+  "createdAt": {
+    "$date": "2021-08-03T14:22:12.357Z"
+  },
+  "category": {
+    "$oid": "610950c2e889783e643ab729"
+  },
+  "name": "Casques",
+  "img": "https://www.topachat.com/images/interface/category/wx/wx_cas_m/wx_cas_m-60x60.jpg",
+  "description": "Notre sélection de casques s'adapte à tous vos besoins : choisissez un casque Bluetooth sans fil, si vous êtes sportifs, optez pour un casque réducteur de bruit ou laissez-vous simplement tenter par des écouteurs si vous voulez jouer la discrétion.",
+  "updatedAt": {
+    "$date": "2021-08-03T14:22:12.357Z"
+  },
+  "__v": 0
+},{
+  "_id": {
+    "$oid": "61095114b24da43eb2616c21"
+  },
+  "createdAt": {
+    "$date": "2021-08-03T14:22:12.358Z"
+  },
+  "category": {
+    "$oid": "610950c2e889783e643ab72b"
+  },
+  "name": "Nas",
+  "img": "https://www.topachat.com/images/interface/category/w_/w_nas/w_nas-60x60.jpg",
+  "description": "Le NAS, dont le sigle est issu de l'anglais et signifie « Network Attached Storageest », est un serveur de fichiers autonomes. Relié à un réseau, il se comporte comme le disque dur d'un ordinateur classique.",
+  "updatedAt": {
+    "$date": "2021-08-03T14:22:12.358Z"
+  },
+  "__v": 0
+},{
+  "_id": {
+    "$oid": "61095114b24da43eb2616c24"
+  },
+  "createdAt": {
+    "$date": "2021-08-03T14:22:12.359Z"
+  },
+  "category": {
+    "$oid": "610950c2e889783e643ab72b"
+  },
+  "name": "Cpl",
+  "img": "https://www.topachat.com/images/interface/category/wt/wt_cpl/wt_cpl-60x60.jpg",
+  "description": "Indispensable pour évitez les câbles partout dans l'appartement ! Car parfois le Wifi ne passe pas (ou pas stable) alors le CPL devient la solution.",
+  "updatedAt": {
+    "$date": "2021-08-03T14:22:12.359Z"
+  },
+  "__v": 0
+},{
+  "_id": {
+    "$oid": "61095114b24da43eb2616c27"
+  },
+  "createdAt": {
+    "$date": "2021-08-03T14:22:12.360Z"
+  },
+  "category": {
+    "$oid": "610950c2e889783e643ab72b"
+  },
+  "name": "Cable réseau",
+  "img": "https://www.topachat.com/images/interface/category/wt/wt_cab/wt_cab-60x60.jpg",
+  "description": "Notre sélection si vous recherchez un câble Ethernet pour connecter votre ordinateur à votre box ou à votre réseau local.",
+  "updatedAt": {
+    "$date": "2021-08-03T14:22:12.360Z"
+  },
+  "__v": 0
+},{
+  "_id": {
+    "$oid": "61095114b24da43eb2616c2a"
+  },
+  "createdAt": {
+    "$date": "2021-08-03T14:22:12.361Z"
+  },
+  "category": {
+    "$oid": "610950c2e889783e643ab72b"
+  },
+  "name": "Routeur",
+  "img": "https://www.topachat.com/images/interface/category/wt/wt_rou/wt_rou-60x60.jpg",
+  "description": "Découvrez toute la gamme de modem / routeur Wi-Fi.",
+  "updatedAt": {
+    "$date": "2021-08-03T14:22:12.361Z"
+  },
+  "__v": 0
+},{
+  "_id": {
+    "$oid": "61095114b24da43eb2616c2d"
+  },
+  "createdAt": {
+    "$date": "2021-08-03T14:22:12.363Z"
+  },
+  "category": {
+    "$oid": "610950c2e889783e643ab727"
+  },
+  "name": "Mémoire",
+  "img": "https://www.topachat.com/images/interface/gammes/memoire-pc-60x60.jpg",
+  "description": "La quantité de mémoire présente dans votre ordinateur influe grandement sur sa vitesse. Plus les besoins sont élevés, plus vous aurez besoin de mémoire !",
+  "updatedAt": {
+    "$date": "2021-08-03T14:22:12.363Z"
+  },
+  "__v": 0
+}]

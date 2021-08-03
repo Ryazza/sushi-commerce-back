@@ -29,7 +29,7 @@ exports.getAllCategory = async () => {
 
 exports.getOneCategory = async ({ id }) => {
     try {
-        let category = await Category.findById(id).populate("subCategory", "name description");
+        let category = await Category.findById(id).populate("subCategory", "name description img");
         if(typeof category !== "object" || !category) {
             return {
                 success: false,
@@ -58,23 +58,29 @@ exports.createCategory = async (form) => {
             form.name = form.name.capitalizeFirstLetter();
             let testCategorie = await Category.find({name: form.name});
             if(testCategorie.length > 0) {
+
                 return {
                     success: false,
-                    message: "La catégorie existe déjà"
+                    message: "La catégorie existe déjà",
+                    categoryId: testCategorie._id
                 }
             } else {
                 const category = new Category({createdAt: new Date(), updateAt: new Date()});
                 Object.assign(category, form);
                 await category.save();
+                console.log("create category ID", category._id)
                 return {
-                    success: true
+                    success: true,
+                    categoryId: category._id
                 };
             }
         } else {
             return {
                 success: verify.success,
                 message: verify.message,
-                errors: verify.error
+                errors: verify.error,
+                categoryId : verify.categoryId
+
             }
         }
     } catch (e) {
@@ -194,19 +200,22 @@ async function verifyEntry(category, checkValue = null, id=null, update = false)
         category.name = category.name.capitalizeFirstLetter();
 
         let nameExist = await Category.find({ name: category.name});
-
         if(nameExist.length > 0 && update === false ) {
             return {
                 success: false,
                 message: "Votre nom de catégorie existe déjà !",
+                categoryId: nameExist[0]._id
+
             }
         } else if(update === true && nameExist.length > 0) {
             let updatedCategory = await Category.findById(id);
-
+            // console.log("updatedCategory", updatedCategory)
             if(updatedCategory.name !== category.name ) {
+
                 return {
                     success: false,
                     message: "Votre nom de catégorie existe déjà !",
+                    categoryId: updatedCategory._id
                 }
             }
         }
