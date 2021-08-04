@@ -8,7 +8,7 @@ let i = 0;
 let saveId=[]
 
 
-let cat = categories.forEach(async category => {
+categories.forEach(async category => {
 
     try {
         let newCategory = await CategoryService.createCategory(category)

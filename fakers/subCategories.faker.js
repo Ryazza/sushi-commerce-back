@@ -20,8 +20,10 @@ let saveId=[]
             if (newSubCategory.success === true) {
                 console.log(subCategory.name, newSubCategory)
             } else {
-                console.log( subCategory.name+" new subCategory failed", newSubCategory)
+                // console.log( subCategory.name+" : new subCategory failed", newSubCategory)
             }
+            saveId.push({name: subCategory.name, id: newSubCategory.subCategoryId})
+
 
         } catch (e) {
 
@@ -29,6 +31,8 @@ let saveId=[]
         }
         i++;
         if (i === subCategories.length) {
+            console.log("saveId", saveId)
+
             return true;
 
         }
