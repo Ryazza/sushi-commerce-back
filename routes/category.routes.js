@@ -10,10 +10,10 @@ router.get('/:id', categoryController.getOneCategory)
 
 /*--------------- ADMIN -----------------*/
 
-router.post('/', checkTokenMiddleware.checkToken, categoryController.createCategory)
+router.post('/', checkTokenMiddleware.checkTokenAdmin, categoryController.createCategory)
 
-router.put('/:id', checkTokenMiddleware.checkToken, categoryController.updateCategory)
+router.put('/:id', checkTokenMiddleware.checkTokenAdmin, categoryController.updateCategory)
 
-router.delete('/:id', checkTokenMiddleware.checkToken, categoryController.deleteCategory)
+router.delete('/:id', checkTokenMiddleware.checkTokenAdmin, categoryController.deleteCategory)
 
 module.exports = router;

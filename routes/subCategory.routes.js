@@ -9,13 +9,14 @@ router.get('/All', subCategoryController.getAllSubCategory);
 router.get('/:id/products', subCategoryController.getOneSubCategoryAndProduct);
 router.get('/:id', subCategoryController.getOneSubCategory);
 
-
 /*--------------- ADMIN -----------------*/
 
-router.post('/', checkTokenMiddleware.checkToken, subCategoryController.createSubCategory)
+router.get('/admin/:id/products', checkTokenMiddleware.checkTokenAdmin, subCategoryController.getOneSubCategoryAndProductAdmin);
 
-router.put('/:id', checkTokenMiddleware.checkToken, subCategoryController.updateSubCategory)
+router.post('/', checkTokenMiddleware.checkTokenAdmin, subCategoryController.createSubCategory)
 
-router.delete('/:id', checkTokenMiddleware.checkToken, subCategoryController.deleteSubCategory)
+router.put('/:id', checkTokenMiddleware.checkTokenAdmin, subCategoryController.updateSubCategory)
+
+router.delete('/:id', checkTokenMiddleware.checkTokenAdmin, subCategoryController.deleteSubCategory)
 
 module.exports = router;

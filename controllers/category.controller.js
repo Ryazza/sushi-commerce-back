@@ -13,7 +13,7 @@ exports.getAllCategory = async (req, res) => {
         res.status(400)
         res.send({
             success: false,
-            errors: e.errors
+            errors: e
         })
     }
 }
@@ -29,7 +29,7 @@ exports.getOneCategory = async (req, res) => {
         res.status(400)
         res.send({
             success: false,
-            errors: e.errors
+            errors: e
         })
     }
 }
@@ -55,7 +55,7 @@ exports.createCategory = async (req, res) => {
         res.status(400)
         res.send({
             success: false,
-            errors: e.errors
+            errors: e
         })
     }
 }
@@ -78,7 +78,7 @@ exports.updateCategory = async (req, res) => {
         res.status(400);
         res.send({
             success: false,
-            errors: e.errors
+            errors: e
         });
     }
 }
@@ -103,6 +103,11 @@ exports.deleteCategory = async ( req, res ) => {
             })
         }
     } catch (e) {
-        throw e;
+        console.log("catch" + e);
+        res.status(400)
+        res.send({
+            success: false,
+            errors: e
+        })
     }
 }

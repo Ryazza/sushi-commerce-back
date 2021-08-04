@@ -58,7 +58,9 @@ exports.getOneSubCategoryAndProduct = async ({ id }) => {
                 message: "Votre sous-catégorie n'existe pas!"
             }
         }
-        let subCategory = await Product.find({subCategoryId: id}).sort({name: 1});
+        let subCategory = await Product.find({subCategoryId: id})
+            .populate({ path:"subCategoryId", populate:{ path: "category", model: 'category', select: "_id name"}, model: 'subCategory', select: "_id name"})
+            .sort({name: 1}).select("-createdAt -__v sale-1 -views");
         if(typeof subCategory !== "object" || !subCategory || subCategory.length < 1) {
             return {
                 success: false,
@@ -76,6 +78,35 @@ exports.getOneSubCategoryAndProduct = async ({ id }) => {
 }
 
 /*-------------------------- ADMIN ---------------------------*/
+
+exports.getOneSubCategoryAndProductAdmin = async ({ id }) => {
+    try {
+        let verifId = checkObjectId(id);
+
+        if(verifId.success === false) {
+            return {
+                success: false,
+                message: "Votre sous-catégorie n'existe pas!"
+            }
+        }
+        let subCategory = await Product.find({subCategoryId: id})
+            .populate({ path:"subCategoryId", populate:{ path: "category", model: 'category', select: "_id name"}, model: 'subCategory', select: "_id name"})
+            .sort({name: 1});
+        if(typeof subCategory !== "object" || !subCategory || subCategory.length < 1) {
+            return {
+                success: false,
+                error: "Cette catégorie n'existe pas ou n'a pas encore de produits"
+            }
+        } else {
+            return {
+                success: true,
+                products: subCategory
+            }
+        }
+    } catch (e) {
+        throw e;
+    }
+}
 
 exports.createSubCategory = async (form) => {
     try {
@@ -269,7 +300,6 @@ async function verifyEntry(subCategory, checkValue = null, id=null, update= fals
             };
         }
 
-
         if(update) {
             let currentSubCat = await SubCategory.findById(id);
             oldIdCategory = currentSubCat.category;
@@ -335,7 +365,6 @@ async function verifyEntry(subCategory, checkValue = null, id=null, update= fals
     } else {
         return { success: true }
     }
-
 }
 
 String.prototype.capitalizeFirstLetter = function() {

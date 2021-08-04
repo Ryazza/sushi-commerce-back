@@ -14,7 +14,7 @@ exports.getAllSubCategory = async (req, res) => {
         res.status(400)
         res.send({
             success: false,
-            errors: e.errors
+            errors: e
         })
     }
 }
@@ -30,7 +30,7 @@ exports.getOneSubCategory = async (req, res) => {
         res.status(400)
         res.send({
             success: false,
-            errors: e.errors
+            errors: e
         })
     }
 }
@@ -46,12 +46,28 @@ exports.getOneSubCategoryAndProduct = async (req, res) => {
         res.status(400)
         res.send({
             success: false,
-            errors: e.errors
+            errors: e
         })
     }
 }
 
 /*------------------------ ADMIN -------------------------------*/
+
+exports.getOneSubCategoryAndProductAdmin = async (req, res) => {
+    try {
+        let oneSubCategory = await subCategoryService.getOneSubCategoryAndProductAdmin(req.params);
+        res.status(200);
+        res.send(oneSubCategory);
+    } catch (e) {
+
+        console.log(e);
+        res.status(400)
+        res.send({
+            success: false,
+            errors: e
+        })
+    }
+}
 
 exports.createSubCategory = async (req, res) => {
     try {
@@ -72,7 +88,7 @@ exports.createSubCategory = async (req, res) => {
         res.status(400)
         res.send({
             success: false,
-            errors: e.errors
+            errors: e
         })
     }
 }
@@ -95,7 +111,7 @@ exports.updateSubCategory = async (req, res) => {
         res.status(400);
         res.send({
             success: false,
-            errors: e.errors
+            errors: e
         });
     }
 }
