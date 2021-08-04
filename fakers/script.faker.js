@@ -1,7 +1,7 @@
 categories = require('./categories_data.json');
 subCategories = require('./subCategories_data.json');
 
-Lib = require('./categories.faker')
+Lib = require('./lib.faker')
 
 let saveId = []
 
@@ -27,9 +27,9 @@ exploitSaveId = (saveId) => {
 }
 
 Lib.pushCategories(categories)
-    .then(r => exploitSaveId(saveId))
-    // .then(r => console.log("okay", r))
-    .then(r => Lib.pushSubCategories(r))
-    .then(r => console.log('okay', r));
+    // .then(r => exploitSaveId(saveId))
+    .then(r => console.log("okay", r))
+// .then(r => Lib.pushSubCategories(r))
+    // .then(r => console.log('okay', r));
 
 console.log("fin du script")
