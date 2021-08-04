@@ -1,0 +1,161 @@
+[
+  {
+    "subCategoryId": "61095114b24da43eb2616c12",
+    "name": "GeForce RTX 3080 Ti GAMING X TRIO",
+    "brand": "MSI",
+    "description": "Carte graphique PCI-Express overclockée - Refroidissement semi-passif (mode 0 dB) - Avec backplate - Compatible VR",
+    "bigPicture": "https://www.topachat.com/boutique/img/in/in2000/in20009184/in2000918402@2x.jpg",
+    "pictures": [
+      {
+        "url": "https://www.topachat.com/boutique/img/in/in2000/in20009184/01.jpg"
+      },
+      {
+        "url": "https://www.topachat.com/boutique/img/in/in2000/in20009184/02.jpg"
+      },
+      {
+        "url": "https://www.topachat.com/boutique/img/in/in2000/in20009184/03.jpg"
+      },
+      {
+        "url": "https://www.topachat.com/boutique/img/in/in2000/in20009184/05.jpg"
+      },
+      {
+        "url": "https://www.topachat.com/boutique/img/in/in2000/in20009184/06.jpg"
+      }
+    ],
+    "events": {
+      "new": true,
+      "discount": 10,
+      "endOfSerie": false
+    },
+    "quantity": 10,
+    "available": true,
+    "price": 1959.99
+  },
+  {
+    "subCategoryId": "61095114b24da43eb2616c12",
+    "name": "PowerColor Radeon RX 6900 XT Red Devil",
+    "brand": "AMD",
+    "description": "Carte graphique PCI-Express overclockée - Refroidissement semi-passif (mode 0 dB) - Avec backplate - Compatible VR",
+    "bigPicture": "https://www.topachat.com/boutique/img/in/in2000/in20006800/in2000680002@2x.jpg",
+    "pictures": [
+      {
+        "url": "https://www.topachat.com/boutique/img/in/in2000/in20006800/03b.jpg"
+      },
+      {
+        "url": "https://www.topachat.com/boutique/img/in/in2000/in20006800/04b.jpg"
+      },
+      {
+        "url": "https://www.topachat.com/boutique/img/in/in2000/in20006800/05b.jpg"
+      },
+      {
+        "url": "https://www.topachat.com/boutique/img/in/in2000/in20006800/05b.jpg"
+      },
+      {
+        "url": "https://www.topachat.com/boutique/img/in/in2000/in20006800/06b.jpg"
+      }
+    ],
+    "events": {
+      "new": true,
+      "discount": null,
+      "endOfSerie": false
+    },
+    "quantity": 20,
+    "available": true,
+    "price": 1679.99
+  },
+  {
+    "subCategoryId": "61095114b24da43eb2616c12",
+    "name": "Asus GeForce GT 1030 2G-BRK",
+    "brand": "ASUS",
+    "description": "Carte graphique PCI-Express overclockée",
+    "bigPicture": "https://www.topachat.com/boutique/img/in/in2000/in20006758/in2000675802.jpg",
+    "pictures": [
+      {
+        "url": "https://www.topachat.com/boutique/img/in/in2000/in20006758/02.jpg"
+      },
+      {
+        "url": "https://www.topachat.com/boutique/img/in/in2000/in20006758/03.jpg"
+      },
+      {
+        "url": "https://www.topachat.com/boutique/img/in/in2000/in20006758/04.jpg"
+      }
+    ],
+    "events": {
+      "new": false,
+      "discount": 20,
+      "endOfSerie": true
+    },
+    "quantity": 3,
+    "available": true,
+    "price": 112.99
+  },
+  {
+    "subCategoryId": "61095114b24da43eb2616c2d",
+    "name": "Crucial MX500 1 To",
+    "brand": "CRUCIAL",
+    "description": "SSD 2.5\" - SATA III - Contrôleur Silicon Motion SM2258 - Lecture max : 560 Mo/s - Ecriture max : 510 Mo/s - Mémoire TLC 3D",
+    "bigPicture": "https://www.topachat.com/boutique/img/in/in1010/in10108971/in1010897102.jpg",
+    "pictures": [
+      {
+        "url": "https://www.topachat.com/boutique/img/in/in1010/in10108971/in1010897102.jpg"
+      }
+    ],
+    "events": {
+      "new": true,
+      "discount": 5,
+      "endOfSerie": false
+    },
+    "quantity": 120,
+    "available": true,
+    "price": 114.99
+  },
+  {
+    "subCategoryId": "61095114b24da43eb2616c2d",
+    "name": "Samsung Série 870 QVO 1 To",
+    "brand": "SAMSUNG",
+    "description": "SSD 2.5 - SATA III - Contrôleur Samsung MKX - Lecture max : 560 Mo/s - Ecriture max : 530 Mo/s - Mémoire QLC 3D",
+    "bigPicture": "https://www.topachat.com/boutique/img/in/in2000/in20002628/in2000262802@2x.jpg",
+    "pictures": [
+      {
+        "url": "https://www.topachat.com/boutique/img/in/in2000/in20002628/02.jpg"
+      },
+      {
+        "url": "https://www.topachat.com/boutique/img/in/in2000/in20002628/03.jpg"
+      },
+      {
+        "url": "https://www.topachat.com/boutique/img/in/in2000/in20002628/04.jpg"
+      },
+      {
+        "url": "https://www.topachat.com/boutique/img/in/in2000/in20002628/05.jpg"
+      }
+    ],
+    "events": {
+      "new": true,
+      "discount": 50,
+      "endOfSerie": false
+    },
+    "quantity": 200,
+    "available": true,
+    "price": 124.99
+  },
+  {
+    "subCategoryId": "61095114b24da43eb2616c2d",
+    "name": "Kingston A2000 1 To",
+    "brand": "KINGSTON",
+    "description": "SSD M.2 - PCI-Express 3.0 NVMe - Lecture max : 2200 Mo/s - Ecriture max : 2200 Mo/s - Mémoire TLC 3D",
+    "bigPicture": "https://www.topachat.com/boutique/img/in/in1101/in11017749/in1101774902@2x.jpg",
+    "pictures": [
+      {
+        "url": "https://www.topachat.com/boutique/img/in/in1101/in11017749/02.jpg"
+      }
+    ],
+    "events": {
+      "new": true,
+      "discount": 50,
+      "endOfSerie": false
+    },
+    "quantity": 200,
+    "available": true,
+    "price": 124.99
+  }
+]
