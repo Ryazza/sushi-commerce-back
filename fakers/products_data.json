@@ -478,6 +478,83 @@
     "quantity": 2,
     "available": true,
     "price": 149.99
+  },
+  {
+    "subCategoryId": "61095114b24da43eb2616c1e",
+    "name": "Logitech G PRO X",
+    "brand": "LOGITECH",
+    "description": "Casque-micro gamer 2.0 - PS4 / Xbox One / PC - USB ou 1 x Jack 3.5 mm - Carte Son externe",
+    "bigPicture": "https://www.topachat.com/boutique/img/in/in1102/in11020103/in1102010302@2x.jpg",
+    "pictures": [
+      {
+        "url": "https://www.topachat.com/boutique/img/in/in1102/in11020103/r01.jpg"
+      },
+      {
+        "url": "https://www.topachat.com/boutique/img/in/in1102/in11020103/r02.jpg"
+      }
+    ],
+    "events": {
+      "new": true,
+      "discount": null,
+      "endOfSerie": false
+    },
+    "quantity": 32,
+    "available": true,
+    "price": 119.99
+  },
+  {
+    "subCategoryId": "61095114b24da43eb2616c1e",
+    "name": "SteelSeries Arctis 7 Blanc (2019 Edition)",
+    "brand": "STEELSERIES",
+    "description": "Casque-micro gamer sans fil 7.1 - PC / Mac / PS4 - USB ou 1 x Jack 3.5 mm - Rétroéclairage RGB 16.8M de couleurs",
+    "bigPicture": "https://www.topachat.com/boutique/img/in/in1011/in10114375/in1011437502@2x.jpg",
+    "pictures": [
+      {
+        "url": "https://www.topachat.com/boutique/img/in/in1011/in10114375/02.jpg"
+      },
+      {
+        "url": "https://www.topachat.com/boutique/img/in/in1011/in10114375/03.jpg"
+      },
+      {
+        "url": "https://www.topachat.com/boutique/img/in/in1011/in10114375/04.jpg"
+      },
+      {
+        "url": "https://www.topachat.com/boutique/img/in/in1011/in10114375/05.jpg"
+      },
+      {
+        "url": "https://www.topachat.com/boutique/img/in/in1011/in10114375/06.jpg"
+      }
+    ],
+    "events": {
+      "new": true,
+      "discount": null,
+      "endOfSerie": false
+    },
+    "quantity": 21,
+    "available": true,
+    "price": 149.99
+  },
+  {
+    "subCategoryId": "61095114b24da43eb2616c1e",
+    "name": "Razer Kraken - Mercury",
+    "brand": "RAZER KRAKEN",
+    "description": "Casque-micro Gamer - PC / Mac / PS4 / Xbox One - 1 x jack 3.5mm",
+    "bigPicture": "https://www.topachat.com/boutique/img/in/in1011/in10114375/in1011437502@2x.jpg",
+    "pictures": [
+      {
+        "url": "https://www.topachat.com/boutique/img/in/in1101/in11018165/kraken2.jpg"
+      },
+      {
+        "url": "https://www.topachat.com/boutique/img/in/in1101/in11018165/kraken3.jpg"
+      }
+    ],
+    "events": {
+      "new": true,
+      "discount": null,
+      "endOfSerie": false
+    },
+    "quantity": 21,
+    "available": true,
+    "price": 79.99
   }
-
 ]
