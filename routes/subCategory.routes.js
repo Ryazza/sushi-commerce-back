@@ -11,7 +11,7 @@ router.get('/:id', subCategoryController.getOneSubCategory);
 
 /*--------------- ADMIN -----------------*/
 
-router.get('admin/:id/products', checkTokenMiddleware.checkTokenAdmin, subCategoryController.getOneSubCategoryAndProductAdmin);
+router.get('/admin/:id/products', checkTokenMiddleware.checkTokenAdmin, subCategoryController.getOneSubCategoryAndProductAdmin);
 
 router.post('/', checkTokenMiddleware.checkTokenAdmin, subCategoryController.createSubCategory)
 
