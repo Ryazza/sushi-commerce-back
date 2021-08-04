@@ -98,7 +98,7 @@ exports.addProduct = async (form) => {
 
     checkForm(form);
     try {
-        const product = new Product({createdAt: new Date()});
+        const product = new Product({createdAt: new Date(), views : 0});
         Object.assign(product, form);
         await product.save();
         return {

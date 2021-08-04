@@ -1,7 +1,6 @@
-categories = require('./categories_data.json');
-subCategories = require('./subCategories_data.json');
-const CategoryService = require('../services/category.service')
 
+const CategoryService = require('../services/category.service')
+const ProductService = require('../services/product.service')
 const SubCategoryService = require("../services/subCategory.service");
 let i = 0
 
@@ -36,6 +35,7 @@ exports.pushCategories = async (categories) => {
 
     }
 }
+
 exports.pushSubCategories = async (subCategories) => {
     let response = {
         saveId: [],
@@ -69,4 +69,38 @@ exports.pushSubCategories = async (subCategories) => {
         }
 
     }
+}
+
+exports.pushProducts = async (products)=>{
+    let response =  [];
+    let i = 0;
+    for (const product of products) {
+        try {
+            let newProduct = await ProductService.addProduct(product)
+
+            if (newProduct.success === true) {
+                response.push({name: product.name, result: newProduct})
+                console.log(product.name, newProduct)
+            } else {
+                response.push({name: product.name, result: newProduct})
+                console.log(product.name + " : new subCategory failed", newProduct)
+            }
+            response.push({name: product.name, id: newProduct._id})
+
+
+        } catch (e) {
+
+            console.log(e)
+        }
+        i++;
+
+        if (i === products.length) {
+            // console.log("saveId", saveId)
+            console.log("products.length = ", i)
+            return response;
+
+        }
+
+    }
+
 }

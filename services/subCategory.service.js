@@ -249,7 +249,7 @@ async function verifyEntry(subCategory, checkValue = null, id=null, update= fals
         } else {
             return {
                 success: false,
-                message: "Le champ 'categorie' doit être remplis!"
+                message: "Le champ 'categorie' doit être rempli!"
             }
         }
 
