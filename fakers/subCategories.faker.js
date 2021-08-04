@@ -32,34 +32,3 @@ let saveId = []
 //
 //     }
 // })
-exports.pushDatas = async (subCategories) => {
-    let response = [];
-    for (const subCategory of subCategories) {
-        try {
-            let newSubCategory = await SubCategoryService.createSubCategory(subCategory)
-
-            if (newSubCategory.success === true) {
-                response.push({name:subCategory.name, result:newSubCategory  })
-                console.log(subCategory.name, newSubCategory)
-            } else {
-                response.push({name:subCategory.name, result:newSubCategory  })
-
-                console.log(subCategory.name + " : new subCategory failed", newSubCategory)
-            }
-            saveId.push({name: subCategory.name, id: newSubCategory.subCategoryId})
-
-
-        } catch (e) {
-
-            console.log(e)
-        }
-        i++;
-        if (i === subCategories.length) {
-            // console.log("saveId", saveId)
-
-            return response;
-
-        }
-
-    }
-}

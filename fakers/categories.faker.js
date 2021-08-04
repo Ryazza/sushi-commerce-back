@@ -1,12 +1,10 @@
 categories = require('./categories_data.json');
 subCategories = require('./subCategories_data.json');
-pushSubCategories = require('./subCategories.faker');
 const CategoryService = require('../services/category.service')
-const SubCategoryService = require('../services/subCategory.service')
 const res = require("express");
 const index = require("../server");
 const {log} = require("debug");
-let i = 0;
+const SubCategoryService = require("../controllers/subCategory.controller");
 let saveId = []
 
 
@@ -34,7 +32,7 @@ let saveId = []
 //     }
 //
 // })
-pushCategories = async (categories) => {
+exports.pushCategories = async (categories) => {
 
     for (const category of categories) {
         try {
@@ -60,31 +58,36 @@ pushCategories = async (categories) => {
 
     }
 }
-findCategory = (category, saveId) => {
-    let response = false;
-    saveId.forEach(element => {
-            // console.log("element.name = ", element.name);
-            // console.log("category.category = ", category.category)
-            if (element.name === category.category) {
-                // console.log("return", element.id)
-                response = element.id;
+exports.pushSubCategories = async (subCategories) => {
+    let response = [];
+    let i=0;
+    for (const subCategory of subCategories) {
+        try {
+            let newSubCategory = await SubCategoryService.createSubCategory(subCategory)
+
+            if (newSubCategory.success === true) {
+                response.push({name:subCategory.name, result:newSubCategory  })
+                console.log(subCategory.name, newSubCategory)
+            } else {
+                response.push({name:subCategory.name, result:newSubCategory  })
+
+                console.log(subCategory.name + " : new subCategory failed", newSubCategory)
             }
+            saveId.push({name: subCategory.name, id: newSubCategory.subCategoryId})
+
+
+        } catch (e) {
+
+            console.log(e)
         }
-    )
-    return response;
+        i++;
+
+        if (i === subCategories.length) {
+            // console.log("saveId", saveId)
+
+            return response;
+
+        }
+
+    }
 }
-
-exploitSaveId = (saveId) => {
-    subCategories.forEach((subCategory) => {
-        subCategory.category = findCategory(subCategory, saveId);
-    })
-    return subCategories;
-}
-
-pushCategories(categories)
-    .then(r => exploitSaveId(saveId))
-    // .then(r => console.log("okay", r))
-    .then(r => pushSubCategories.pushDatas(r))
-    .then(r => console.log('okay', r));
-
-console.log("fin du script")
