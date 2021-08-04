@@ -222,13 +222,100 @@
       }
     ],
     "events": {
-      "new": true,
-      "discount": null,
-      "endOfSerie": false
+      "new": false,
+      "discount": 30,
+      "endOfSerie": true
     },
     "quantity": 3,
     "available": true,
     "price": 119.99
+  },
+  {
+    "subCategoryId": "61095114b24da43eb2616c1b",
+    "name": "Razer Naga Pro",
+    "brand": "RAZER",
+    "description": "Souris Gamer optique - Résolution ajustable jusqu'à 20 000 dpi - jusqu'à 20 boutons programmables - Sans fil",
+    "bigPicture": "https://www.topachat.com/boutique/img/in/in2000/in20004645/in2000464502@2x.jpg",
+    "pictures": [
+      {
+        "url": "https://www.topachat.com/boutique/img/in/in2000/in20004645/np2.jpg"
+      },
+      {
+        "url": "https://www.topachat.com/boutique/img/in/in2000/in20004645/np3.jpg"
+      },
+      {
+        "url": "https://www.topachat.com/boutique/img/in/in2000/in20004645/np4.jpg"
+      },
+      {
+        "url": "https://www.topachat.com/boutique/img/in/in2000/in20004645/np5.jpg"
+      }
+    ],
+    "events": {
+      "new": true,
+      "discount": null,
+      "endOfSerie": false
+    },
+    "quantity": 78,
+    "available": true,
+    "price": 159.99
+  },
+  {
+    "subCategoryId": "61095114b24da43eb2616c1b",
+    "name": "Cooler Master M711",
+    "brand": "COOLER MASTER",
+    "description": "Souris Gamer optique - Résolution ajustable 16000 DPI - RGB - 6 boutons programmables - 60 grammes",
+    "bigPicture": "https://www.topachat.com/boutique/img/in/in2000/in20001249/in2000124902@2x.jpg",
+    "pictures": [
+      {
+        "url": "https://www.topachat.com/boutique/img/in/in2000/in20001249/m2.jpg"
+      },
+      {
+        "url": "https://www.topachat.com/boutique/img/in/in2000/in20001249/m3.jpg"
+      },
+      {
+        "url": "https://www.topachat.com/boutique/img/in/in2000/in20001249/m4.jpg"
+      },
+      {
+        "url": "https://www.topachat.com/boutique/img/in/in2000/in20001249/m5.jpg"
+      }
+    ],
+    "events": {
+      "new": true,
+      "discount": null,
+      "endOfSerie": false
+    },
+    "quantity": 12,
+    "available": true,
+    "price": 56.99
+  },
+  {
+    "subCategoryId": "61095114b24da43eb2616c1b",
+    "name": "Corsair Harpoon RGB PRO",
+    "brand": "CORSAIR",
+    "description": "Souris Gamer optique - Résolution ajustable jusqu'à 12 000 dpi - 6 boutons programmables\n",
+    "bigPicture": "https://www.topachat.com/boutique/img/in/in1101/in11017091/in1101709102@2x.jpg",
+    "pictures": [
+      {
+        "url": "https://www.topachat.com/boutique/img/in/in1101/in11017091/02.jpg"
+      },
+      {
+        "url": "https://www.topachat.com/boutique/img/in/in1101/in11017091/03.jpg"
+      },
+      {
+        "url": "https://www.topachat.com/boutique/img/in/in1101/in11017091/04.jpg"
+      },
+      {
+        "url": "https://www.topachat.com/boutique/img/in/in1101/in11017091/05.jpg"
+      }
+    ],
+    "events": {
+      "new": true,
+      "discount": null,
+      "endOfSerie": false
+    },
+    "quantity": 21,
+    "available": true,
+    "price": 29.99
   }
 
 ]
