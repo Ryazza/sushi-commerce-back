@@ -16,6 +16,7 @@ exports.addOrder = async (form, token) => {
 
             // calcul function totalAmount and other;
             let formValid = await calculate(form);
+            console.log(formValid)
 
             const decoded = jwt.decode(token, {complete: false});
             formValid.form.client_ID = decoded.id;
@@ -274,7 +275,7 @@ async function calculate(form) {
     let totalAmount = 0;
 
      for(let i=0; i < form.articles.length; i++) {
-         let product = await Product.findById(form.articles[i].id);
+         let product = await Product.findById(form.articles[i].id).populate({ path: "subCategoryId", populate: { path: "category", select: "_id name"}, select: "_id name" });
          let oldQuantity = product.quantity;
          let newQuantity = oldQuantity - form.articles[i].quantity;
 
@@ -291,12 +292,15 @@ async function calculate(form) {
          changeStock.push({ id: form.articles[i].id, quantity: newQuantity, available: available, canChangeStock: canChangeStock})
 
          let amount = product.price * form.articles[i].quantity;
+         console.log(product)
          articles.push({
              id: product.id,
              pictures: product.pictures,
              name: product.name,
              events: product.events,
-             category: product.category,
+             category: product.subCategoryId.category.name,
+             subCategory: product.subCategoryId.name,
+             brand: product.brand,
              description: product.description,
              price: product.price,
              quantityBuy: form.articles[i].quantity,
