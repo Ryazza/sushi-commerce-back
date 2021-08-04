@@ -4,7 +4,7 @@
   "scripts": {
     "start": "node bin/www",
     "test": "jest",
-    "categories faker": " node fakers/categories.faker.js ",
+    "faker": " node fakers/script.faker.js ",
     "swagger": "node swagger.js"
   },
   "author": "sushi-team",
