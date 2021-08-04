@@ -51,7 +51,6 @@ exports.getOneCategory = async ({ id }) => {
 exports.createCategory = async (form) => {
     try {
         let verify = await verifyEntry(form, true);
-        console.log("verify", verify)
         if(verify.success === true) {
 
             form.name = form.name.toLowerCase();
