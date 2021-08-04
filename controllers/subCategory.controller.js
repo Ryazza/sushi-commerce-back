@@ -53,6 +53,22 @@ exports.getOneSubCategoryAndProduct = async (req, res) => {
 
 /*------------------------ ADMIN -------------------------------*/
 
+exports.getOneSubCategoryAndProductAdmin = async (req, res) => {
+    try {
+        let oneSubCategory = await subCategoryService.getOneSubCategoryAndProductAdmin(req.params);
+        res.status(200);
+        res.send(oneSubCategory);
+    } catch (e) {
+
+        console.log(e);
+        res.status(400)
+        res.send({
+            success: false,
+            errors: e.errors
+        })
+    }
+}
+
 exports.createSubCategory = async (req, res) => {
     try {
         const token = req.headers.authorization && checkTokenMiddleware.extractBearerToken(req.headers.authorization);
