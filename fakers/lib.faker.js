@@ -3,22 +3,26 @@ subCategories = require('./subCategories_data.json');
 const CategoryService = require('../services/category.service')
 
 const SubCategoryService = require("../services/subCategory.service");
-let saveId = []
-let i=0
+let i = 0
 
 
 exports.pushCategories = async (categories) => {
-
+    let response = {
+        saveId: [],
+        result: []
+    };
     for (const category of categories) {
         try {
             let newCategory = await CategoryService.createCategory(category)
 
             if (newCategory.success === true) {
-                console.log(category.name, newCategory)
+                response.result.push({name: category.name, result: newCategory})
+                // console.log(category.name, newCategory)
             } else {
-                console.log(category.name + " new category failed", newCategory)
+                response.result.push({name: category.name, result: newCategory})
+                // console.log(category.name + " new category failed", newCategory)
             }
-            saveId.push({name: category.name, id: newCategory.categoryId})
+            response.saveId.push({name: category.name, id: newCategory.categoryId})
 
         } catch (e) {
 
@@ -27,28 +31,28 @@ exports.pushCategories = async (categories) => {
         i++;
         if (i === categories.length) {
             // console.log("saveId", saveId)
-
-            return true;
+            return response;
         }
 
     }
 }
 exports.pushSubCategories = async (subCategories) => {
-    let response = [];
-    let i=0;
+    let response = {
+        saveId: [],
+        result: []
+    };    let i = 0;
     for (const subCategory of subCategories) {
         try {
             let newSubCategory = await SubCategoryService.createSubCategory(subCategory)
 
             if (newSubCategory.success === true) {
-                response.push({name:subCategory.name, result:newSubCategory  })
-                console.log(subCategory.name, newSubCategory)
+                response.result.push({name: subCategory.name, result: newSubCategory})
+                // console.log(subCategory.name, newSubCategory)
             } else {
-                response.push({name:subCategory.name, result:newSubCategory  })
-
-                console.log(subCategory.name + " : new subCategory failed", newSubCategory)
+                response.result.push({name: subCategory.name, result: newSubCategory})
+                // console.log(subCategory.name + " : new subCategory failed", newSubCategory)
             }
-            saveId.push({name: subCategory.name, id: newSubCategory.subCategoryId})
+            response.saveId.push({name: subCategory.name, id: newSubCategory.subCategoryId})
 
 
         } catch (e) {

@@ -1,6 +1,8 @@
 categories = require('./categories_data.json');
 subCategories = require('./subCategories_data.json');
-
+const res = require("express");
+const index = require("../server");
+const {log} = require("debug");
 Lib = require('./lib.faker')
 
 let saveId = []
@@ -19,17 +21,17 @@ findCategory = (category, saveId) => {
     return response;
 }
 
-exploitSaveId = (saveId) => {
+exploitSaveId = (data) => {
     subCategories.forEach((subCategory) => {
-        subCategory.category = findCategory(subCategory, saveId);
+        subCategory.category = findCategory(subCategory, data.saveId);
     })
     return subCategories;
 }
 
 Lib.pushCategories(categories)
-    // .then(r => exploitSaveId(saveId))
-    .then(r => console.log("okay", r))
-// .then(r => Lib.pushSubCategories(r))
-    // .then(r => console.log('okay', r));
+    .then(r => exploitSaveId(r))
+    // .then(r => console.log("okay", r))
+    .then(r => Lib.pushSubCategories(r))
+    .then(r => console.log('okay', r.result));
 
 console.log("fin du script")

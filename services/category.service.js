@@ -197,8 +197,6 @@ async function verifyEntry(category, checkValue = null, id=null, update = false)
         category.name = category.name.capitalizeFirstLetter();
 
         let nameExist = await Category.find({ name: category.name});
-        console.log("repere")
-
         if(nameExist.length > 0 && update === false ) {
             return {
                 success: false,
