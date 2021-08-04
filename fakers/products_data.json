@@ -292,7 +292,7 @@
     "subCategoryId": "61095114b24da43eb2616c1b",
     "name": "Corsair Harpoon RGB PRO",
     "brand": "CORSAIR",
-    "description": "Souris Gamer optique - Résolution ajustable jusqu'à 12 000 dpi - 6 boutons programmables\n",
+    "description": "Souris Gamer optique - Résolution ajustable jusqu'à 12 000 dpi - 6 boutons programmables",
     "bigPicture": "https://www.topachat.com/boutique/img/in/in1101/in11017091/in1101709102@2x.jpg",
     "pictures": [
       {
@@ -316,6 +316,88 @@
     "quantity": 21,
     "available": true,
     "price": 29.99
+  },
+  {
+    "subCategoryId": "61095114b24da43eb2616c18",
+    "name": "AKRacing Core EX - Noir / Rouge",
+    "brand": "AKRACING",
+    "description": "Fauteuil Gamer - Tissu - Accoudoirs 3D réglables - Assise inclinable - Poids supporté 150 Kg",
+    "bigPicture": "https://www.topachat.com/boutique/img/in/in1101/in11017091/in1101709102@2x.jpg",
+    "pictures": [
+      {
+        "url": "https://www.topachat.com/boutique/img/in/in1011/in10117889/r01.jpg"
+      },
+      {
+        "url": "https://www.topachat.com/boutique/img/in/in1011/in10117889/r02.jpg"
+      },
+      {
+        "url": "https://www.topachat.com/boutique/img/in/in1011/in10117889/r03.jpg"
+      },
+      {
+        "url": "https://www.topachat.com/boutique/img/in/in1011/in10117889/r04.jpg"
+      }
+    ],
+    "events": {
+      "new": true,
+      "discount": null,
+      "endOfSerie": false
+    },
+    "quantity": 13,
+    "available": true,
+    "price": 294.99
+  },
+  {
+    "subCategoryId": "61095114b24da43eb2616c18",
+    "name": "Noblechairs HERO - Noir / Or",
+    "brand": "NOBLECHAIRS",
+    "description": "Fauteuil Gamer - Simili Cuir - Accoudoirs 4D réglables - Assise inclinable - Poids supporté 150 Kg",
+    "bigPicture": "https://www.topachat.com/boutique/img/in/in1011/in10113096/in1011309602@2x.jpg",
+    "pictures": [
+      {
+        "url": "https://www.topachat.com/boutique/img/in/in1011/in10113096/r01.jpg"
+      },
+      {
+        "url": "https://www.topachat.com/boutique/img/in/in1011/in10113096/r02.jpg"
+      }
+    ],
+    "events": {
+      "new": true,
+      "discount": 20,
+      "endOfSerie": false
+    },
+    "quantity": 11,
+    "available": true,
+    "price": 419.99
+  },
+  {
+    "subCategoryId": "61095114b24da43eb2616c18",
+    "name": "DXRacer Formula F08 - Noir",
+    "brand": "DXRACER",
+    "description": "Fauteuil Gamer - Simili-Cuir - Accoudoirs 3D réglables - Poids supporté 150 kg",
+    "bigPicture": "https://www.topachat.com/boutique/img/in/in1010/in10109835/in1010983502@2x.jpg",
+    "pictures": [
+      {
+        "url": "https://www.topachat.com/boutique/img/in/in1010/in10109835/r01.jpg"
+      },
+      {
+        "url": "https://www.topachat.com/boutique/img/in/in1010/in10109835/r02.jpg"
+      },
+      {
+        "url": "https://www.topachat.com/boutique/img/in/in1010/in10109835/r03.jpg"
+      },
+      {
+        "url": "https://www.topachat.com/boutique/img/in/in1010/in10109835/r04.jpg"
+      }
+    ],
+    "events": {
+      "new": true,
+      "discount": 70,
+      "endOfSerie": false
+    },
+    "quantity": 8,
+    "available": true,
+    "price": 279.99
   }
+
 
 ]
