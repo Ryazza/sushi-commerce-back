@@ -154,7 +154,6 @@ exports.deleteCategoryById = async (id) => {
 
 /*----------- VERIFY --------------*/
 async function verifyEntry(category, checkValue = null, id=null, update = false) {
-
     if(id !== null) {
         let verifId = checkObjectId(id);
 
@@ -169,11 +168,10 @@ async function verifyEntry(category, checkValue = null, id=null, update = false)
         } else {
             return {
                 success: false,
-                message: "Votre catégorie n'existe pas!"
+                message: "Votre ID ne correspond pas!"
             }
         }
     }
-
     if (checkValue !== null) {
         if(typeof category.name === "undefined") {
             return {
@@ -195,7 +193,6 @@ async function verifyEntry(category, checkValue = null, id=null, update = false)
                 error: "name"
             };
         }
-
         category.name = category.name.toLowerCase();
         category.name = category.name.capitalizeFirstLetter();
 

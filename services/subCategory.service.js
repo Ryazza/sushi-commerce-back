@@ -111,7 +111,6 @@ exports.getOneSubCategoryAndProductAdmin = async ({ id }) => {
 exports.createSubCategory = async (form) => {
     try {
         let verify = await verifyEntry(form, true);
-
         if(verify.success === true) {
             form.name = form.name.toLowerCase();
             form.name = form.name.capitalizeFirstLetter();
@@ -119,7 +118,9 @@ exports.createSubCategory = async (form) => {
             if(testCategorie.length > 0) {
                 return {
                     success: false,
-                    message: "La sous-catégorie existe déjà"
+                    message: "La sous-catégorie existe déjà",
+                    categoryId: testCategorie._id
+
                 }
             } else {
                 const subCategory = new SubCategory({createdAt: new Date(), updateAt: new Date()});
@@ -128,14 +129,17 @@ exports.createSubCategory = async (form) => {
                 await Category.findOneAndUpdate({ _id: form.category}, { $push: { subCategory: response.id }} );
 
                 return {
-                    success: true
+                    success: true,
+                    subCategoryId: subCategory._id
+
                 };
             }
         } else {
             return {
                 success: verify.success,
                 message: verify.message,
-                errors: verify.error
+                errors: verify.error,
+                subCategoryId: verify.subCategoryId
             }
         }
     } catch (e) {
@@ -230,6 +234,7 @@ async function verifyEntry(subCategory, checkValue = null, id=null, update= fals
 
     if(id !== null) {
         let verifId = checkObjectId(id);
+
         if(verifId.success === true) {
             let idExist = await SubCategory.findById(id);
             if(!idExist) {
@@ -275,7 +280,7 @@ async function verifyEntry(subCategory, checkValue = null, id=null, update= fals
         } else {
             return {
                 success: false,
-                message: "Le champ 'categorie' doit être remplis!"
+                message: "Le champ 'categorie' doit être rempli!"
             }
         }
 
@@ -314,6 +319,8 @@ async function verifyEntry(subCategory, checkValue = null, id=null, update= fals
             return {
                 success: false,
                 message: "Votre nom de sous catégorie existe déjà !",
+                subCategoryId: nameExist[0]._id
+
             }
         } else if(update === true && nameExist.length > 0) {
             let updatedSubCategory = await SubCategory.findById(id);
@@ -322,6 +329,8 @@ async function verifyEntry(subCategory, checkValue = null, id=null, update= fals
                 return {
                     success: false,
                     message: "Votre nom de sous-catégorie existe déjà !",
+                    categoryId: updatedSubCategory._id
+
                 }
             }
         }
