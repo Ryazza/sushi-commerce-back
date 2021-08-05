@@ -1,6 +1,6 @@
 [
   {
-    "subCategoryId": "61095114b24da43eb2616c12",
+    "subCategoryId": "Cartes graphiques",
     "name": "GeForce RTX 3080 Ti GAMING X TRIO",
     "brand": "MSI",
     "description": "Carte graphique PCI-Express overclockée - Refroidissement semi-passif (mode 0 dB) - Avec backplate - Compatible VR",
@@ -32,7 +32,7 @@
     "price": 1959.99
   },
   {
-    "subCategoryId": "61095114b24da43eb2616c12",
+    "subCategoryId": "Cartes graphiques",
     "name": "PowerColor Radeon RX 6900 XT Red Devil",
     "brand": "AMD",
     "description": "Carte graphique PCI-Express overclockée - Refroidissement semi-passif (mode 0 dB) - Avec backplate - Compatible VR",
@@ -64,7 +64,7 @@
     "price": 1679.99
   },
   {
-    "subCategoryId": "61095114b24da43eb2616c12",
+    "subCategoryId": "Cartes graphiques",
     "name": "Asus GeForce GT 1030 2G-BRK",
     "brand": "ASUS",
     "description": "Carte graphique PCI-Express overclockée",
@@ -90,7 +90,7 @@
     "price": 112.99
   },
   {
-    "subCategoryId": "61095114b24da43eb2616c2d",
+    "subCategoryId": "Mémoire",
     "name": "Crucial MX500 1 To",
     "brand": "CRUCIAL",
     "description": "SSD 2.5\" - SATA III - Contrôleur Silicon Motion SM2258 - Lecture max : 560 Mo/s - Ecriture max : 510 Mo/s - Mémoire TLC 3D",
@@ -110,7 +110,7 @@
     "price": 114.99
   },
   {
-    "subCategoryId": "61095114b24da43eb2616c2d",
+    "subCategoryId": "Mémoire",
     "name": "Samsung Série 870 QVO 1 To",
     "brand": "SAMSUNG",
     "description": "SSD 2.5 - SATA III - Contrôleur Samsung MKX - Lecture max : 560 Mo/s - Ecriture max : 530 Mo/s - Mémoire QLC 3D",
@@ -139,7 +139,7 @@
     "price": 124.99
   },
   {
-    "subCategoryId": "61095114b24da43eb2616c2d",
+    "subCategoryId": "Mémoire",
     "name": "Kingston A2000 1 To",
     "brand": "KINGSTON",
     "description": "SSD M.2 - PCI-Express 3.0 NVMe - Lecture max : 2200 Mo/s - Ecriture max : 2200 Mo/s - Mémoire TLC 3D",
@@ -159,7 +159,7 @@
     "price": 124.99
   },
   {
-    "subCategoryId": "61095114b24da43eb2616c1b",
+    "subCategoryId": "Claviers et souris",
     "name": "Razer Ornata V2 (AZERTY)",
     "brand": "RAZER",
     "description": "Clavier Gamer - Rétroéclairage 16.8 millions de couleurs - Anti-ghosting",
@@ -182,7 +182,7 @@
     "price": 99.99
   },
   {
-    "subCategoryId": "61095114b24da43eb2616c1b",
+    "subCategoryId": "Claviers et souris",
     "name": "Corsair K55 RGB PRO (AZERTY)",
     "brand": "CORSAIR",
     "description": "Clavier Gamer - Rétroéclairage 16.8M de couleurs - Anti-ghosting",
@@ -211,7 +211,7 @@
     "price": 59.99
   },
   {
-    "subCategoryId": "61095114b24da43eb2616c1b",
+    "subCategoryId": "Claviers et souris",
     "name": "Logitech G512 Carbon (Switch GX Brown) (AZERTY)",
     "brand": "LOGITECH",
     "description": "Clavier Gamer mécanique - Rétroéclairage RGB - Anti-ghosting - Switches GX Brown",
@@ -231,7 +231,7 @@
     "price": 119.99
   },
   {
-    "subCategoryId": "61095114b24da43eb2616c1b",
+    "subCategoryId": "Claviers et souris",
     "name": "Razer Naga Pro",
     "brand": "RAZER",
     "description": "Souris Gamer optique - Résolution ajustable jusqu'à 20 000 dpi - jusqu'à 20 boutons programmables - Sans fil",
@@ -260,7 +260,7 @@
     "price": 159.99
   },
   {
-    "subCategoryId": "61095114b24da43eb2616c1b",
+    "subCategoryId": "Claviers et souris",
     "name": "Cooler Master M711",
     "brand": "COOLER MASTER",
     "description": "Souris Gamer optique - Résolution ajustable 16000 DPI - RGB - 6 boutons programmables - 60 grammes",
@@ -289,7 +289,7 @@
     "price": 56.99
   },
   {
-    "subCategoryId": "61095114b24da43eb2616c1b",
+    "subCategoryId": "Claviers et souris",
     "name": "Corsair Harpoon RGB PRO",
     "brand": "CORSAIR",
     "description": "Souris Gamer optique - Résolution ajustable jusqu'à 12 000 dpi - 6 boutons programmables",
@@ -318,7 +318,7 @@
     "price": 29.99
   },
   {
-    "subCategoryId": "61095114b24da43eb2616c18",
+    "subCategoryId": "Fauteuils",
     "name": "AKRacing Core EX - Noir / Rouge",
     "brand": "AKRACING",
     "description": "Fauteuil Gamer - Tissu - Accoudoirs 3D réglables - Assise inclinable - Poids supporté 150 Kg",
@@ -347,7 +347,7 @@
     "price": 294.99
   },
   {
-    "subCategoryId": "61095114b24da43eb2616c18",
+    "subCategoryId": "Fauteuils",
     "name": "Noblechairs HERO - Noir / Or",
     "brand": "NOBLECHAIRS",
     "description": "Fauteuil Gamer - Simili Cuir - Accoudoirs 4D réglables - Assise inclinable - Poids supporté 150 Kg",
@@ -370,7 +370,7 @@
     "price": 419.99
   },
   {
-    "subCategoryId": "61095114b24da43eb2616c18",
+    "subCategoryId": "Fauteuils",
     "name": "DXRacer Formula F08 - Noir",
     "brand": "DXRACER",
     "description": "Fauteuil Gamer - Simili-Cuir - Accoudoirs 3D réglables - Poids supporté 150 kg",
@@ -399,7 +399,7 @@
     "price": 279.99
   },
   {
-    "subCategoryId": "61095114b24da43eb2616c15",
+    "subCategoryId": "Ecrans pc",
     "name": "Asus VG248QG Adaptive Sync",
     "brand": "ASUS",
     "description": "Moniteur 24 TN 165 Hz - Full HD - 0.5 ms - DisplayPort / HDMI / DVI - Pied réglable + Rotation - HP intégrés - Bords fins - Compatible G-Sync + 15€ remboursés par Asus !",
@@ -428,7 +428,7 @@
     "price": 229.99
   },
   {
-    "subCategoryId": "61095114b24da43eb2616c15",
+    "subCategoryId": "Ecrans pc",
     "name": "Acer Nitro VG270UPbmiipx FreeSync",
     "brand": "ACER",
     "description": "Moniteur 27 IPS LED 144 Hz - 2560 x 1440 px (QHD) - 1 ms - DisplayPort / HDMI (x2) - HP intégrés - Bords extra-fins",
@@ -451,7 +451,7 @@
     "price": 319.99
   },
   {
-    "subCategoryId": "61095114b24da43eb2616c15",
+    "subCategoryId": "Ecrans pc",
     "name": "AOC 24B2XH",
     "brand": "AOC",
     "description": "Moniteur 23.8 IPS 75 Hz - Full HD - 7 ms - HDMI / VGA - bords fin",
@@ -480,7 +480,7 @@
     "price": 149.99
   },
   {
-    "subCategoryId": "61095114b24da43eb2616c1e",
+    "subCategoryId": "Casques",
     "name": "Logitech G PRO X",
     "brand": "LOGITECH",
     "description": "Casque-micro gamer 2.0 - PS4 / Xbox One / PC - USB ou 1 x Jack 3.5 mm - Carte Son externe",
@@ -503,7 +503,7 @@
     "price": 119.99
   },
   {
-    "subCategoryId": "61095114b24da43eb2616c1e",
+    "subCategoryId": "Casques",
     "name": "SteelSeries Arctis 7 Blanc (2019 Edition)",
     "brand": "STEELSERIES",
     "description": "Casque-micro gamer sans fil 7.1 - PC / Mac / PS4 - USB ou 1 x Jack 3.5 mm - Rétroéclairage RGB 16.8M de couleurs",
@@ -535,7 +535,7 @@
     "price": 149.99
   },
   {
-    "subCategoryId": "61095114b24da43eb2616c1e",
+    "subCategoryId": "Casques",
     "name": "Razer Kraken - Mercury",
     "brand": "RAZER KRAKEN",
     "description": "Casque-micro Gamer - PC / Mac / PS4 / Xbox One - 1 x jack 3.5mm",
