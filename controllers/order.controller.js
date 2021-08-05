@@ -21,7 +21,7 @@ exports.addOrder = async (req, res) => {
         res.status(400)
         res.send({
             success: false,
-            errors: e.errors
+            errors: e
         })
     }
 }
@@ -45,7 +45,7 @@ exports.calculateOrder = async (req, res) => {
         res.status(400)
         res.send({
             success: false,
-            errors: e.errors
+            errors: e
         })
     }
 }
@@ -60,7 +60,7 @@ exports.getAllOrder = async (req, res) => {
         res.status(400)
         res.send({
             success: false,
-            errors: e.errors
+            errors: e
         })
     }
 }
@@ -85,7 +85,7 @@ exports.getOneOrder = async (req, res) => {
         res.status(400)
         res.send({
             success: false,
-            errors: e.errors
+            errors: e
         })
     }
 }
@@ -131,7 +131,7 @@ exports.updateOrder = async (req, res) => {
         res.status(400);
         res.send({
             success: false,
-            errors: e.errors
+            errors: e
         });
     }
 }
@@ -183,7 +183,7 @@ exports.getAllOrderByStatus = async (req, res) => {
         res.status(400)
         res.send({
             success: false,
-            errors: e.errors
+            errors: e
         })
     }
 }

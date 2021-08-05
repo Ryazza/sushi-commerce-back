@@ -2,7 +2,7 @@ const mongoose = require('mongoose');
 const {Schema} = require('mongoose');
 const uniqueValidator = require('mongoose-unique-validator');
 
-const UnderCategorySchema = new mongoose.Schema({
+const SubCategorySchema = new mongoose.Schema({
     category: {
         type: Schema.Types.ObjectId,
         ref: 'category',
@@ -20,7 +20,7 @@ const UnderCategorySchema = new mongoose.Schema({
         type: String,
         required: true,
     }
-},{
+}, {
     timestamps: true,
 });
 
@@ -35,18 +35,18 @@ const UnderCategorySchema = new mongoose.Schema({
  *       localField: Key for reference id, stored on Child Doc, as named on Parent Doc.
  *       foreignField: Key name that holds localField value on Child Document
  */
-// UnderCategorySchema.virtual('subCategoriesProducts', {
+// SubCategorySchema.virtual('subCategoriesProducts', {
 //     ref: 'products', //The Model to use
 //     localField: '_id', //Find in Model, where localField
 //     foreignField: 'subCategoryId', // is equal to foreignField
 // });
 //
 // // Set Object and Json property to true. Default is set to false
-// UnderCategorySchema.set('toObject', { virtuals: true });
-// UnderCategorySchema.set('toJSON', { virtuals: true });
+// SubCategorySchema.set('toObject', { virtuals: true });
+// SubCategorySchema.set('toJSON', { virtuals: true });
 
-UnderCategorySchema.plugin(uniqueValidator);
+SubCategorySchema.plugin(uniqueValidator);
 
-const Order = mongoose.model('subCategory', UnderCategorySchema);
+const Order = mongoose.model('subCategory', SubCategorySchema);
 
 module.exports = Order;

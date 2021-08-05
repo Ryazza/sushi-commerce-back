@@ -1,23 +1,24 @@
-products     = require('./products_data.json');
-const ProductService = require('../services/product.service')
+categories = require('./categories_data.json');
+subCategories = require('./subCategories_data.json');
+products = require('./products_data.json');
+
 const res = require("express");
 const index = require("../server");
+const {log} = require("debug");
+Lib = require('./lib.faker')
 
-// console.log(products)
+let saveId = []
 
-products.forEach(async product =>  {
-    try {
-        let newProduct = await ProductService.addProduct(product)
-        if (newProduct.success === true) {
-            console.log("Success")
-            // console.log(newProduct)
-        } else {
-            console.log("newProduct failed")
-        }
 
-    } catch (e) {
+Lib.pushCategories(categories)
+    .then(r => Lib.exploitSaveId(r.saveId, subCategories))
+    // .then(r => console.log("okay", r))
+    .then(r => Lib.pushSubCategories(r))
+    .then(r => Lib.changeProductsSubCategoryId(r.saveId, products) )
+    // .then(r => console.log('okay', r.saveId))
+    .then(r=>Lib.pushProducts(r)).catch(e=>console.log(e));
 
-        console.log(e)
-    }
-})
 
+// Lib.pushProducts(products).then(e=>console.log(e))
+
+console.log("fin du script")

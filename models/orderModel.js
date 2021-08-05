@@ -16,7 +16,14 @@ const OrderSchema = new mongoose.Schema({
                 type: String,
                 required: true,
             },
+            brand: {
+                type: String
+            },
             category: {
+                type: String,
+                required: true,
+            },
+            subCategory: {
                 type: String,
                 required: true,
             },

@@ -76,7 +76,6 @@ exports.getOneProduct = async (req, res) => {
 }
 
 exports.showStock = async (req, res) => {
-
     try {
         let allProduct = await ProductService.showStock();
         res.status(200);

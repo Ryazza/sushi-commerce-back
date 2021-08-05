@@ -98,7 +98,7 @@ exports.addProduct = async (form) => {
 
     checkForm(form);
     try {
-        const product = new Product({createdAt: new Date()});
+        const product = new Product({createdAt: new Date(), views : 0});
         Object.assign(product, form);
         await product.save();
         return {
@@ -141,7 +141,7 @@ exports.updateProduct = async (form, id) => {
 
 exports.allProducts = async () => {
     try {
-        let products = await Product.find({})
+        let products = await Product.find({}).populate({ path: "subCategoryId", populate: { path: "category", select: "_id name"}, select: "_id name" });
         return {
             success: true,
             products: products
@@ -163,7 +163,7 @@ exports.getOneProduct = async (id) => {
             }
         }
 
-        let product = await Product.findById(id).populate({ path: "subCategoryId", populate: { path: "category"} });
+        let product = await Product.findById(id).populate({ path: "subCategoryId", populate: { path: "category", select: "_id name"}, select: "_id name" });
 
         if(!product) {
             return {
@@ -203,7 +203,7 @@ exports.getOneProduct = async (id) => {
 
 exports.searchProductByName = async (keyword) => {
     try {
-        let products = await Product.find({name: {$regex: keyword, $options: "i"}})
+        let products = await Product.find({name: {$regex: keyword, $options: "i"}}).populate({ path: "subCategoryId", populate: { path: "category", select: "_id name"}, select: "_id name" })
 
         return {
             success: true,
@@ -220,7 +220,7 @@ exports.searchOneProduct = async (id) => {
             $inc: {
                 views: +1
             }
-        });
+        }).populate({ path: "subCategoryId", populate: { path: "category", select: "_id name"}, select: "_id name" });
 
         return {
             success: true,
@@ -364,7 +364,7 @@ async function moreOrLess(id, stayNumber) {
 exports.sortProducts = async (type) => {
     if (type === "name") {
         try {
-            let products = await Product.find({}).sort({name: 1})
+            let products = await Product.find({}).sort({name: 1}).populate({ path: "subCategoryId", populate: { path: "category", select: "_id name"}, select: "_id name" });
             return {
                 success: true,
                 products: products
@@ -375,7 +375,7 @@ exports.sortProducts = async (type) => {
     }
     if (type === "category") {
         try {
-            let products = await Product.find({}).sort({category: 1})
+            let products = await Product.find({}).sort({category: 1}).populate({ path: "subCategoryId", populate: { path: "category", select: "_id name"}, select: "_id name" });
             return {
                 success: true,
                 products: products
@@ -386,7 +386,7 @@ exports.sortProducts = async (type) => {
     }
     if (type === "description") {
         try {
-            let products = await Product.find({}).sort({description: 1})
+            let products = await Product.find({}).sort({description: 1}).populate({ path: "subCategoryId", populate: { path: "category", select: "_id name"}, select: "_id name" });
             return {
                 success: true,
                 products: products
@@ -397,7 +397,7 @@ exports.sortProducts = async (type) => {
     }
     if (type === "views") {
         try {
-            let products = await Product.find({}).sort({views: -1})
+            let products = await Product.find({}).sort({views: -1}).populate({ path: "subCategoryId", populate: { path: "category", select: "_id name"}, select: "_id name" });
             return {
                 success: true,
                 products: products

@@ -1,70 +1,86 @@
-const underCategoryService = require('../services/underCategory.service')
+const subCategoryService = require('../services/subCategory.service')
 const checkTokenMiddleware = require('../controllers/jwt.controller');
 
 
 /*------------------------ USER -------------------------------*/
 
-exports.getAllUnderCategory = async (req, res) => {
+exports.getAllSubCategory = async (req, res) => {
 
     try {
-        let allUnderCategory = await underCategoryService.getAllUnderCategory();
+        let allSubCategory = await subCategoryService.getAllSubCategory();
         res.status(200);
-        res.send(allUnderCategory);
+        res.send(allSubCategory);
     } catch (e) {
         res.status(400)
         res.send({
             success: false,
-            errors: e.errors
+            errors: e
         })
     }
 }
 
-exports.getOneUnderCategory = async (req, res) => {
+exports.getOneSubCategory = async (req, res) => {
     try {
-        let oneUnderCategory = await underCategoryService.getOneUnderCategory(req.params);
+        let oneSubCategory = await subCategoryService.getOneSubCategory(req.params);
         res.status(200);
-        res.send(oneUnderCategory);
+        res.send(oneSubCategory);
     } catch (e) {
 
         console.log( e);
         res.status(400)
         res.send({
             success: false,
-            errors: e.errors
+            errors: e
         })
     }
 }
 
 exports.getOneSubCategoryAndProduct = async (req, res) => {
     try {
-        let oneUnderCategory = await underCategoryService.getOneSubCategoryAndProduct(req.params);
+        let oneSubCategory = await subCategoryService.getOneSubCategoryAndProduct(req.params);
         res.status(200);
-        res.send(oneUnderCategory);
+        res.send(oneSubCategory);
     } catch (e) {
 
         console.log(e);
         res.status(400)
         res.send({
             success: false,
-            errors: e.errors
+            errors: e
         })
     }
 }
 
 /*------------------------ ADMIN -------------------------------*/
 
-exports.createUnderCategory = async (req, res) => {
+exports.getOneSubCategoryAndProductAdmin = async (req, res) => {
+    try {
+        let oneSubCategory = await subCategoryService.getOneSubCategoryAndProductAdmin(req.params);
+        res.status(200);
+        res.send(oneSubCategory);
+    } catch (e) {
+
+        console.log(e);
+        res.status(400)
+        res.send({
+            success: false,
+            errors: e
+        })
+    }
+}
+
+exports.createSubCategory = async (req, res) => {
     try {
         const token = req.headers.authorization && checkTokenMiddleware.extractBearerToken(req.headers.authorization);
 
-        let newUnderCategory = await underCategoryService.createUnderCategory(req.body, token)
+        let newSubCategory = await subCategoryService.createSubCategory(req.body, token)
 
-        if (newUnderCategory.success === true) {
+        if (newSubCategory.success === true) {
             res.status(201)
-            res.send(newUnderCategory)
+            res.send(newSubCategory)
         } else {
             res.status(400)
-            res.send(newUnderCategory)
+            res.send(newSubCategory)
         }
 
     } catch (e) {
@@ -72,40 +88,40 @@ exports.createUnderCategory = async (req, res) => {
         res.status(400)
         res.send({
             success: false,
-            errors: e.errors
+            errors: e
         })
     }
 }
 
-exports.updateUnderCategory = async (req, res) => {
+exports.updateSubCategory = async (req, res) => {
     try {
         const token = req.headers.authorization && checkTokenMiddleware.extractBearerToken(req.headers.authorization);
 
-        let underCategoryServiceRes = await underCategoryService.updateUnderCategory(req.params.id , req.body, token);
+        let subCategoryServiceRes = await subCategoryService.updateSubCategory(req.params.id , req.body, token);
 
-        if (underCategoryServiceRes.success) {
+        if (subCategoryServiceRes.success) {
             res.status(200);
-            res.send(underCategoryServiceRes);
+            res.send(subCategoryServiceRes);
         } else {
             res.status(400);
-            res.send(underCategoryServiceRes);
+            res.send(subCategoryServiceRes);
         }
     } catch (e) {
         console.log(e)
         res.status(400);
         res.send({
             success: false,
-            errors: e.errors
+            errors: e
         });
     }
 }
 
-exports.deleteUnderCategory = async ( req, res ) => {
+exports.deleteSubCategory = async ( req, res ) => {
     try {
 
         const token = req.headers.authorization && checkTokenMiddleware.extractBearerToken(req.headers.authorization);
-        let underCategory = await underCategoryService.deleteUnderCategoryById(req.params.id, token);
-        if (underCategory.success) {
+        let subCategory = await subCategoryService.deleteSubCategoryById(req.params.id, token);
+        if (subCategory.success) {
             res.status(200);
             res.send({
                 success: true,
