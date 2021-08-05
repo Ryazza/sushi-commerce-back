@@ -1,3 +1,6 @@
+categories = require('./categories_data.json');
+subCategories = require('./subCategories_data.json');
+products = require('./products_data.json');
 
 const CategoryService = require('../services/category.service')
 const ProductService = require('../services/product.service')
@@ -40,7 +43,8 @@ exports.pushSubCategories = async (subCategories) => {
     let response = {
         saveId: [],
         result: []
-    };    let i = 0;
+    };
+    let i = 0;
     for (const subCategory of subCategories) {
         try {
             let newSubCategory = await SubCategoryService.createSubCategory(subCategory)
@@ -71,8 +75,8 @@ exports.pushSubCategories = async (subCategories) => {
     }
 }
 
-exports.pushProducts = async (products)=>{
-    let response =  [];
+exports.pushProducts = async (products) => {
+    let response = [];
     let i = 0;
     for (const product of products) {
         try {
@@ -103,4 +107,52 @@ exports.pushProducts = async (products)=>{
 
     }
 
+}
+findCategory = (category, saveId) => {
+    // console.log("category in find category=>", category)
+    let response = false;
+    saveId.forEach(element => {
+            // console.log("element.name = ", element.name);
+            // console.log("category.category = ", category.category)
+            if (element.name === category.category) {
+                // console.log("return", element.id)
+                response = element.id;
+            }
+        }
+    )
+    // console.log("find category", response)
+    return response;
+}
+
+exports.exploitSaveId = (data, objectArray) => {
+    // console.log("exploitSaveId",data.saveId)
+    objectArray.forEach((object) => {
+        object.category = findCategory(object, data);
+    })
+    return objectArray;
+}
+findId = (subCategory, saveId) => {
+    // console.log("category in find category=>", category)
+    let response = false;
+    saveId.forEach(element => {
+            // console.log("element.name = ", element.name);
+            // console.log("category.category = ", category.category)
+            if (element.name === subCategory.subCategoryId) {
+                // console.log("return", element.id)
+                response = element.id;
+            }
+        }
+    )
+    // console.log("find category", response)
+    return response;
+}
+
+exports.changeProductsSubCategoryId = (data, objectArray) => {
+    // console.log("IDs = ",data)
+    // console.log("products = ", objectArray[0])
+    objectArray.forEach((object) => {
+        object.subCategoryId = findId(object, data);
+    })
+    // console.log("result toto = " , objectArray[0])
+    return objectArray;
 }

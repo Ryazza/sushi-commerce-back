@@ -9,33 +9,14 @@ Lib = require('./lib.faker')
 
 let saveId = []
 
-findCategory = (category, saveId) => {
-    let response = false;
-    saveId.forEach(element => {
-            // console.log("element.name = ", element.name);
-            // console.log("category.category = ", category.category)
-            if (element.name === category.category) {
-                // console.log("return", element.id)
-                response = element.id;
-            }
-        }
-    )
-    return response;
-}
-
-exploitSaveId = (data) => {
-    subCategories.forEach((subCategory) => {
-        subCategory.category = findCategory(subCategory, data.saveId);
-    })
-    return subCategories;
-}
 
 Lib.pushCategories(categories)
-    .then(r => exploitSaveId(r))
-    .then(r => console.log("okay", r))
+    .then(r => Lib.exploitSaveId(r.saveId, subCategories))
+    // .then(r => console.log("okay", r))
     .then(r => Lib.pushSubCategories(r))
-    .then(r => console.log('okay', r.result))
-    // .then(r=>Lib.pushProducts(products)).catch(e=>console.log(e));
+    .then(r => Lib.changeProductsSubCategoryId(r.saveId, products) )
+    // .then(r => console.log('okay', r.saveId))
+    .then(r=>Lib.pushProducts(r)).catch(e=>console.log(e));
 
 
 // Lib.pushProducts(products).then(e=>console.log(e))
