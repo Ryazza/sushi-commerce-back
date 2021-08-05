@@ -16,7 +16,6 @@ exports.addOrder = async (form, token) => {
 
             // calcul function totalAmount and other;
             let formValid = await calculate(form);
-            console.log(formValid)
 
             const decoded = jwt.decode(token, {complete: false});
             formValid.form.client_ID = decoded.id;
@@ -42,6 +41,7 @@ exports.addOrder = async (form, token) => {
                     let product = await Product.findOne({_id: formValid.changeStock[i].id});
                     product.quantity = formValid.changeStock[i].quantity;
                     product.available = formValid.changeStock[i].available;
+                    product.sale = formValid.form.articles[i].sale;
 
                     await Product.updateOne({_id: formValid.changeStock[i].id}, product);
                 }
@@ -292,7 +292,15 @@ async function calculate(form) {
          changeStock.push({ id: form.articles[i].id, quantity: newQuantity, available: available, canChangeStock: canChangeStock})
 
          let amount = product.price * form.articles[i].quantity;
-         console.log(product)
+         let sale;
+
+         if(typeof product.sale === "undefined") {
+
+             sale = parseInt(form.articles[i].quantity);
+         } else {
+             sale = parseInt(product.sale) + parseInt(form.articles[i].quantity);
+         }
+
          articles.push({
              id: product.id,
              pictures: product.pictures,
@@ -303,6 +311,7 @@ async function calculate(form) {
              brand: product.brand,
              description: product.description,
              price: product.price,
+             sale: sale,
              quantityBuy: form.articles[i].quantity,
              amount: amount
          });
