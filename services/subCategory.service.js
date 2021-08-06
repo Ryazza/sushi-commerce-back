@@ -60,7 +60,7 @@ exports.getOneSubCategoryAndProduct = async ({ id }) => {
         }
         let subCategory = await Product.find({subCategoryId: id})
             .populate({ path:"subCategoryId", populate:{ path: "category", model: 'category', select: "_id name"}, model: 'subCategory', select: "_id name"})
-            .sort({name: 1}).select("-createdAt -__v sale-1 -views");
+            .sort({name: 1}).select("-createdAt -__v -sale -views");
         if(typeof subCategory !== "object" || !subCategory || subCategory.length < 1) {
             return {
                 success: false,
