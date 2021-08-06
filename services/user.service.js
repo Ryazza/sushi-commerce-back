@@ -2,6 +2,7 @@ const User = require('../models/userModel');
 const bcrypt = require('bcrypt')
 const jwt = require('jsonwebtoken');
 const SECRET = 'RyaSuiteSecretKey1298456';
+const { body } = require('express-validator');
 
 function validateEmail(email) {
     const re = /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
@@ -84,8 +85,7 @@ exports.addAddress = async (id, objectAddress) => {
                 error: "No not valid, number needed"
             }
         }
-
-        if (objectAddress.address && body(objectAddress.address).isString()  && body(objectAddress.complement).isLength({ min: 2 , max: 255})) {
+        if (objectAddress.address && body(objectAddress.address).isString()  && body(objectAddress.address).isLength({ min: 2 , max: 255})) {
             addressToAdd.address = objectAddress.address;
         } else {
             return {
@@ -110,7 +110,6 @@ exports.addAddress = async (id, objectAddress) => {
                 error: "No not valid, number needed"
             }
         }
-
         if (body(objectAddress.city).isString() && body(objectAddress.city).isLength({ min: 2 , max: 255})) {
             addressToAdd.city = objectAddress.city;
         } else if(objectAddress.city  && !body(objectAddress.city).isString() || objectAddress.city && !body(objectAddress.city).isLength({ min: 2 , max: 255})) {
@@ -119,7 +118,6 @@ exports.addAddress = async (id, objectAddress) => {
                 error: "City not valid, string needed nim : 2 max : 255"
             }
         }
-
         if (body(objectAddress.phone).isNumeric()) {
             addressToAdd.phone = objectAddress.phone;
         } else if(objectAddress.phone  && !body(objectAddress.phone).isNumeric()) {
@@ -128,8 +126,9 @@ exports.addAddress = async (id, objectAddress) => {
                 error: "phone number not valid"
             }
         }
-
+        console.log(addressToAdd)
         user.address.push(addressToAdd);
+        user.save();
         return {
             success: true,
             message: "Address added successfully"
