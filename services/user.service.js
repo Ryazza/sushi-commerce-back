@@ -126,7 +126,6 @@ exports.addAddress = async (id, objectAddress) => {
                 error: "phone number not valid"
             }
         }
-        console.log(addressToAdd)
         user.address.push(addressToAdd);
         user.save();
         return {
