@@ -7,6 +7,7 @@ router.post('/', userController.addUser)
 router.post('/login', userController.connectUser)
 
 router.get('/', checkTokenMiddleware.checkToken, userController.getMe)
+router.put('/adress', checkTokenMiddleware.checkToken, userController.addAdress)
 
 router.delete('/' , checkTokenMiddleware.checkToken, userController.deleteUser)
 

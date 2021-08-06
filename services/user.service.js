@@ -2,6 +2,7 @@ const User = require('../models/userModel');
 const bcrypt = require('bcrypt')
 const jwt = require('jsonwebtoken');
 const SECRET = 'RyaSuiteSecretKey1298456';
+const { body } = require('express-validator');
 
 function validateEmail(email) {
     const re = /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
@@ -68,6 +69,73 @@ exports.addUser = async (form) => {
         };
     } catch (e) {
         throw e
+    }
+}
+//ajout d'une adresse
+exports.addAddress = async (id, objectAddress) => {
+    let user = await User.findOne({_id: id})
+    if (user) {
+        let addressToAdd = {};
+
+        if (body(objectAddress.no).isNumeric()) {
+            addressToAdd.no = objectAddress.no;
+        } else if(!body(objectAddress.no).isNumeric() && objectAddress.no) {
+            return {
+                success: false,
+                error: "No not valid, number needed"
+            }
+        }
+        if (objectAddress.address && body(objectAddress.address).isString()  && body(objectAddress.address).isLength({ min: 2 , max: 255})) {
+            addressToAdd.address = objectAddress.address;
+        } else {
+            return {
+                success: false,
+                error: "Address not valid min string: 2 max : 255"
+            }
+        }
+
+        if (body(objectAddress.complement).isString() && body(objectAddress.complement).isLength({ min: 2 , max: 255})) {
+            addressToAdd.complement = objectAddress.complement;
+        } else if(objectAddress.complement  && !body(objectAddress.complement).isString() || objectAddress.complement && !body(objectAddress.complement).isLength({ min: 2 , max: 255})) {
+            return {
+                success: false,
+                error: "Complement not valid, string needed nim : 2 max : 255"
+            }
+        }
+        if (body(objectAddress.cp).isNumeric()) {
+            addressToAdd.cp = objectAddress.cp;
+        } else {
+            return {
+                success: false,
+                error: "No not valid, number needed"
+            }
+        }
+        if (body(objectAddress.city).isString() && body(objectAddress.city).isLength({ min: 2 , max: 255})) {
+            addressToAdd.city = objectAddress.city;
+        } else if(objectAddress.city  && !body(objectAddress.city).isString() || objectAddress.city && !body(objectAddress.city).isLength({ min: 2 , max: 255})) {
+            return {
+                success: false,
+                error: "City not valid, string needed nim : 2 max : 255"
+            }
+        }
+        if (body(objectAddress.phone).isNumeric()) {
+            addressToAdd.phone = objectAddress.phone;
+        } else if(objectAddress.phone  && !body(objectAddress.phone).isNumeric()) {
+            return {
+                success: false,
+                error: "phone number not valid"
+            }
+        }
+        user.address.push(addressToAdd);
+        user.save();
+        return {
+            success: true,
+            message: "Address added successfully"
+        }
+    }
+    return {
+        success: false,
+        error: "User not found"
     }
 }
 //connexion
