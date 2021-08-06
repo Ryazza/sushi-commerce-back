@@ -21,6 +21,28 @@ exports.addUser = async (req, res) => {
         })
     }
 }
+// ajout d'une adress
+exports.addAdress = async (req, res) => {
+    try {
+        const token = req.headers.authorization && checkTokenMiddleware.extractBearerToken(req.headers.authorization);
+        const decoded = jwt.decode(token, {complete: false})
+        let newUser = await UserService.addAddress(decoded.id, req.body)
+        if (newUser.success === true) {
+            res.status(201)
+            res.send(newUser)
+        } else {
+            res.status(400)
+            res.send(newUser)
+        }
+    } catch (e) {
+        res.status(403)
+        console.log(e)
+        res.send({
+            success: false,
+            errors: e
+        })
+    }
+}
 //connection
 exports.connectUser = async (req, res) => {
     try {
