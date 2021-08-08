@@ -543,7 +543,7 @@
     "discount": 70,
     "endOfSerie": false
   },
-  "quantity": 62,
+  "quantity": 0,
   "available": true,
   "price": 279.99,
   "__v": 0
@@ -687,7 +687,7 @@
     "discount": null,
     "endOfSerie": false
   },
-  "quantity": 32,
+  "quantity": 0,
   "available": true,
   "price": 119.99,
   "__v": 0
