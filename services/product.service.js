@@ -115,8 +115,7 @@ exports.updateProduct = async (form, id) => {
         let product = await Product.findOneAndUpdate({_id: id}, {
             name: form.name,
             brand: form.brand,
-            category: form.subCategoryId.subCategory.name,
-            subCategory: form.subCategoryId.name,
+            subCategoryId: form.subCategoryId,
             description: form.description,
             bigPicture: form.bigPicture,
             pictures: form.pictures,
