@@ -94,50 +94,6 @@ async function checkStockUpdate(form, id, availableAuto = false) {
     return {success: true};
 }
 
-exports.addProduct = async (form) => {
-
-    checkForm(form);
-    try {
-        const product = new Product({createdAt: new Date(), views : 0});
-        Object.assign(product, form);
-        await product.save();
-        return {
-            success: true
-        };
-    } catch (e) {
-        throw e;
-    }
-}
-
-exports.updateProduct = async (form, id) => {
-    checkForm(form);
-    try {
-        let product = await Product.findOneAndUpdate({_id: id}, {
-            name: form.name,
-            brand: form.brand,
-            subCategoryId: form.subCategoryId,
-            description: form.description,
-            bigPicture: form.bigPicture,
-            pictures: form.pictures,
-            events: form.events,
-            quantity: form.quantity,
-            available: form.available,
-            price: form.price,
-            view: form.view,
-            sale: form.sale,
-            comment: form.comment,
-            }
-        );
-        Object.assign(product, form);
-        await product.save();
-        return {
-            success: true
-        };
-    } catch (e) {
-        throw e;
-    }
-}
-
 exports.allProducts = async () => {
     try {
         let products = await Product.find({}).populate({ path: "subCategoryId", populate: { path: "category", select: "_id name"}, select: "_id name" });
@@ -231,6 +187,69 @@ exports.searchOneProduct = async (id) => {
 }
 
 /*---------------------- ADMIN -----------------------*/
+
+exports.addProduct = async (form) => {
+
+    checkForm(form);
+    try {
+        const product = new Product({createdAt: new Date(), views : 0});
+        Object.assign(product, form);
+        await product.save();
+        return {
+            success: true
+        };
+    } catch (e) {
+        throw e;
+    }
+}
+
+exports.updateProduct = async (form, id) => {
+    checkForm(form);
+    try {
+        let product = await Product.findOneAndUpdate({_id: id}, {
+                name: form.name,
+                brand: form.brand,
+                subCategoryId: form.subCategoryId,
+                description: form.description,
+                bigPicture: form.bigPicture,
+                pictures: form.pictures,
+                events: form.events,
+                quantity: form.quantity,
+                available: form.available,
+                price: form.price,
+                view: form.view,
+                sale: form.sale,
+                comment: form.comment,
+            }
+        );
+        Object.assign(product, form);
+        await product.save();
+        return {
+            success: true
+        };
+    } catch (e) {
+        throw e;
+    }
+}
+
+exports.updateProducts = async (products) => {
+
+    try {
+        for (const product of products) {
+            let currProduct = await Product.findOneAndUpdate({_id: product._id}, {
+                    product
+                }
+            );
+            Object.assign(currProduct, product);
+            await currProduct.save();
+        }
+        return {
+            success: true
+        };
+    } catch (e) {
+        throw e;
+    }
+}
 
 exports.showStock = async () => {
     try {

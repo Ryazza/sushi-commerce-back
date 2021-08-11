@@ -8,6 +8,7 @@ const checkTokenMiddleware = require('../controllers/jwt.controller');
 //admin user routes
 router.post('/create', checkTokenMiddleware.checkTokenAdmin, ProductController.createProduct)
 router.put('/update/:id', checkTokenMiddleware.checkTokenAdmin,ProductController.updateProduct)
+router.put('/update', checkTokenMiddleware.checkTokenAdmin,ProductController.updateProducts)
 router.put('/update_available', checkTokenMiddleware.checkTokenAdmin, ProductController.updateAvailable)
 router.put('/update_event/:event', checkTokenMiddleware.checkTokenAdmin, ProductController.updateEvent)
 router.get('/verifyStock', checkTokenMiddleware.checkTokenAdmin, ProductController.showStock)
