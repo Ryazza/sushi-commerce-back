@@ -44,6 +44,9 @@ const ProductsSchema = new mongoose.Schema({
     views: {
         type: Number
     },
+    weight: {
+        type: Number
+    },
     price: {
       type: Number,
       required:true
