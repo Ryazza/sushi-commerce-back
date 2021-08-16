@@ -19,5 +19,6 @@ router.delete('/:id', checkTokenMiddleware.checkToken, orderController.deleteOrd
 /*-------------- ADMIN -----------------*/
 
 router.get('/status/:status/:order', checkTokenMiddleware.checkTokenAdmin, orderController.getAllOrderByStatus)
+router.put('/status/newStatus/:id', checkTokenMiddleware.checkTokenAdmin, orderController.updateStatus)
 
 module.exports = router;

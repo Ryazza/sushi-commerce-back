@@ -1,6 +1,8 @@
 const OrderService = require('../services/order.service')
 const jwt = require('jsonwebtoken');
 const checkTokenMiddleware = require('../controllers/jwt.controller');
+const {response} = require("express");
+const {body} = require("express-validator");
 
 exports.addOrder = async (req, res) => {
     try {
@@ -176,6 +178,30 @@ exports.getAllOrderByStatus = async (req, res) => {
             res.send({
                 success: false,
                 errors: "Vous n'avez pas les droits nécessaires !"
+            });
+        }
+
+    } catch (e) {
+        res.status(400)
+        res.send({
+            success: false,
+            errors: e
+        })
+    }
+}
+
+
+exports.updateStatus = async (req, res) => {
+    try {
+        let updateStatus = await OrderService.updateStatus(req.params.id);
+        if (updateStatus.success === true) {
+            res.status(200);
+            res.send(updateStatus);
+        } else {
+            res.status(403);
+            res.send({
+                success: false,
+                errors: "Un problème est survenu, merci de réessayer plus tard."
             });
         }
 

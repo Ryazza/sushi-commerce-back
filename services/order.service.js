@@ -20,8 +20,11 @@ exports.addOrder = async (form, token) => {
             const decoded = jwt.decode(token, {complete: false});
             formValid.form.client_ID = decoded.id;
 
+            if (form.status !== null || form.status !== undefined || form.status.trim() !== '') {
+                form.status = "préparation";
+            }
 
-            const order = new Order({createdAt: new Date(), updateAt: new Date()});
+            const order = new Order({createdAt: new Date(), updateAt: new Date(), status: "préparation"});
 
             Object.assign(order, formValid.form);
             let canSave = true;
@@ -242,10 +245,12 @@ exports.deleteOrderById = async (id) => {
 //----------------------- ADMIN ---------------------------//
 
 
+
+
 exports.getAllOrderByStatus = async ( status, order ) => {
 
     try {
-        if ((status === "préparation" || status === "envoyé") && (order === "desc" || order === 'asc')) {
+        if ((status === "préparation" || status === "expédié") && (order === "desc" || order === 'asc')) {
             let inOrder;
             order === "desc" ? inOrder = -1 : inOrder = 1;
             let orders = await Order.find({status: status}).sort({_id: inOrder})
@@ -316,7 +321,7 @@ async function calculate(form) {
              amount: amount
          });
          totalAmount += amount;
-    };
+    }
 
     /*----------------------- A lier au systeme fraix de port -------------------------*/
     let shipping_fee = 10;
@@ -420,30 +425,21 @@ async function verifyEntry(order, token) {
             }
         }
 
-        if(typeof order.status === "undefined" || order.status.length < 1) {
-            return {
-                success: false,
-                message: "vous devez renseigner un statut de commande ('préparation' ou 'envoyé')",
-                errors: "status"
-            };
-        }
-
-        if(typeof order.status !== "string") {
-            return {
-                success: false,
-                message: "Le status de votre commande doit être une chaine de caractère",
-                errors: "status"
-            };
-        }
-
-        if(order.status !== "préparation" && order.status !== "envoyé") {
-            return {
-                success: false,
-                message: "Le status doit être 'préparation' ou 'envoyé'",
-                errors: "status"
-            };
-        }
 
         return { success: true };
     }
 }
+
+// CHANGER LE STATUT D'UNE COMMANDE - de préparation à expédiée //
+
+exports.updateStatus = async (id) => {
+    try {
+       await Order.updateOne({_id:id} , {status: "expédié"})
+        return {
+            success: true,
+        }
+    } catch (e) {
+        throw (e)
+    }
+}
+
