@@ -21,10 +21,10 @@ exports.addOrder = async (form, token) => {
             formValid.form.client_ID = decoded.id;
 
             if (form.status !== null || form.status !== undefined || form.status.trim() !== '') {
-                form.status = "préparation";
+                form.status = "payée";
             }
 
-            const order = new Order({createdAt: new Date(), updateAt: new Date(), status: "préparation"});
+            const order = new Order({createdAt: new Date(), updateAt: new Date(), status: "payée"});
 
             Object.assign(order, formValid.form);
             let canSave = true;
@@ -250,7 +250,7 @@ exports.deleteOrderById = async (id) => {
 exports.getAllOrderByStatus = async ( status, order ) => {
 
     try {
-        if ((status === "préparation" || status === "expédié") && (order === "desc" || order === 'asc')) {
+        if ((status === "payée" || status === "expédiée") && (order === "desc" || order === 'asc')) {
             let inOrder;
             order === "desc" ? inOrder = -1 : inOrder = 1;
             let orders = await Order.find({status: status}).sort({_id: inOrder})
@@ -430,11 +430,11 @@ async function verifyEntry(order, token) {
     }
 }
 
-// CHANGER LE STATUT D'UNE COMMANDE - de préparation à expédiée //
+// CHANGER LE STATUT D'UNE COMMANDE - de payée à expédiée //
 
 exports.updateStatus = async (id) => {
     try {
-       await Order.updateOne({_id:id} , {status: "expédié"})
+       await Order.updateOne({_id:id} , {status: "expédiée"})
         return {
             success: true,
         }

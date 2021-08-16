@@ -193,7 +193,7 @@ exports.getAllOrderByStatus = async (req, res) => {
 
 exports.updateStatus = async (req, res) => {
     try {
-        let updateStatus = await OrderService.updateStatus(req.params.id);
+        let updateStatus = await OrderService.updateStatus(req.params.id, "payée");
         if (updateStatus.success === true) {
             res.status(200);
             res.send(updateStatus);
