@@ -41,6 +41,26 @@ exports.updateProduct = async (req, res) => {
     }
 }
 
+exports.updateProducts = async (req, res) => {
+    try {
+        let newProduct = await ProductService.updateProducts(req.body)
+        if (newProduct.success === true) {
+            res.status(201)
+            res.send(newProduct)
+        } else {
+            res.status(400)
+            res.send(newProduct)
+        }
+
+    } catch (e) {
+        res.status(400);
+        res.send({
+            success: false,
+            errors: e
+        })
+    }
+}
+
 exports.getProducts = async (req, res) => {
     try {
         let allUser = await ProductService.allProducts();
