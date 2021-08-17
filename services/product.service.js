@@ -525,27 +525,42 @@ exports.updateEvent = async (products, eventType) => {
         throw e;
     }
 
-    // si besoin, le code pour faire la boucle avec une seule requête :
-    // for (const product of products) {
-    //     let request;
-    //     console.log("entree dans la boucle, eventType = ", eventType)
-    //     try {
-    //         if (eventType === "discount") {
-    //             console.log(product.discount, product.id)
-    //             request =   await Product.updateOne({_id: product.id}, {"event.discount" : product.discount})
-    //         }
-    //         if (eventType === "new") {
-    //             request =  await Product.updateOne({_id: product.id}, {"event.new" : product.new})
-    //         }
-    //         if (eventType === "endOfSerie") {
-    //             request =  await Product.updateOne({_id: product.id}, {"event.endOfSerie" : product.endOfSerie})
-    //         }
-    //     } catch (e) {
-    //         console.log(e);
-    //     }
-    //     console.log(request)
-    // }
 
 
 }
 
+exports.findBestSales = async (type) => {
+    if (type === "all") {
+        try {
+            let products = await Product.find({}).sort({sale: -1}).limit(6).populate({ path: "subCategoryId", populate: { path: "category", select: "_id name"}, select: "_id name" });
+            return {
+                success: true,
+                products: products
+            }
+        } catch (e) {
+            throw e;
+        }
+    }
+    if (type === "category") {
+        try {
+            // let products = await Product.find({}).sort({sale: 1}).populate({ path: "subCategoryId", populate: { path: "category", select: "_id name"}, select: "_id name" });
+            return {
+                success: true,
+                // products: products
+            }
+        } catch (e) {
+            throw e;
+        }
+    }
+    if (type === "subcategory") {
+        try {
+            // let products = await Product.find({}).sort({sale: 1}).populate({ path: "subCategoryId", populate: { path: "category", select: "_id name"}, select: "_id name" });
+            return {
+                success: true,
+                // products: products
+            }
+        } catch (e) {
+            throw e;
+        }
+    }
+}
