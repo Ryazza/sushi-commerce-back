@@ -294,13 +294,13 @@ exports.updateEvent = async (req,res)=>{
 }
 exports.findBestSales = async (req, res) => {
     let type =  req.params.type;
-    if (type !== "all" && type !=="category" && type !== "subcategory"){
-        res.status(400);
-        res.send({
-            success: false,
-            errors: "veuillez préciser 'all', 'category' ou 'subcategory"
-        })
-    }
+    // if (type !== "all" && type !=="category" && type !== "subcategory"){
+    //     res.status(400);
+    //     res.send({
+    //         success: false,
+    //         errors: "veuillez préciser 'all', 'category' ou 'subcategory"
+    //     })
+    // }
     try {
         let products = await ProductService.findBestSales(type);
         res.status(200);
