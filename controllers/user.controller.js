@@ -26,6 +26,7 @@ exports.addAdress = async (req, res) => {
     try {
         const token = req.headers.authorization && checkTokenMiddleware.extractBearerToken(req.headers.authorization);
         const decoded = jwt.decode(token, {complete: false})
+        console.log(req.body)
         let newUser = await UserService.addAddress(decoded.id, req.body)
         if (newUser.success === true) {
             res.status(201)

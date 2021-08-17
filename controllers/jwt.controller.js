@@ -24,7 +24,6 @@ exports.extractBearerToken = headerValue => {
 exports.checkToken = async function(req, res, next) {
     // Récupération du token
     const token = req.headers.authorization && extractBearerToken(req.headers.authorization)
-
     // Présence d'un token
     if (!token) {
         return res.status(401).json({ message: 'Error. Need a token' })
@@ -34,6 +33,7 @@ exports.checkToken = async function(req, res, next) {
         if (err) {
             res.status(401).json({ message: 'Error. Bad token' })
         } else {
+            //todo req.user = decoded.id
             return next()
         }
     })
