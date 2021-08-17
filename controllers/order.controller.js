@@ -94,8 +94,12 @@ exports.getOneOrder = async (req, res) => {
 
 exports.getOrderByUser = async (req, res) => {
     try {
-        let oneOrder = await OrderService.getOrderByUser(req.params.id);
-        if(typeof oneOrder === "object" && oneOrder.length > 0) {
+        const token = req.headers.authorization && checkTokenMiddleware.extractBearerToken(req.headers.authorization);
+        const decoded = jwt.decode(token, {complete: false});
+        console.log(decoded.id)
+        let oneOrder = await OrderService.getOrderByUser(decoded.id);
+        console.log(oneOrder)
+        if(oneOrder.success === true) {
             res.status(200);
             res.send(oneOrder);
         } else {
@@ -106,7 +110,6 @@ exports.getOrderByUser = async (req, res) => {
             });
         }
     } catch (e) {
-
         console.log("catch" + e);
         res.status(400)
         res.send({
@@ -193,7 +196,7 @@ exports.getAllOrderByStatus = async (req, res) => {
 
 exports.updateStatus = async (req, res) => {
     try {
-        let updateStatus = await OrderService.updateStatus(req.params.id);
+        let updateStatus = await OrderService.updateStatus(req.params.id, "payée");
         if (updateStatus.success === true) {
             res.status(200);
             res.send(updateStatus);
