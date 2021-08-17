@@ -1,5 +1,6 @@
 const Product = require('../models/productModel.js');
 const {checkObjectId} = require('../helper/dbHelper');
+const SubCategory = require("../models/subCategoryModel");
 
 
 function checkForm(form) {
@@ -96,7 +97,11 @@ async function checkStockUpdate(form, id, availableAuto = false) {
 
 exports.allProducts = async () => {
     try {
-        let products = await Product.find({}).populate({ path: "subCategoryId", populate: { path: "category", select: "_id name"}, select: "_id name" });
+        let products = await Product.find({}).populate({
+            path: "subCategoryId",
+            populate: {path: "category", select: "_id name"},
+            select: "_id name"
+        });
         return {
             success: true,
             products: products
@@ -111,16 +116,20 @@ exports.getOneProduct = async (id) => {
     try {
         let verifId = checkObjectId(id);
 
-        if(!verifId.success) {
+        if (!verifId.success) {
             return {
                 success: false,
                 message: "Votre produit n'existe pas!"
             }
         }
 
-        let product = await Product.findById(id).populate({ path: "subCategoryId", populate: { path: "category", select: "_id name"}, select: "_id name" });
+        let product = await Product.findById(id).populate({
+            path: "subCategoryId",
+            populate: {path: "category", select: "_id name"},
+            select: "_id name"
+        });
 
-        if(!product) {
+        if (!product) {
             return {
                 success: false,
                 error: "ID incorrect"
@@ -158,7 +167,11 @@ exports.getOneProduct = async (id) => {
 
 exports.searchProductByName = async (keyword) => {
     try {
-        let products = await Product.find({name: {$regex: keyword, $options: "i"}}).populate({ path: "subCategoryId", populate: { path: "category", select: "_id name"}, select: "_id name" })
+        let products = await Product.find({name: {$regex: keyword, $options: "i"}}).populate({
+            path: "subCategoryId",
+            populate: {path: "category", select: "_id name"},
+            select: "_id name"
+        })
 
         return {
             success: true,
@@ -175,7 +188,7 @@ exports.searchOneProduct = async (id) => {
             $inc: {
                 views: +1
             }
-        }).populate({ path: "subCategoryId", populate: { path: "category", select: "_id name"}, select: "_id name" });
+        }).populate({path: "subCategoryId", populate: {path: "category", select: "_id name"}, select: "_id name"});
 
         return {
             success: true,
@@ -192,7 +205,7 @@ exports.addProduct = async (form) => {
 
     checkForm(form);
     try {
-        const product = new Product({createdAt: new Date(), views : 0});
+        const product = new Product({createdAt: new Date(), views: 0});
         Object.assign(product, form);
         await product.save();
         return {
@@ -382,7 +395,11 @@ async function moreOrLess(id, stayNumber) {
 exports.sortProducts = async (type) => {
     if (type === "name") {
         try {
-            let products = await Product.find({}).sort({name: 1}).populate({ path: "subCategoryId", populate: { path: "category", select: "_id name"}, select: "_id name" });
+            let products = await Product.find({}).sort({name: 1}).populate({
+                path: "subCategoryId",
+                populate: {path: "category", select: "_id name"},
+                select: "_id name"
+            });
             return {
                 success: true,
                 products: products
@@ -393,7 +410,11 @@ exports.sortProducts = async (type) => {
     }
     if (type === "category") {
         try {
-            let products = await Product.find({}).sort({category: 1}).populate({ path: "subCategoryId", populate: { path: "category", select: "_id name"}, select: "_id name" });
+            let products = await Product.find({}).sort({category: 1}).populate({
+                path: "subCategoryId",
+                populate: {path: "category", select: "_id name"},
+                select: "_id name"
+            });
             return {
                 success: true,
                 products: products
@@ -404,7 +425,11 @@ exports.sortProducts = async (type) => {
     }
     if (type === "description") {
         try {
-            let products = await Product.find({}).sort({description: 1}).populate({ path: "subCategoryId", populate: { path: "category", select: "_id name"}, select: "_id name" });
+            let products = await Product.find({}).sort({description: 1}).populate({
+                path: "subCategoryId",
+                populate: {path: "category", select: "_id name"},
+                select: "_id name"
+            });
             return {
                 success: true,
                 products: products
@@ -415,7 +440,11 @@ exports.sortProducts = async (type) => {
     }
     if (type === "views") {
         try {
-            let products = await Product.find({}).sort({views: -1}).populate({ path: "subCategoryId", populate: { path: "category", select: "_id name"}, select: "_id name" });
+            let products = await Product.find({}).sort({views: -1}).populate({
+                path: "subCategoryId",
+                populate: {path: "category", select: "_id name"},
+                select: "_id name"
+            });
             return {
                 success: true,
                 products: products
@@ -454,7 +483,7 @@ exports.updateAvailable = async (products) => {
 
 }
 checkId = async (products) => {
-    let result={
+    let result = {
         success: true
     };
     for (const product of products) {
@@ -468,7 +497,7 @@ checkId = async (products) => {
         if (!search) {
             result = {
                 success: false,
-                error:  "Au moins une id n'existe pas"
+                error: "Au moins une id n'existe pas"
             }
         }
 
@@ -479,8 +508,8 @@ checkId = async (products) => {
 
 exports.updateEvent = async (products, eventType) => {
     try {
-      let check = await checkId(products);
-        if(check.success=== false){
+        let check = await checkId(products);
+        if (check.success === false) {
             return {
                 success: false,
                 error: check.error
@@ -507,12 +536,11 @@ exports.updateEvent = async (products, eventType) => {
                 console.log(e);
             }
         }
-        let message="";
+        let message = "";
         result.forEach(item => {
-            if (item.nModified ===0){
-                message= "Base de donnée non modifiée"
-            }
-            else{
+            if (item.nModified === 0) {
+                message = "Base de donnée non modifiée"
+            } else {
                 message = "Base de donnée modifiée avec succès"
             }
         })
@@ -525,27 +553,44 @@ exports.updateEvent = async (products, eventType) => {
         throw e;
     }
 
-    // si besoin, le code pour faire la boucle avec une seule requête :
-    // for (const product of products) {
-    //     let request;
-    //     console.log("entree dans la boucle, eventType = ", eventType)
-    //     try {
-    //         if (eventType === "discount") {
-    //             console.log(product.discount, product.id)
-    //             request =   await Product.updateOne({_id: product.id}, {"event.discount" : product.discount})
-    //         }
-    //         if (eventType === "new") {
-    //             request =  await Product.updateOne({_id: product.id}, {"event.new" : product.new})
-    //         }
-    //         if (eventType === "endOfSerie") {
-    //             request =  await Product.updateOne({_id: product.id}, {"event.endOfSerie" : product.endOfSerie})
-    //         }
-    //     } catch (e) {
-    //         console.log(e);
-    //     }
-    //     console.log(request)
-    // }
-
 
 }
 
+exports.findBestSales = async (type) => {
+    if (type === "all") {
+        try {
+            let products = await Product.find({}).sort({sale: -1}).limit(6).populate({
+                path: "subCategoryId",
+                populate: {path: "category", select: "_id name"},
+                select: "_id name"
+            });
+            return {
+                success: true,
+                products: products
+            }
+        } catch (e) {
+            throw e;
+        }
+    } else {
+        try {
+             await SubCategory.find({_id: type});
+            // if (testCategory.length === 0) {
+            //     return {
+            //         success: false,
+            //         message: "La sous-catégorie n'existe pas",
+            //         categoryId: testCategory._id
+            //
+            //     }
+            // }
+            let products = await Product.find({subCategoryId: type}).sort({sale: -1}).limit(6);
+            console.log(products)
+            return {
+                success: true,
+                products: products
+            }
+        } catch (e) {
+            throw e;
+        }
+    }
+
+}

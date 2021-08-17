@@ -24,6 +24,7 @@ router.get('/:id', ProductController.getOneProduct)
 router.get('/search/:keyword', ProductController.searchProductByName)
 router.get('/one/:id', ProductController.searchOneProduct)
 router.get('/sort/:type' ,ProductController.sortProducts)
+router.get('/best_sales/:type' ,ProductController.findBestSales)
 
 // router.delete('/:id' , checkTokenMiddleware.checkTokenAdmin, ProductController.deleteUserById)
 
