@@ -145,14 +145,7 @@ exports.getOneOrder = async ({ id }) => {
 }
 
 exports.getOrderByUser = async ( client_id ) => {
-    let verifId = checkObjectId(client_id);
-
-    if(verifId === false) {
-        return {
-            success: false,
-            message: "ID invalide",
-        }
-    } else {
+    console.log(client_id)
         try {
             let orders = await Order.find({ client_ID: client_id }).sort({_id: -1})
 
@@ -169,7 +162,6 @@ exports.getOrderByUser = async ( client_id ) => {
         } catch (e) {
             throw e;
         }
-    }
 }
 
 exports.updateOrder = async (id, change, token ) => {
