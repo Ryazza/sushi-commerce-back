@@ -33,7 +33,7 @@ exports.checkToken = async function(req, res, next) {
         if (err) {
             res.status(401).json({ message: 'Error. Bad token' })
         } else {
-            //todo req.user = decoded.id
+            req.user = jwt.decode(token, {complete: false})
             return next()
         }
     })
@@ -48,8 +48,8 @@ exports.checkTokenAdmin = async function(req, res, next) {
         return res.status(401).json({ message: 'Error. Need a token' })
     }
     // Véracité du token
-    const decoded = jwt.decode(token, { complete: false });
-    const user = await User.findOne({_id: decoded.id});
+    req.user = jwt.decode(token, { complete: false });
+    const user = await User.findOne({_id: req.user.id});
     if (user.admin) {
         return next()
     } else {

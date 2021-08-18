@@ -24,10 +24,8 @@ exports.addUser = async (req, res) => {
 // ajout d'une adress
 exports.addAdress = async (req, res) => {
     try {
-        const token = req.headers.authorization && checkTokenMiddleware.extractBearerToken(req.headers.authorization);
-        const decoded = jwt.decode(token, {complete: false})
-        console.log(req.body)
-        let newUser = await UserService.addAddress(decoded.id, req.body)
+
+        let newUser = await UserService.addAddress(req.user.id, req.body)
         if (newUser.success === true) {
             res.status(201)
             res.send(newUser)
@@ -35,6 +33,19 @@ exports.addAdress = async (req, res) => {
             res.status(400)
             res.send(newUser)
         }
+    } catch (e) {
+        res.status(403)
+        console.log(e)
+        res.send({
+            success: false,
+            errors: e
+        })
+    }
+}
+//voir ses adress
+exports.getMyAdress = async (req, res) => {
+    try {
+
     } catch (e) {
         res.status(403)
         console.log(e)
