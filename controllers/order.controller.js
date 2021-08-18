@@ -1,6 +1,8 @@
 const OrderService = require('../services/order.service')
 const jwt = require('jsonwebtoken');
 const checkTokenMiddleware = require('../controllers/jwt.controller');
+const {response} = require("express");
+const {body} = require("express-validator");
 
 exports.addOrder = async (req, res) => {
     try {
@@ -92,8 +94,12 @@ exports.getOneOrder = async (req, res) => {
 
 exports.getOrderByUser = async (req, res) => {
     try {
-        let oneOrder = await OrderService.getOrderByUser(req.params.id);
-        if(typeof oneOrder === "object" && oneOrder.length > 0) {
+        const token = req.headers.authorization && checkTokenMiddleware.extractBearerToken(req.headers.authorization);
+        const decoded = jwt.decode(token, {complete: false});
+        console.log(decoded.id)
+        let oneOrder = await OrderService.getOrderByUser(decoded.id);
+        console.log(oneOrder)
+        if(oneOrder.success === true) {
             res.status(200);
             res.send(oneOrder);
         } else {
@@ -104,7 +110,6 @@ exports.getOrderByUser = async (req, res) => {
             });
         }
     } catch (e) {
-
         console.log("catch" + e);
         res.status(400)
         res.send({
@@ -176,6 +181,30 @@ exports.getAllOrderByStatus = async (req, res) => {
             res.send({
                 success: false,
                 errors: "Vous n'avez pas les droits nécessaires !"
+            });
+        }
+
+    } catch (e) {
+        res.status(400)
+        res.send({
+            success: false,
+            errors: e
+        })
+    }
+}
+
+
+exports.updateStatus = async (req, res) => {
+    try {
+        let updateStatus = await OrderService.updateStatus(req.params.id, "payée");
+        if (updateStatus.success === true) {
+            res.status(200);
+            res.send(updateStatus);
+        } else {
+            res.status(403);
+            res.send({
+                success: false,
+                errors: "Un problème est survenu, merci de réessayer plus tard."
             });
         }
 
