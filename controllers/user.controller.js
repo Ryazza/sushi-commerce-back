@@ -44,10 +44,13 @@ exports.addAdress = async (req, res) => {
 //voir ses adress
 exports.getMyAdress = async (req, res) => {
     try {
-
+        let adress = await UserService.getMyAdress(req.user.id)
+        res.status(200);
+        res.send({
+            adress
+        })
     } catch (e) {
-        res.status(403)
-        console.log(e)
+        res.status(400)
         res.send({
             success: false,
             errors: e

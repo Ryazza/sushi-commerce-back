@@ -140,7 +140,17 @@ exports.addAddress = async (id, objectAddress) => {
         error: "User not found"
     }
 }
-
+//récupéré mes adresses
+exports.getMyAdress = async (idUser) => {
+    try {
+        return {
+            success: true,
+            address: await User.findOne({_id: idUser}, 'address')
+        };
+    } catch (e) {
+        throw  e;
+    }
+}
 //connexion
 exports.logUser = async (form) => {
     const user = await User.findOne({email: form.email})
