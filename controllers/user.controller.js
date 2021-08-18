@@ -174,6 +174,20 @@ exports.allUser = async (req, res) => {
         })
     }
 }
+
+exports.userById = async (req, res) => {
+    try {
+        let oneUser = await UserService.userById();
+        res.status(200);
+        res.send(oneUser);
+    } catch (e) {
+        res.status(400)
+        res.send({
+            success: false,
+            errors: e
+        })
+    }
+}
 exports.deleteUserById = async (req, res) => {
     try {
         const token = req.headers.authorization && checkTokenMiddleware.extractBearerToken(req.headers.authorization);
