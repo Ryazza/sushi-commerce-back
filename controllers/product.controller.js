@@ -10,7 +10,6 @@ exports.createProduct = async (req, res) => {
             res.status(400)
             res.send(newProduct)
         }
-
     } catch (e) {
         res.status(400);
         res.send({
@@ -85,7 +84,6 @@ exports.getOneProduct = async (req, res) => {
             res.status(200);
             res.send(oneProduct);
         }
-
     } catch (e) {
         res.status(400);
         res.send({
@@ -111,7 +109,6 @@ exports.showStock = async (req, res) => {
 }
 
 exports.updateStock = async (req, res) => {
-
     try {
         let newProduct = await ProductService.updateStock(req.body)
         if (newProduct.success === true) {
@@ -121,7 +118,6 @@ exports.updateStock = async (req, res) => {
             res.status(400)
             res.send(newProduct)
         }
-
     } catch (e) {
         res.status(400);
         res.send({
@@ -132,7 +128,6 @@ exports.updateStock = async (req, res) => {
 }
 
 exports.deduceStock = async (req, res) => {
-
     try {
         let newProduct = await ProductService.deduceStock(req.body, req.params.id)
         if (newProduct.success === true) {
@@ -142,7 +137,6 @@ exports.deduceStock = async (req, res) => {
             res.status(400)
             res.send(newProduct)
         }
-
     } catch (e) {
         res.status(400);
         res.send({
@@ -153,7 +147,6 @@ exports.deduceStock = async (req, res) => {
 }
 
 exports.addStock = async (req, res) => {
-
     try {
         let newProduct = await ProductService.addStock(req.body, req.params.id)
         if (newProduct.success === true) {
@@ -176,9 +169,7 @@ exports.addStock = async (req, res) => {
 
 exports.searchProductByName = async (req, res) => {
     try {
-        let keyword = req.params.keyword;
-
-        let products = await ProductService.searchProductByName(keyword);
+        let products = await ProductService.searchProductByName(req.params.keyword);
         res.status(200);
         res.send(products);
     } catch (e) {
@@ -192,9 +183,7 @@ exports.searchProductByName = async (req, res) => {
 
 exports.searchOneProduct = async (req, res) => {
     try {
-        let id = req.params.id;
-
-        let products = await ProductService.searchOneProduct(id);
+        let products = await ProductService.searchOneProduct(req.params.id);
         res.status(200);
         res.send(products);
     } catch (e) {
@@ -232,9 +221,8 @@ exports.sortProducts = async (req, res) => {
 }
 
 exports.deleteProduct = async (req,res)=>{
-    let id=req.params.id;
     try {
-        let products = await ProductService.deleteProduct(id);
+        let products = await ProductService.deleteProduct(req.params.id);
         res.status(200);
         res.send(products);
     } catch (e) {
@@ -293,16 +281,8 @@ exports.updateEvent = async (req,res)=>{
     }
 }
 exports.findBestSales = async (req, res) => {
-    let type =  req.params.type;
-    // if (type !== "all" && type !=="category" && type !== "subcategory"){
-    //     res.status(400);
-    //     res.send({
-    //         success: false,
-    //         errors: "veuillez préciser 'all', 'category' ou 'subcategory"
-    //     })
-    // }
     try {
-        let products = await ProductService.findBestSales(type);
+        let products = await ProductService.findBestSales(req.params.type);
         res.status(200);
         res.send(products);
     } catch (e) {

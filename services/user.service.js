@@ -2,7 +2,7 @@ const User = require('../models/userModel');
 const bcrypt = require('bcrypt')
 const jwt = require('jsonwebtoken');
 const SECRET = 'RyaSuiteSecretKey1298456';
-const { body } = require('express-validator');
+const {body, check} = require('express-validator');
 
 function validateEmail(email) {
     const re = /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
@@ -12,6 +12,7 @@ function validateEmail(email) {
 function isDate(date) {
     return (new Date(date) !== "Invalid Date") && !isNaN(new Date(date));
 }
+
 //inscription
 exports.addUser = async (form) => {
     try {
@@ -76,16 +77,16 @@ exports.addAddress = async (id, objectAddress) => {
     let user = await User.findOne({_id: id})
     if (user) {
         let addressToAdd = {};
-
-        if (body(objectAddress.no).isNumeric()) {
+        RegIsNumeric = /\d+$/g;
+        if (objectAddress.no && RegIsNumeric.test(objectAddress.no)) {
             addressToAdd.no = objectAddress.no;
-        } else if(!body(objectAddress.no).isNumeric() && objectAddress.no) {
+        } else {
             return {
                 success: false,
                 error: "No not valid, number needed"
             }
         }
-        if (objectAddress.address && body(objectAddress.address).isString()  && body(objectAddress.address).isLength({ min: 2 , max: 255})) {
+        if (objectAddress.address && typeof objectAddress.address === "string" && objectAddress.address.length > 2 && objectAddress.address.length < 255) {
             addressToAdd.address = objectAddress.address;
         } else {
             return {
@@ -93,16 +94,17 @@ exports.addAddress = async (id, objectAddress) => {
                 error: "Address not valid min string: 2 max : 255"
             }
         }
-
-        if (body(objectAddress.complement).isString() && body(objectAddress.complement).isLength({ min: 2 , max: 255})) {
-            addressToAdd.complement = objectAddress.complement;
-        } else if(objectAddress.complement  && !body(objectAddress.complement).isString() || objectAddress.complement && !body(objectAddress.complement).isLength({ min: 2 , max: 255})) {
-            return {
-                success: false,
-                error: "Complement not valid, string needed nim : 2 max : 255"
+        if(objectAddress.complement) {
+            if (typeof objectAddress.complement === "string" && objectAddress.complement.length > 2 && objectAddress.complement.length < 255) {
+                addressToAdd.complement = objectAddress.complement;
+            } else {
+                return {
+                    success: false,
+                    error: "Complement not valid, string needed nim : 2 max : 255"
+                }
             }
         }
-        if (body(objectAddress.cp).isNumeric()) {
+        if (RegIsNumeric.test(objectAddress.cp)) {
             addressToAdd.cp = objectAddress.cp;
         } else {
             return {
@@ -110,17 +112,17 @@ exports.addAddress = async (id, objectAddress) => {
                 error: "No not valid, number needed"
             }
         }
-        if (body(objectAddress.city).isString() && body(objectAddress.city).isLength({ min: 2 , max: 255})) {
+        if (typeof objectAddress.city === "string" && objectAddress.city.length > 2 && objectAddress.city.length < 255) {
             addressToAdd.city = objectAddress.city;
-        } else if(objectAddress.city  && !body(objectAddress.city).isString() || objectAddress.city && !body(objectAddress.city).isLength({ min: 2 , max: 255})) {
+        } else {
             return {
                 success: false,
                 error: "City not valid, string needed nim : 2 max : 255"
             }
         }
-        if (body(objectAddress.phone).isNumeric()) {
+        if (RegIsNumeric.test(objectAddress.phone)) {
             addressToAdd.phone = objectAddress.phone;
-        } else if(objectAddress.phone  && !body(objectAddress.phone).isNumeric()) {
+        } else {
             return {
                 success: false,
                 error: "phone number not valid"
@@ -138,6 +140,7 @@ exports.addAddress = async (id, objectAddress) => {
         error: "User not found"
     }
 }
+
 //connexion
 exports.logUser = async (form) => {
     const user = await User.findOne({email: form.email})

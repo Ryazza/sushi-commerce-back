@@ -1,10 +1,9 @@
 const CategoryService = require('../services/category.service')
-const checkTokenMiddleware = require('../controllers/jwt.controller');
+
 
 /*------------------------ USER -------------------------------*/
 
 exports.getAllCategory = async (req, res) => {
-
     try {
         let allCategory = await CategoryService.getAllCategory();
         res.status(200);
@@ -24,7 +23,6 @@ exports.getOneCategory = async (req, res) => {
         res.status(200);
         res.send(oneCategory);
     } catch (e) {
-
         console.log("catch" + e);
         res.status(400)
         res.send({
@@ -33,15 +31,10 @@ exports.getOneCategory = async (req, res) => {
         })
     }
 }
-
 /*------------------------ ADMIN -------------------------------*/
-
 exports.createCategory = async (req, res) => {
     try {
-        const token = req.headers.authorization && checkTokenMiddleware.extractBearerToken(req.headers.authorization);
-
         let newCategory = await CategoryService.createCategory(req.body)
-
         if (newCategory.success === true) {
             res.status(201)
             res.send(newCategory)
@@ -49,7 +42,6 @@ exports.createCategory = async (req, res) => {
             res.status(400)
             res.send(newCategory)
         }
-
     } catch (e) {
         console.log("create category catch", e);
         res.status(400)
@@ -62,9 +54,7 @@ exports.createCategory = async (req, res) => {
 
 exports.updateCategory = async (req, res) => {
     try {
-        const token = req.headers.authorization && checkTokenMiddleware.extractBearerToken(req.headers.authorization);
-
-        let categoryServiceRes = await CategoryService.updateCategory(req.params.id , req.body, token);
+        let categoryServiceRes = await CategoryService.updateCategory(req.params.id , req.body);
 
         if (categoryServiceRes.success) {
             res.status(200);
@@ -86,8 +76,7 @@ exports.updateCategory = async (req, res) => {
 exports.deleteCategory = async ( req, res ) => {
     try {
 
-        const token = req.headers.authorization && checkTokenMiddleware.extractBearerToken(req.headers.authorization);
-        let category = await CategoryService.deleteCategoryById(req.params.id, token);
+        let category = await CategoryService.deleteCategoryById(req.params.id);
         if (category.success) {
             res.status(200);
             res.send({

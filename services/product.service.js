@@ -1,7 +1,4 @@
 const Product = require('../models/productModel.js');
-const {checkObjectId} = require('../helper/dbHelper');
-const SubCategory = require("../models/subCategoryModel");
-
 
 function checkForm(form) {
     if (form.name.length > 25 || form.name.length < 3) {
@@ -44,27 +41,14 @@ function checkForm(form) {
 
 async function checkStockUpdate(form, id, availableAuto = false) {
 
-    let verifId = checkObjectId(id);
-    if (availableAuto) {
-        verifId.success = true;
-    }
+    let product = await Product.findById(id)
 
-    if (!verifId.success) {
+    if (!product) {
         return {
             success: false,
-            error: "Vous devez rentrer un id correct " + verifId.message
-        }
-    } else {
-
-        let product = await Product.findById(id)
-        if (!product) {
-            return {
-                success: false,
-                error: "Votre produit " + id + " n'existe plus !"
-            }
+            error: "Votre produit " + id + " n'existe pas !"
         }
     }
-
     if (typeof form.quantity !== "number") {
         return {
             success: false,
@@ -91,7 +75,6 @@ async function checkStockUpdate(form, id, availableAuto = false) {
             }
         }
     }
-
     return {success: true};
 }
 
@@ -114,15 +97,6 @@ exports.allProducts = async () => {
 exports.getOneProduct = async (id) => {
 
     try {
-        let verifId = checkObjectId(id);
-
-        if (!verifId.success) {
-            return {
-                success: false,
-                message: "Votre produit n'existe pas!"
-            }
-        }
-
         let product = await Product.findById(id).populate({
             path: "subCategoryId",
             populate: {path: "category", select: "_id name"},

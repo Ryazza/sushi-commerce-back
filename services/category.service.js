@@ -1,5 +1,4 @@
 const Category = require('../models/categoryModel');
-const { checkObjectId } = require('../helper/dbHelper');
 
 /*------------------------- USER ---------------------------*/
 
@@ -7,9 +6,9 @@ exports.getAllCategory = async () => {
 
     try {
 
-        let category = await Category.find().populate("subCategory", "id name description img", null, {sort: { name: 1}}).sort({name: 1});
+        let category = await Category.find().populate("subCategory", "id name description img", null, {sort: {name: 1}}).sort({name: 1});
 
-        if(category.length < 1) {
+        if (category.length < 1) {
             return {
                 success: false,
                 error: "Il n'y a pas encore de catégorie"
@@ -27,10 +26,10 @@ exports.getAllCategory = async () => {
 
 }
 
-exports.getOneCategory = async ({ id }) => {
+exports.getOneCategory = async ({id}) => {
     try {
         let category = await Category.findById(id).populate("subCategory", "name description img");
-        if(typeof category !== "object" || !category) {
+        if (typeof category !== "object" || !category) {
             return {
                 success: false,
                 error: "Votre id est incorrect"
@@ -52,12 +51,12 @@ exports.createCategory = async (form) => {
     try {
         let verify = await verifyEntry(form, true);
 
-        if(verify.success === true) {
+        if (verify.success === true) {
 
             form.name = form.name.toLowerCase();
             form.name = form.name.capitalizeFirstLetter();
             let testCategorie = await Category.find({name: form.name});
-            if(testCategorie.length > 0) {
+            if (testCategorie.length > 0) {
 
                 return {
                     success: false,
@@ -79,7 +78,7 @@ exports.createCategory = async (form) => {
                 success: verify.success,
                 message: verify.message,
                 errors: verify.error,
-                categoryId : verify.categoryId
+                categoryId: verify.categoryId
 
             }
         }
@@ -89,18 +88,17 @@ exports.createCategory = async (form) => {
 }
 
 exports.updateCategory = async (id, change) => {
-
     try {
         let verify = await verifyEntry(change, true, id, true);
-        if(verify.success === true) {
+        if (verify.success === true) {
 
             change.name = change.name.toLowerCase();
             change.name = change.name.capitalizeFirstLetter();
 
             await Category.findOneAndUpdate(
-                { _id: id },
+                {_id: id},
                 change,
-                { new: true }
+                {new: true}
             )
             return {
                 success: true,
@@ -121,22 +119,8 @@ exports.updateCategory = async (id, change) => {
 
 exports.deleteCategoryById = async (id) => {
     try {
-        let verifId = checkObjectId(id);
-
-        if(verifId.success === true) {
-            let idExist = await Category.findById(id);
-            if(!idExist) {
-                return {
-                    success: false,
-                }
-            }
-        } else {
-            return {
-                success: false,
-            }
-        }
         let testCategorie = await Category.findById(id);
-        if(!testCategorie) {
+        if (!testCategorie) {
             return {
                 success: false,
             }
@@ -153,27 +137,9 @@ exports.deleteCategoryById = async (id) => {
 /*----------- function for add update category -----------------*/
 
 /*----------- VERIFY --------------*/
-async function verifyEntry(category, checkValue = null, id=null, update = false) {
-    if(id !== null) {
-        let verifId = checkObjectId(id);
-
-        if(verifId.success === true) {
-            let idExist = await Category.findById(id);
-            if(!idExist) {
-                return {
-                    success: false,
-                    message: "Votre catégorie n'existe pas!"
-                }
-            }
-        } else {
-            return {
-                success: false,
-                message: "Votre ID ne correspond pas!"
-            }
-        }
-    }
+async function verifyEntry(category, checkValue = null, update = false) {
     if (checkValue !== null) {
-        if(typeof category.name === "undefined") {
+        if (typeof category.name === "undefined") {
             return {
                 success: false,
                 message: "Vous devez définir une catégorie",
@@ -196,18 +162,18 @@ async function verifyEntry(category, checkValue = null, id=null, update = false)
         category.name = category.name.toLowerCase();
         category.name = category.name.capitalizeFirstLetter();
 
-        let nameExist = await Category.find({ name: category.name});
-        if(nameExist.length > 0 && update === false ) {
+        let nameExist = await Category.find({name: category.name});
+        if (nameExist.length > 0 && update === false) {
             return {
                 success: false,
                 message: "Votre nom de catégorie existe déjà !",
                 categoryId: nameExist[0]._id
 
             }
-        } else if(update === true && nameExist.length > 0) {
+        } else if (update === true && nameExist.length > 0) {
             let updatedCategory = await Category.findById(id);
             // console.log("updatedCategory", updatedCategory)
-            if(updatedCategory.name !== category.name ) {
+            if (updatedCategory.name !== category.name) {
 
                 return {
                     success: false,
@@ -217,7 +183,7 @@ async function verifyEntry(category, checkValue = null, id=null, update = false)
             }
         }
 
-        if(typeof category.description === "undefined") {
+        if (typeof category.description === "undefined") {
             return {
                 success: false,
                 message: "Vous devez définir une description"
@@ -237,9 +203,9 @@ async function verifyEntry(category, checkValue = null, id=null, update = false)
             };
         }
     }
-    return { success: true };
+    return {success: true};
 }
 
-String.prototype.capitalizeFirstLetter = function() {
+String.prototype.capitalizeFirstLetter = function () {
     return this.charAt(0).toUpperCase() + this.slice(1);
 }

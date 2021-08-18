@@ -1,6 +1,5 @@
 const UserService = require('../services/user.service')
-const jwt = require('jsonwebtoken');
-const checkTokenMiddleware = require('../controllers/jwt.controller');
+
 //inscription
 exports.addUser = async (req, res) => {
     try {
@@ -24,9 +23,8 @@ exports.addUser = async (req, res) => {
 // ajout d'une adress
 exports.addAdress = async (req, res) => {
     try {
-        const token = req.headers.authorization && checkTokenMiddleware.extractBearerToken(req.headers.authorization);
-        const decoded = jwt.decode(token, {complete: false})
-        let newUser = await UserService.addAddress(decoded.id, req.body)
+
+        let newUser = await UserService.addAddress(req.user.id, req.body)
         if (newUser.success === true) {
             res.status(201)
             res.send(newUser)
@@ -34,6 +32,19 @@ exports.addAdress = async (req, res) => {
             res.status(400)
             res.send(newUser)
         }
+    } catch (e) {
+        res.status(403)
+        console.log(e)
+        res.send({
+            success: false,
+            errors: e
+        })
+    }
+}
+//voir ses adress
+exports.getMyAdress = async (req, res) => {
+    try {
+
     } catch (e) {
         res.status(403)
         console.log(e)
@@ -65,10 +76,7 @@ exports.connectUser = async (req, res) => {
 //Supprimer mon compte
 exports.deleteUser = async (req, res) => {
     try {
-        const token = req.headers.authorization && checkTokenMiddleware.extractBearerToken(req.headers.authorization);
-        const decoded = jwt.decode(token, {complete: false})
-
-        let userServiceRes = await UserService.unsetUser(decoded.id);
+        let userServiceRes = await UserService.unsetUser(req.user.id);
         res.status(200);
         res.send(userServiceRes);
 
@@ -83,9 +91,7 @@ exports.deleteUser = async (req, res) => {
 //Récupéré mes information
 exports.getMe = async (req, res) => {
     try {
-        const token = req.headers.authorization && checkTokenMiddleware.extractBearerToken(req.headers.authorization);
-        const decoded = jwt.decode(token, {complete: false});
-        let userServiceRes = await UserService.getMe(decoded.id);
+        let userServiceRes = await UserService.getMe(req.user.id);
         res.status(200);
         res.send(userServiceRes);
     } catch (e) {
@@ -99,9 +105,7 @@ exports.getMe = async (req, res) => {
 //Modifier mon mot de passe
 exports.updateUserPass = async (req, res) => {
     try {
-        const token = req.headers.authorization && checkTokenMiddleware.extractBearerToken(req.headers.authorization);
-        const decoded = jwt.decode(token, {complete: false});
-        let userServiceRes = await UserService.updateUserPass(decoded.id, req.body);
+        let userServiceRes = await UserService.updateUserPass(req.user.id, req.body);
         if (userServiceRes.success) {
             res.status(200);
             res.send(userServiceRes);
@@ -120,9 +124,7 @@ exports.updateUserPass = async (req, res) => {
 //Modification de l'email
 exports.updateMail = async (req, res) => {
     try {
-        const token = req.headers.authorization && checkTokenMiddleware.extractBearerToken(req.headers.authorization);
-        const decoded = jwt.decode(token, {complete: false});
-        let userServiceRes = await UserService.updateMail(decoded.id, req.body);
+        let userServiceRes = await UserService.updateMail(req.user.id, req.body);
         if (userServiceRes.success) {
             res.status(200);
             res.send(userServiceRes);
@@ -141,9 +143,8 @@ exports.updateMail = async (req, res) => {
 //Modification de la date de naissance
 exports.updateBirth = async (req, res) => {
     try {
-        const token = req.headers.authorization && checkTokenMiddleware.extractBearerToken(req.headers.authorization);
-        const decoded = jwt.decode(token, {complete: false});
-        let userServiceRes = await UserService.updateBirth(decoded.id, req.body);
+
+        let userServiceRes = await UserService.updateBirth(req.user.id, req.body);
         if (userServiceRes.success) {
             res.status(200);
             res.send(userServiceRes);
@@ -176,9 +177,7 @@ exports.allUser = async (req, res) => {
 }
 exports.deleteUserById = async (req, res) => {
     try {
-        const token = req.headers.authorization && checkTokenMiddleware.extractBearerToken(req.headers.authorization);
-        const decoded = jwt.decode(token, {complete: false});
-        if(decoded.id !== req.params.id) {
+        if(req.user.id !== req.params.id) {
             let userServiceRes = await UserService.deleteUserById(req.params.id);
             res.status(200);
             res.send(userServiceRes);
@@ -200,9 +199,7 @@ exports.deleteUserById = async (req, res) => {
 //ADMIN Modifier le mail par id
 exports.updateMailAdmin = async (req, res) => {
     try {
-        const token = req.headers.authorization && checkTokenMiddleware.extractBearerToken(req.headers.authorization);
-        const decoded = jwt.decode(token, {complete: false});
-        if(decoded.id !== req.params.id) {
+        if(req.user.id !== req.params.id) {
             let userServiceRes = await UserService.updateMail(req.params.id, req.body);
             if (userServiceRes.success) {
                 res.status(200);
@@ -229,9 +226,7 @@ exports.updateMailAdmin = async (req, res) => {
 // ADMIN modifier le role par id
 exports.updateRole = async (req, res) => {
     try {
-        const token = req.headers.authorization && checkTokenMiddleware.extractBearerToken(req.headers.authorization);
-        const decoded = jwt.decode(token, {complete: false});
-        if (decoded.id !== req.params.id) {
+        if (req.user.id !== req.params.id) {
             let userServiceRes = await UserService.updateRole(req.params.id, req.body);
             if (userServiceRes.success) {
                 res.status(200);

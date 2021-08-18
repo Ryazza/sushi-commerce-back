@@ -1,46 +1,34 @@
 const Order = require('../models/orderModel');
 const Product = require('../models/productModel');
-const User = require('../models/userModel');
-const { checkObjectId } = require('../helper/dbHelper');
-const jwt = require('jsonwebtoken');
 const dayjs = require("dayjs");
 let isBetween = require('dayjs/plugin/isBetween')
 dayjs.extend(isBetween)
 
-exports.addOrder = async (form, token) => {
+exports.addOrder = async (form, user) => {
 
     try {
-        let verify = await verifyEntry(form, token);
+        let verify = await verifyEntry(form);
 
-        if(verify.success === true) {
-
+        if (verify.success === true) {
             // calcul function totalAmount and other;
             let formValid = await calculate(form);
-
-            const decoded = jwt.decode(token, {complete: false});
-            formValid.form.client_ID = decoded.id;
-
-            if (form.status !== null || form.status !== undefined || form.status.trim() !== '') {
+            formValid.form.client_ID = user.id;
+            if (form.status || form.status.trim() !== '') {
                 form.status = "payée";
             }
-
             const order = new Order({createdAt: new Date(), updateAt: new Date(), status: "payée"});
-
             Object.assign(order, formValid.form);
             let canSave = true;
             let insufficientStock = '';
-
-            formValid.changeStock.forEach( product => {
-                if(product.canChangeStock === false) {
+            formValid.changeStock.forEach(product => {
+                if (product.canChangeStock === false) {
                     insufficientStock += product.id + ' ';
                     canSave = false;
                 }
             });
-
-            if(canSave) {
+            if (canSave) {
                 await order.save();
-
-                for(let i=0; i < formValid.changeStock.length; i++) {
+                for (let i = 0; i < formValid.changeStock.length; i++) {
                     let product = await Product.findOne({_id: formValid.changeStock[i].id});
                     product.quantity = formValid.changeStock[i].quantity;
                     product.available = formValid.changeStock[i].available;
@@ -48,18 +36,15 @@ exports.addOrder = async (form, token) => {
 
                     await Product.updateOne({_id: formValid.changeStock[i].id}, product);
                 }
-
                 return {
                     success: true
                 };
-
             } else {
                 return {
                     success: false,
                     message: "Les produits suivants n'ont pas de stock suffisant " + insufficientStock + "!"
                 };
             }
-
         } else {
             return {
                 success: verify.success,
@@ -72,25 +57,25 @@ exports.addOrder = async (form, token) => {
     }
 }
 
-exports.calculateOrder = async (form, token) => {
+exports.calculateOrder = async (form) => {
 
     try {
-        let verify = await verifyEntry(form , token);
+        let verify = await verifyEntry(form);
 
-        if(verify.success === true) {
+        if (verify.success === true) {
 
             // calcul function totalAmount and other;
             let formValid = await calculate(form);
             let canSend = true;
-            formValid.changeStock.forEach( product => {
-                if(product.canChangeStock === false) {
+            formValid.changeStock.forEach(product => {
+                if (product.canChangeStock === false) {
                     canSend = false;
                 }
             });
 
             return {
                 success: true,
-                response: {formValid , canOrder: canSend},
+                response: {formValid, canOrder: canSend},
             };
         } else {
             return {
@@ -117,26 +102,18 @@ exports.getAllOrder = async () => {
 
 }
 
-exports.getOneOrder = async ({ id }) => {
+exports.getOneOrder = async (id) => { //todo check si la comande est bien a l'utilisateur
     try {
-        let verifId = checkObjectId(id);
-        if(verifId.success === false) {
+        let order = await Order.findOne({_id: id})
+        if (order) {
             return {
-                success: false,
-                message: "ID invalide",
+                success: true,
+                order: order
             }
         } else {
-            let order = await Order.findById(id)
-            if (order) {
-                return {
-                    success: true,
-                    order: order
-                }
-            } else {
-                return {
-                    success: false,
-                    error: "ID invalide"
-                }
+            return {
+                success: false,
+                error: "ID invalide"
             }
         }
     } catch (e) {
@@ -144,27 +121,26 @@ exports.getOneOrder = async ({ id }) => {
     }
 }
 
-exports.getOrderByUser = async ( client_id ) => {
+exports.getOrderByUser = async (client_id) => {
     console.log(client_id)
-        try {
-            let orders = await Order.find({ client_ID: client_id }).sort({_id: -1})
-
-            if(typeof orders === "object" && orders.length > 0) {
-                return {
-                    success: true,
-                    order: orders
-                }
-            } else {
-                return {
-                    success: false,
-                }
+    try {
+        let orders = await Order.find({client_ID: client_id}).sort({_id: -1})
+        if (typeof orders === "object" && orders.length > 0) {
+            return {
+                success: true,
+                order: orders
             }
-        } catch (e) {
-            throw e;
+        } else {
+            return {
+                success: false,
+            }
         }
+    } catch (e) {
+        throw e;
+    }
 }
 
-exports.updateOrder = async (id, change, token ) => {
+exports.updateOrder = async (id, change) => { //todo vérifier si la commande appartien bien au client
 
     try {
         let order = await Order.findById(id);
@@ -176,9 +152,9 @@ exports.updateOrder = async (id, change, token ) => {
             }
         }
 
-        let verify = await verifyEntry(change, token);
+        let verify = await verifyEntry(change);
 
-        if(verify.success === true) {
+        if (verify.success === true) {
             // calcul function totalAmount and other;
 
             let changeValid = await calculate(change);
@@ -186,9 +162,9 @@ exports.updateOrder = async (id, change, token ) => {
             changeValid.client_ID = order.client_ID;
 
             await Order.findOneAndUpdate(
-                { _id: id },
+                {_id: id},
                 changeValid,
-                { new: true }
+                {new: true}
             )
 
             return {
@@ -210,37 +186,22 @@ exports.updateOrder = async (id, change, token ) => {
 
 exports.deleteOrderById = async (id) => {
     try {
-        let verifId = checkObjectId(id);
-        if(verifId.success === false) {
+        let response = await Order.deleteOne({_id: id})
+        if (response) {
             return {
-                success: false,
-                message: "ID invalide",
+                success: true
             }
         } else {
-            let response = await Order.deleteOne({_id: id})
-
-            if(response) {
-                return {
-                    success: true
-                }
-            } else {
-                return {
-                    success: false
-                }
+            return {
+                success: false
             }
         }
     } catch (e) {
         throw e;
     }
 }
-
 //----------------------- ADMIN ---------------------------//
-
-
-
-
-exports.getAllOrderByStatus = async ( status, order ) => {
-
+exports.getAllOrderByStatus = async (status, order) => {
     try {
         if ((status === "payée" || status === "expédiée") && (order === "desc" || order === 'asc')) {
             let inOrder;
@@ -271,48 +232,48 @@ async function calculate(form) {
     let canChangeStock;
     let totalAmount = 0;
 
-     for(let i=0; i < form.articles.length; i++) {
-         let product = await Product.findById(form.articles[i].id).populate({ path: "subCategoryId", populate: { path: "category", select: "_id name"}, select: "_id name" });
-         let oldQuantity = product.quantity;
-         let newQuantity = oldQuantity - form.articles[i].quantity;
+    for (let i = 0; i < form.articles.length; i++) {
+        let product = await Product.findById(form.articles[i].id).populate({path: "subCategoryId", populate: {path: "category", select: "_id name"}, select: "_id name"});
+        let oldQuantity = product.quantity;
+        let newQuantity = oldQuantity - form.articles[i].quantity;
 
-         if(newQuantity < 0) {
-             canChangeStock = false;
-             available = false;
-         } else if (newQuantity === 0) {
-             canChangeStock = true;
-             available = false;
-         } else {
-             canChangeStock = true;
-             available = true;
-         }
-         changeStock.push({ id: form.articles[i].id, quantity: newQuantity, available: available, canChangeStock: canChangeStock})
+        if (newQuantity < 0) {
+            canChangeStock = false;
+            available = false;
+        } else if (newQuantity === 0) {
+            canChangeStock = true;
+            available = false;
+        } else {
+            canChangeStock = true;
+            available = true;
+        }
+        changeStock.push({id: form.articles[i].id, quantity: newQuantity, available: available, canChangeStock: canChangeStock})
 
-         let amount = product.price * form.articles[i].quantity;
-         let sale;
+        let amount = product.price * form.articles[i].quantity;
+        let sale;
 
-         if(typeof product.sale === "undefined") {
+        if (typeof product.sale === "undefined") {
 
-             sale = parseInt(form.articles[i].quantity);
-         } else {
-             sale = parseInt(product.sale) + parseInt(form.articles[i].quantity);
-         }
+            sale = parseInt(form.articles[i].quantity);
+        } else {
+            sale = parseInt(product.sale) + parseInt(form.articles[i].quantity);
+        }
 
-         articles.push({
-             id: product.id,
-             pictures: product.pictures,
-             name: product.name,
-             events: product.events,
-             category: product.subCategoryId.category.name,
-             subCategory: product.subCategoryId.name,
-             brand: product.brand,
-             description: product.description,
-             price: product.price,
-             sale: sale,
-             quantityBuy: form.articles[i].quantity,
-             amount: amount
-         });
-         totalAmount += amount;
+        articles.push({
+            id: product.id,
+            pictures: product.pictures,
+            name: product.name,
+            events: product.events,
+            category: product.subCategoryId.category.name,
+            subCategory: product.subCategoryId.name,
+            brand: product.brand,
+            description: product.description,
+            price: product.price,
+            sale: sale,
+            quantityBuy: form.articles[i].quantity,
+            amount: amount
+        });
+        totalAmount += amount;
     }
 
     /*----------------------- A lier au systeme fraix de port -------------------------*/
@@ -321,7 +282,7 @@ async function calculate(form) {
 
     let gift_package;
 
-    if(totalAmount > 200) {
+    if (totalAmount > 200) {
         gift_package = true;
     } else {
         gift_package = false;
@@ -329,9 +290,9 @@ async function calculate(form) {
 
     let today = new Date();
 
-    if(today.getMonth() === 11 && today.getDate() > 5) {
+    if (today.getMonth() === 11 && today.getDate() > 5) {
         gift_package = true;
-    } else if (dayjs(dayjs().year()+ "-" + dayjs().get('month')+ "-" +dayjs().get('date')).isBetween(dayjs().year() +'6-15', dayjs().year() +'7-15')) {
+    } else if (dayjs(dayjs().year() + "-" + dayjs().get('month') + "-" + dayjs().get('date')).isBetween(dayjs().year() + '6-15', dayjs().year() + '7-15')) {
         gift_package = true;
     }
 
@@ -343,34 +304,9 @@ async function calculate(form) {
 }
 
 /*----------- VERIFY --------------*/
-async function verifyEntry(order, token) {
+verifyEntry = async (order) => {
 
-    const decoded = jwt.decode(token, {complete: false});
-
-    let verifId = checkObjectId(decoded.id);
-    let idExist;
-
-    order.client_ID = decoded.id;
-
-    if(verifId.success === true) {
-        idExist = await User.findById(decoded.id);
-    } else {
-        return {
-            success: false,
-            message: "ID invalide" + verifId.message,
-            errors: "client_ID"
-        };
-    }
-
-    if (!idExist) {
-        return {
-            success: false,
-            message: "ID invalide Client" + order.client_ID,
-            errors: "client_ID"
-        };
-    }
-
-    if(typeof order.articles === "undefined") {
+    if (typeof order.articles === "undefined") {
         return {
             success: false,
             message: "Vous devez enregistrer un article pour une commande",
@@ -378,29 +314,29 @@ async function verifyEntry(order, token) {
         };
     } else {
 
-        for(let i=0; i < order.articles.length; i++) {
+        for (let i = 0; i < order.articles.length; i++) {
             let verifId = checkObjectId(order.articles[i].id);
             let verifProduct;
-            let actualNbr = i+1;
-            if(verifId.success === true) {
+            let actualNbr = i + 1;
+            if (verifId.success === true) {
                 verifProduct = await Product.findById(order.articles[i].id);
             } else {
                 return {
                     success: false,
-                    message: "Vous devez enregistrer un id correct pour votre article " +actualNbr+ ": " + verifId.message,
+                    message: "Vous devez enregistrer un id correct pour votre article " + actualNbr + ": " + verifId.message,
                     errors: "article.id"
                 };
             }
 
-            if(!verifProduct) {
+            if (!verifProduct) {
                 return {
                     success: false,
-                    message: "Votre article " +actualNbr+ " n'est pas reconnu " + order.articles[i].id,
+                    message: "Votre article " + actualNbr + " n'est pas reconnu " + order.articles[i].id,
                     errors: "article.id"
                 };
             }
 
-            if(typeof order.articles[i].quantity === "undefined") {
+            if (typeof order.articles[i].quantity === "undefined") {
                 return {
                     success: false,
                     message: "Vous devez renseigner une quantité à votre article " + order.articles[i].id + " !",
@@ -408,7 +344,7 @@ async function verifyEntry(order, token) {
                 };
             }
 
-            if(typeof order.articles[i].quantity !== "number") {
+            if (typeof order.articles[i].quantity !== "number") {
                 return {
                     success: false,
                     message: "La quantité de votre article doit être un chiffre !",
@@ -416,9 +352,7 @@ async function verifyEntry(order, token) {
                 };
             }
         }
-
-
-        return { success: true };
+        return {success: true};
     }
 }
 
@@ -426,7 +360,7 @@ async function verifyEntry(order, token) {
 
 exports.updateStatus = async (id) => {
     try {
-       await Order.updateOne({_id:id} , {status: "expédiée"})
+        await Order.updateOne({_id: id}, {status: "expédiée"})
         return {
             success: true,
         }
