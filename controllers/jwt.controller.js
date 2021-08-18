@@ -29,7 +29,7 @@ exports.checkToken = async function(req, res, next) {
         return res.status(401).json({ message: 'Error. Need a token' })
     }
     // Véracité du token
-    jwt.verify(token, SECRET, (err, decodedToken) => {
+    jwt.verify(token, SECRET, (err) => {
         if (err) {
             res.status(401).json({ message: 'Error. Bad token' })
         } else {

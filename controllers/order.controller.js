@@ -94,10 +94,9 @@ exports.getOneOrder = async (req, res) => {
 
 exports.getOrderByUser = async (req, res) => {
     try {
-        const token = req.headers.authorization && checkTokenMiddleware.extractBearerToken(req.headers.authorization);
-        const decoded = jwt.decode(token, {complete: false});
-        console.log(decoded.id)
-        let oneOrder = await OrderService.getOrderByUser(decoded.id);
+
+        console.log(req.user.id)
+        let oneOrder = await OrderService.getOrderByUser(req.user.id);
         console.log(oneOrder)
         if(oneOrder.success === true) {
             res.status(200);
@@ -169,10 +168,9 @@ exports.deleteOrder = async ( req, res ) => {
 exports.getAllOrderByStatus = async (req, res) => {
 
     try {
-        const token = req.headers.authorization && checkTokenMiddleware.extractBearerToken(req.headers.authorization);
-        const decoded = jwt.decode(token, {complete: false});
 
-        if(decoded.admin === true) {
+
+        if(req.user.admin === true) {
             let allOrder = await OrderService.getAllOrderByStatus(req.params.status, req.params.order);
             res.status(200);
             res.send(allOrder);
