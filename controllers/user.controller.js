@@ -1,6 +1,5 @@
 const UserService = require('../services/user.service')
-const jwt = require('jsonwebtoken');
-const checkTokenMiddleware = require('../controllers/jwt.controller');
+
 //inscription
 exports.addUser = async (req, res) => {
     try {

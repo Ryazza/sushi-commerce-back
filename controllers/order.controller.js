@@ -1,15 +1,8 @@
 const OrderService = require('../services/order.service')
-const jwt = require('jsonwebtoken');
-const checkTokenMiddleware = require('../controllers/jwt.controller');
-const {response} = require("express");
-const {body} = require("express-validator");
 
 exports.addOrder = async (req, res) => {
     try {
-        const token = req.headers.authorization && checkTokenMiddleware.extractBearerToken(req.headers.authorization);
-
-        let newOrder = await OrderService.addOrder(req.body, token)
-
+        let newOrder = await OrderService.addOrder(req.body, req.user)
         if (newOrder.success === true) {
             res.status(201)
             res.send(newOrder)
@@ -19,7 +12,6 @@ exports.addOrder = async (req, res) => {
         }
 
     } catch (e) {
-        console.log("addOrder catch", e);
         res.status(400)
         res.send({
             success: false,
@@ -30,10 +22,7 @@ exports.addOrder = async (req, res) => {
 
 exports.calculateOrder = async (req, res) => {
     try {
-        const token = req.headers.authorization && checkTokenMiddleware.extractBearerToken(req.headers.authorization);
-
-        let newOrder = await OrderService.calculateOrder(req.body, token)
-
+        let newOrder = await OrderService.calculateOrder(req.body)
         if (newOrder.success === true) {
             res.status(201)
             res.send(newOrder)
@@ -41,7 +30,6 @@ exports.calculateOrder = async (req, res) => {
             res.status(400)
             res.send(newOrder)
         }
-
     } catch (e) {
         console.log("calculOrder catch", e);
         res.status(400)
@@ -53,7 +41,6 @@ exports.calculateOrder = async (req, res) => {
 }
 
 exports.getAllOrder = async (req, res) => {
-
     try {
         let allOrder = await OrderService.getAllOrder();
         res.status(200);
@@ -95,7 +82,6 @@ exports.getOneOrder = async (req, res) => {
 exports.getOrderByUser = async (req, res) => {
     try {
 
-        console.log(req.user.id)
         let oneOrder = await OrderService.getOrderByUser(req.user.id);
         console.log(oneOrder)
         if(oneOrder.success === true) {
@@ -120,8 +106,7 @@ exports.getOrderByUser = async (req, res) => {
 
 exports.updateOrder = async (req, res) => {
     try {
-        const token = req.headers.authorization && checkTokenMiddleware.extractBearerToken(req.headers.authorization);
-        let orderServiceRes = await OrderService.updateOrder(req.params.id , req.body, token);
+        let orderServiceRes = await OrderService.updateOrder(req.params.id , req.body, req.user);
 
         if (orderServiceRes.success) {
             res.status(200);
@@ -168,8 +153,6 @@ exports.deleteOrder = async ( req, res ) => {
 exports.getAllOrderByStatus = async (req, res) => {
 
     try {
-
-
         if(req.user.admin === true) {
             let allOrder = await OrderService.getAllOrderByStatus(req.params.status, req.params.order);
             res.status(200);
@@ -190,7 +173,6 @@ exports.getAllOrderByStatus = async (req, res) => {
         })
     }
 }
-
 
 exports.updateStatus = async (req, res) => {
     try {
