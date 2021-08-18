@@ -573,20 +573,11 @@ exports.findBestSales = async (type) => {
         }
     } else {
         try {
-             await SubCategory.find({_id: type});
-            // if (testCategory.length === 0) {
-            //     return {
-            //         success: false,
-            //         message: "La sous-catégorie n'existe pas",
-            //         categoryId: testCategory._id
-            //
-            //     }
-            // }
-            let products = await Product.find({subCategoryId: type}).sort({sale: -1}).limit(6);
-            console.log(products)
+
+            // let products = await Product.find({subCategoryId: type}).sort({sale: -1}).limit(6);
             return {
                 success: true,
-                products: products
+                products: await Product.find({subCategoryId: type}).sort({sale: -1}).limit(6)
             }
         } catch (e) {
             throw e;
