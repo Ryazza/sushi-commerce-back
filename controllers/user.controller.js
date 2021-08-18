@@ -177,7 +177,8 @@ exports.allUser = async (req, res) => {
 
 exports.userById = async (req, res) => {
     try {
-        let oneUser = await UserService.userById();
+        let oneUser = await UserService.userById(req.params.id);
+        console.log(oneUser)
         res.status(200);
         res.send(oneUser);
     } catch (e) {

@@ -263,7 +263,8 @@ exports.allUser = async () => {
 
 //ADMIN find one user by id
 exports.userById = async (id) => {
-    let users = await User.find({_id: id})
+    console.log(id)
+    let users = await User.findById(id)
     return {
         success: true,
         users: users
