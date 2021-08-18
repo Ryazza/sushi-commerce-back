@@ -175,6 +175,21 @@ exports.allUser = async (req, res) => {
         })
     }
 }
+
+exports.userById = async (req, res) => {
+    try {
+        let oneUser = await UserService.userById(req.params.id);
+        console.log(oneUser)
+        res.status(200);
+        res.send(oneUser);
+    } catch (e) {
+        res.status(400)
+        res.send({
+            success: false,
+            errors: e
+        })
+    }
+}
 exports.deleteUserById = async (req, res) => {
     try {
         if(req.user.id !== req.params.id) {

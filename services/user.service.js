@@ -263,6 +263,16 @@ exports.allUser = async () => {
         users: users
     }
 }
+
+//ADMIN find one user by id
+exports.userById = async (id) => {
+    console.log(id)
+    let users = await User.findById(id)
+    return {
+        success: true,
+        users: users
+    }
+}
 //ADMIN Supprimer un utilisateur
 exports.deleteUserById = async (id) => {
     await User.deleteOne({_id: id})
