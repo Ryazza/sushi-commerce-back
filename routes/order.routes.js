@@ -8,9 +8,10 @@ router.post('/calculate', checkTokenMiddleware.checkToken, orderController.calcu
 
 router.get('/', checkTokenMiddleware.checkToken, orderController.getAllOrder)
 
+router.get('/orderedUser', checkTokenMiddleware.checkToken, orderController.getOrderByUser)
+
 router.get('/:id', checkTokenMiddleware.checkToken, orderController.getOneOrder)
 
-router.get('/byUser/:id', checkTokenMiddleware.checkToken, orderController.getOrderByUser)
 
 router.put('/:id', checkTokenMiddleware.checkToken, orderController.updateOrder)
 
@@ -19,5 +20,6 @@ router.delete('/:id', checkTokenMiddleware.checkToken, orderController.deleteOrd
 /*-------------- ADMIN -----------------*/
 
 router.get('/status/:status/:order', checkTokenMiddleware.checkTokenAdmin, orderController.getAllOrderByStatus)
+router.put('/status/newStatus/:id', checkTokenMiddleware.checkTokenAdmin, orderController.updateStatus)
 
 module.exports = router;
