@@ -42,3 +42,16 @@ exports.getPrice = async (data) => {
         throw e;
     }
 }
+exports.getAll = async () => {
+    try {
+        let response = await ShippingFee.find({})
+
+        return {
+            success: true,
+            response: response
+        }
+    } catch (e) {
+        console.log(e)
+        throw e;
+    }
+}

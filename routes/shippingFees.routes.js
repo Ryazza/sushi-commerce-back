@@ -7,5 +7,7 @@ const checkTokenMiddleware = require('../controllers/jwt.controller');
 
 router.post('/',  ShippingFeeController.createFee)
 
+router.get('/all',  ShippingFeeController.getAll)
+
 router.get('/:weight&:location&:type', ShippingFeeController.getPrice)
 module.exports = router;
