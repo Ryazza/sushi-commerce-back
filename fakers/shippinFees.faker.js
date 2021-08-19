@@ -1,4 +1,4 @@
-shippingFee = require('./shippingFee_data.json');
+shippingFee = require('./shippingfees_data.json');
 
 const res = require("express");
 const index = require("../server");
@@ -8,15 +8,10 @@ Lib = require('./lib.faker')
 let saveId = []
 
 
-Lib.pushCategories(shippingFee)
-    .then(r => Lib.exploitSaveId(r.saveId, subCategories))
-    // .then(r => console.log("okay", r))
-    .then(r => Lib.pushSubCategories(r))
-    .then(r => Lib.changeProductsSubCategoryId(r.saveId, products) )
+Lib.pushShippingFees(shippingFee)
+    .then(r => console.log( r)).then(r =>process.exit())
     // .then(r => console.log('okay', r.saveId))
-    .then(r=>Lib.pushProducts(r)).catch(e=>console.log(e));
 
 
 // Lib.pushProducts(products).then(e=>console.log(e))
 
-console.log("fin du script")

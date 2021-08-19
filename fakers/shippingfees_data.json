@@ -3,6 +3,7 @@
     "country": [
       "France"
     ],
+    "type": "point relais",
     "delay": 3,
     "weight": [
       {

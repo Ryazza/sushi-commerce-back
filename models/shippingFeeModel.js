@@ -23,6 +23,6 @@ const ShippingFeeSchema = new mongoose.Schema({
 
 ShippingFeeSchema.plugin(uniqueValidator);
 
-const SshippingFee = mongoose.model('shippingfees', ShippingFeeSchema);
+const shippingFee = mongoose.model('shippingfees', ShippingFeeSchema);
 
-module.exports = SshippingFee;
+module.exports = shippingFee;
