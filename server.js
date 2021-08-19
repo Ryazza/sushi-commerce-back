@@ -15,6 +15,7 @@ let OrderRoutes = require('./routes/order.routes');
 let AdminRoutes = require('./routes/admin.routes');
 let CategoryRoutes = require('./routes/category.routes');
 let UnderCategoryRoutes = require('./routes/subCategory.routes');
+let ShippingFeesRoutes = require('./routes/shippingFees.routes');
 // -----
 
 let app = express();
@@ -34,6 +35,7 @@ app.use('/product', productRoutes);
 app.use('/admin', AdminRoutes);
 app.use('/category', CategoryRoutes);
 app.use('/subCategory', UnderCategoryRoutes);
+app.use('/shippingFee', ShippingFeesRoutes);
 // -----
 
 // DB

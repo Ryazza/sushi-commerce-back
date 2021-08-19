@@ -1,0 +1,381 @@
+[
+  {
+    "country": [
+      "France"
+    ],
+    "type": "point relais",
+    "delay": 3,
+    "weight": [
+      {
+        "name": "O,5 kg",
+        "value": 3.66
+      },
+      {
+        "name": "1 kg",
+        "value": 4.09
+      },
+      {
+        "name": "2 kg",
+        "value": 5.25
+      },
+      {
+        "name": "3 kg",
+        "value": 5.42
+      },
+      {
+        "name": "4 kg",
+        "value": 5.75
+      },
+      {
+        "name": "5 kg",
+        "value": 8.25
+      },
+      {
+        "name": "7 kg",
+        "value": 9.92
+      },
+      {
+        "name": "10 kg",
+        "value": 11.25
+      },
+      {
+        "name": "15 kg",
+        "value": 14.92
+      },
+      {
+        "name": "20 kg",
+        "value": 16.59
+      },
+      {
+        "name": "30 kg",
+        "value": 20.75
+      }
+    ]
+  },
+  {
+    "country": [
+      "Belgique",
+      "Luxembourg"
+    ],
+    "type": "point relais",
+    "delay": 3,
+    "weight": [
+      [
+        {
+          "name": "0.5 kg",
+          "value": 3.79
+        },
+        {
+          "name": "1 kg",
+          "value": 4.50
+        },
+        {
+          "name": "2 kg",
+          "value": 5.33
+        },
+        {
+          "name": "3 kg",
+          "value": 5.83
+        },
+        {
+          "name": "4 kg",
+          "value": 6.58
+        },
+        {
+          "name": "5 kg",
+          "value": 8.33
+        },
+        {
+          "name": "7 kg",
+          "value": 10.00
+        },
+        {
+          "name": "10 kg",
+          "value": 11.67
+        },
+        {
+          "name": "15 kg",
+          "value": 15.25
+        },
+        {
+          "name": "20 kg",
+          "value": 17.08
+        },
+        {
+          "name": "30 kg",
+          "value": 21.58
+        }
+      ]
+    ]
+  },
+  {
+    "country": [
+      "Pays-bas"
+    ],
+    "delay": 5,
+    "type": "point relais",
+    "weight": [
+      {
+        "name": "0.5 kg",
+        "value": 4.63
+      },
+      {
+        "name": "1 kg",
+        "value": 5.04
+      },
+      {
+        "name": "2 kg",
+        "value": 5.79
+      },
+      {
+        "name": "3 kg",
+        "value": 6.54
+      },
+      {
+        "name": "4 kg",
+        "value": 7.08
+      },
+      {
+        "name": "5 kg",
+        "value": 8.50
+      },
+      {
+        "name": "7 kg",
+        "value": 10.08
+      },
+      {
+        "name": "10 kg",
+        "value": 11.80
+      },
+      {
+        "name": "15 kg",
+        "value": 15.54
+      },
+      {
+        "name": "20 kg",
+        "value": 18.25
+      },
+      {
+        "name": "30 kg",
+        "value": ""
+      }
+    ]
+  },
+  {
+    "country": [
+      "Espagne"
+    ],
+    "delay": 5,
+    "type": "point relais",
+    "weight": [
+      {
+        "name": "0.5 kg",
+        "value": 5.67
+      },
+      {
+        "name": "1 kg",
+        "value": 6.00
+      },
+      {
+        "name": "2 kg",
+        "value": 6.75
+      },
+      {
+        "name": "3 kg",
+        "value": 7.50
+      },
+      {
+        "name": "4 kg",
+        "value": 8.25
+      },
+      {
+        "name": "5 kg",
+        "value": 9.00
+      },
+      {
+        "name": "7 kg",
+        "value": 10.75
+      },
+      {
+        "name": "10 kg",
+        "value": 12.75
+      },
+      {
+        "name": "15 kg",
+        "value": 16.50
+      },
+      {
+        "name": "20 kg",
+        "value": 20.67
+      },
+      {
+        "name": "30 kg",
+        "value": 24.00
+      }
+    ]
+  },
+  {
+    "country": [
+      "Allemagne",
+      "Belgique",
+      "Luxembourg",
+      "Pays-bas"
+    ],
+    "type": "domicile",
+    "delay": 3,
+    "weight": [
+      {
+        "name": "0.5 kg",
+        "value": 7.92
+      },
+      {
+        "name": "1 kg",
+        "value": 8.17
+      },
+      {
+        "name": "2 kg",
+        "value": 8.83
+      },
+      {
+        "name": "3 kg",
+        "value": 9.42
+      },
+      {
+        "name": "4 kg",
+        "value": 10.58
+      },
+      {
+        "name": "5 kg",
+        "value": 10.58
+      },
+      {
+        "name": "7 kg",
+        "value": 11.83
+      },
+      {
+        "name": "10 kg",
+        "value": 13.67
+      },
+      {
+        "name": "15 kg",
+        "value": 16.92
+      },
+      {
+        "name": "20 kg",
+        "value": 20.75
+      },
+      {
+        "name": "30 kg",
+        "value": 26.58
+      }
+    ]
+  },
+  {
+    "country": [
+      "Espagne"
+    ],
+    "type": "domicile",
+    "delay": 5,
+    "weight": [
+      {
+        "name": "0.5 kg",
+        "value": 8.50
+      },
+      {
+        "name": "1 kg",
+        "value": 8.67
+      },
+      {
+        "name": "2 kg",
+        "value": 9.75
+      },
+      {
+        "name": "3 kg",
+        "value": 10.67
+      },
+      {
+        "name": "4 kg",
+        "value": 12.58
+      },
+      {
+        "name": "5 kg",
+        "value": 12.58
+      },
+      {
+        "name": "7 kg",
+        "value": 14.50
+      },
+      {
+        "name": "10 kg",
+        "value": 17.42
+      },
+      {
+        "name": "15 kg",
+        "value": 22.25
+      },
+      {
+        "name": "20 kg",
+        "value": 26.58
+      },
+      {
+        "name": "30 kg",
+        "value": 31.83
+      }
+    ]
+  },
+  {
+    "country": [
+      "Italie",
+      "Portugal",
+      "Autriche"
+    ],
+    "type": "domicile",
+    "delay": 6,
+    "weight": [
+      {
+        "name": "0.5 kg",
+        "value": 9.33
+      },
+      {
+        "name": "1 kg",
+        "value": 9.50
+      },
+      {
+        "name": "2 kg",
+        "value": 10.50
+      },
+      {
+        "name": "3 kg",
+        "value": 11.50
+      },
+      {
+        "name": "4 kg",
+        "value": 13.33
+      },
+      {
+        "name": "5 kg",
+        "value": 13.33
+      },
+      {
+        "name": "7 kg",
+        "value": 15.17
+      },
+      {
+        "name": "10 kg",
+        "value": 18.92
+      },
+      {
+        "name": "15 kg",
+        "value": 23.25
+      },
+      {
+        "name": "20 kg",
+        "value": 25.92
+      },
+      {
+        "name": "30 kg",
+        "value": 33.25
+      }
+    ]
+  }
+]
