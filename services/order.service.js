@@ -102,6 +102,19 @@ exports.getAllOrder = async () => {
 
 }
 
+exports.getOrderByIdAdmin = async (id) => {
+    try {
+        let orders = await Order.findById(id)
+        return {
+            success: true,
+            order: orders
+        }
+    } catch (e) {
+        throw (e)
+    }
+
+}
+
 exports.getOneOrder = async (id) => { //todo check si la comande est bien a l'utilisateur
     try {
         let order = await Order.findOne({_id: id})
@@ -122,7 +135,6 @@ exports.getOneOrder = async (id) => { //todo check si la comande est bien a l'ut
 }
 
 exports.getOrderByUser = async (client_id) => {
-    console.log(client_id)
     try {
         let orders = await Order.find({client_ID: client_id}).sort({_id: -1})
         if (typeof orders === "object" && orders.length > 0) {
