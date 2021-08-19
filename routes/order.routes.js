@@ -20,5 +20,6 @@ router.delete('/:id', checkTokenMiddleware.checkToken, orderController.deleteOrd
 router.get('/', checkTokenMiddleware.checkTokenAdmin, orderController.getAllOrder)
 router.get('/status/:status/:order', checkTokenMiddleware.checkTokenAdmin, orderController.getAllOrderByStatus)
 router.put('/status/newStatus/:id', checkTokenMiddleware.checkTokenAdmin, orderController.updateStatus)
+router.get('/admin/order/:id', checkTokenMiddleware.checkTokenAdmin, orderController.getOneOrder)
 
 module.exports = router;
