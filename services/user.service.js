@@ -2,8 +2,8 @@ const User = require('../models/userModel');
 const bcrypt = require('bcrypt')
 const jwt = require('jsonwebtoken');
 const SECRET = 'RyaSuiteSecretKey1298456';
-const {body, check} = require('express-validator');
 
+// ------------------- User Service -------------------
 exports.addUser = async (form) => {
     try {
         if (!validateEmail(form.email)) {
@@ -62,69 +62,6 @@ exports.addUser = async (form) => {
         throw e
     }
 }
-exports.addAddress = async (id, objectAddress) => {
-    let user = await User.findOne({_id: id})
-    if (user) {
-        switch (false) {
-            case verifyNumberValidity(objectAddress.no).success:
-                return verifyNumberValidity(objectAddress.no);
-            case verifyStringValidity(objectAddress.address).success:
-                return verifyStringValidity(objectAddress.address)
-            case verifyNumberValidity(objectAddress.cp).success:
-                return verifyNumberValidity(objectAddress.cp);
-            case verifyStringValidity(objectAddress.city).success:
-                return verifyStringValidity(objectAddress.city);
-            case verifyNumberValidity(objectAddress.phone).success:
-                return verifyNumberValidity(objectAddress.phone);
-            default:
-                user.address.push(objectAddress);
-                user.save();
-                return {
-                    success: true,
-                    message: "Address added successfully"
-                }
-        }
-    }
-    return {
-        success: false,
-        error: "User not found"
-    }
-}
-exports.getMyAdress = async (idUser) => {
-    try {
-        return {
-            success: true,
-            address: await User.findOne({_id: idUser}, 'address')
-        };
-    } catch (e) {
-        throw  e;
-    }
-}
-exports.deleteAddress = async (idUser, idAddress) => {
-    try {
-        await User.updateOne({_id: idUser}, {"$pull": {"address": {"_id": idAddress}}}, {safe: true, multi: true});
-        return {success: true};
-    } catch (error) {
-        throw error;
-    }
-}
-exports.updateAddress = async (idUser, idAddress, body) => {
-    try {
-        let updateValue = {};
-        if (verifyNumberValidity(body.no).success === true) updateValue = {...updateValue, 'address.$.no': body.no};
-        if (verifyStringValidity(body.address).success === true) updateValue = {...updateValue, 'address.$.address': body.address};
-        if (verifyNumberValidity(body.cp).success === true) updateValue = {...updateValue, 'address.$.cp,': body.cp};
-        if (verifyStringValidity(body.city).success === true) updateValue = {...updateValue, 'address.$.city': body.city};
-        if (verifyNumberValidity(body.phone).success === true) updateValue = {...updateValue, 'address.$.phone': body.phone};
-        if (verifyNumberValidity(body.complement).success === true) updateValue = {...updateValue, 'address.$.complement': body.complement};
-        await User.updateOne({_id: idUser, address: {$elemMatch: {_id: idAddress}}},
-            {$set: updateValue},
-            {'new': true, 'safe': true, 'upsert': true});
-        return {success: true};
-    } catch (error) {
-        throw error;
-    }
-}
 exports.logUser = async (form) => {
     const user = await User.findOne({email: form.email})
     if (!user) {
@@ -154,16 +91,23 @@ exports.logUser = async (form) => {
     }
 }
 exports.unsetUser = async (id) => {
-    await User.deleteOne({_id: id});
-    return {
-        success: true
-    };
+    try {
+        await User.deleteOne({_id: id});
+        return {
+            success: true
+        };
+    } catch (error) {
+        throw error
+    }
 }
 exports.getMe = async (id) => {
-    let user = await User.findOne({_id: id})
-    return {
-        success: true,
-        user: user
+    try {
+        return {
+            success: true,
+            user: await User.findOne({_id: id})
+        }
+    } catch (error) {
+        throw error
     }
 }
 exports.updateUserPass = async (id, change) => {
@@ -233,27 +177,94 @@ exports.updateBirth = async (id, change) => {
         birth: new Date(change.birth)
     };
 }
+// ------------------- Address Service -------------------
+exports.addAddress = async (id, objectAddress) => {
+    let user = await User.findOne({_id: id})
+    if (user) {
+        switch (false) {
+            case verifyNumberValidity(objectAddress.no).success:
+                return verifyNumberValidity(objectAddress.no);
+            case verifyStringValidity(objectAddress.address).success:
+                return verifyStringValidity(objectAddress.address)
+            case verifyNumberValidity(objectAddress.cp).success:
+                return verifyNumberValidity(objectAddress.cp);
+            case verifyStringValidity(objectAddress.city).success:
+                return verifyStringValidity(objectAddress.city);
+            case verifyNumberValidity(objectAddress.phone).success:
+                return verifyNumberValidity(objectAddress.phone);
+            default:
+                user.address.push(objectAddress);
+                user.save();
+                return {
+                    success: true,
+                    message: "Address added successfully"
+                }
+        }
+    }
+    return {
+        success: false,
+        error: "User not found"
+    }
+}
+exports.getMyAdress = async (idUser) => {
+    try {
+        return {
+            success: true,
+            address: await User.findOne({_id: idUser}, 'address')
+        };
+    } catch (e) {
+        throw  e;
+    }
+}
+exports.deleteAddress = async (idUser, idAddress) => {
+    try {
+        await User.updateOne({_id: idUser}, {"$pull": {"address": {"_id": idAddress}}}, {safe: true, multi: true});
+        return {success: true};
+    } catch (error) {
+        throw error;
+    }
+}
+exports.updateAddress = async (idUser, idAddress, body) => {
+    try {
+        let updateValue = {};
+        if (verifyNumberValidity(body.no).success === true) updateValue = {...updateValue, 'address.$.no': body.no};
+        if (verifyStringValidity(body.address).success === true) updateValue = {...updateValue, 'address.$.address': body.address};
+        if (verifyNumberValidity(body.cp).success === true) updateValue = {...updateValue, 'address.$.cp,': body.cp};
+        if (verifyStringValidity(body.city).success === true) updateValue = {...updateValue, 'address.$.city': body.city};
+        if (verifyNumberValidity(body.phone).success === true) updateValue = {...updateValue, 'address.$.phone': body.phone};
+        if (verifyNumberValidity(body.complement).success === true) updateValue = {...updateValue, 'address.$.complement': body.complement};
+        await User.updateOne({_id: idUser, address: {$elemMatch: {_id: idAddress}}},
+            {$set: updateValue},
+            {'new': true, 'safe': true, 'upsert': true});
+        return {success: true};
+    } catch (error) {
+        throw error
+    }
+}
 // --------------------- ADMIN ---------------------
 exports.allUser = async () => {
-    let users = await User.find({})
-    return {
-        success: true,
-        users: users
+    try {
+        return {
+            success: true,
+            users: await User.find({})
+        }
+    } catch (error) {
+        throw error
     }
 }
 exports.userById = async (id) => {
-    console.log(id)
-    let users = await User.findById(id)
-    return {
-        success: true,
-        users: users
+    try {
+        return {
+            success: true,
+            users: await User.findById(id)
+        }
+    } catch (error) {
+        throw error
     }
 }
 exports.deleteUserById = async (id) => {
     await User.deleteOne({_id: id})
-    return {
-        success: true
-    }
+    return {success: true}
 }
 exports.updateRole = async (id, role) => {
 
