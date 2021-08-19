@@ -54,6 +54,8 @@ exports.getAllOrder = async (req, res) => {
     }
 }
 
+
+
 exports.getOneOrder = async (req, res) => {
     try {
         let oneOrder = await OrderService.getOneOrder(req.params);
@@ -78,6 +80,33 @@ exports.getOneOrder = async (req, res) => {
         })
     }
 }
+
+
+exports.getOrderByIdAdmin = async (req, res) => {
+    try {
+        let oneOrder = await OrderService.getOrderByIdAdmin(req.params.id);
+        if(oneOrder.success) {
+            res.status(200);
+            res.send(oneOrder);
+        } else {
+            res.status(400);
+            res.send({
+                success: false,
+                errors: 'id invalide!'
+            });
+        }
+
+    } catch (e) {
+
+        console.log("getOneOrder catch", e);
+        res.status(400)
+        res.send({
+            success: false,
+            errors: e
+        })
+    }
+}
+
 
 exports.getOrderByUser = async (req, res) => {
     try {

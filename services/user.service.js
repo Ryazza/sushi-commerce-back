@@ -266,7 +266,6 @@ exports.allUser = async () => {
 
 //ADMIN find one user by id
 exports.userById = async (id) => {
-    console.log(id)
     let users = await User.findById(id)
     return {
         success: true,
