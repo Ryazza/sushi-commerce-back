@@ -24,13 +24,13 @@ exports.addUser = async (req, res) => {
 exports.addAdress = async (req, res) => {
     try {
 
-        let newUser = await UserService.addAddress(req.user.id, req.body)
-        if (newUser.success === true) {
+        let newAddress = await UserService.addAddress(req.user.id, req.body)
+        if (newAddress.success === true) {
             res.status(201)
-            res.send(newUser)
+            res.send(newAddress)
         } else {
             res.status(400)
-            res.send(newUser)
+            res.send(newAddress)
         }
     } catch (e) {
         res.status(403)
@@ -44,17 +44,40 @@ exports.addAdress = async (req, res) => {
 //voir ses adress
 exports.getMyAdress = async (req, res) => {
     try {
-        let adress = await UserService.getMyAdress(req.user.id)
         res.status(200);
-        res.send({
-            adress
-        })
-    } catch (e) {
+        res.send(
+            await UserService.getMyAdress(req.user.id)
+        )
+    } catch (error) {
         res.status(400)
-        res.send({
-            success: false,
-            errors: e
-        })
+        res.send({success: false, error})
+    }
+}
+exports.updateAddress = async (req, res) => {
+    try {
+        let newAddress = await UserService.updateAddress(req.user.id, req.params.id, req.body)
+        if (newAddress.success === true) {
+            res.status(201)
+            res.send(newAddress)
+        } else {
+            res.status(400)
+            res.send(newAddress)
+        }
+
+    } catch (error) {
+        res.status(400)
+        res.send({success: false, error})
+    }
+}
+exports.deleteAdress = async (req, res) => {
+    try {
+        res.status(200);
+        res.send(
+            await UserService.deleteAddress(req.user.id, req.params.id)
+        )
+    } catch (error) {
+        res.status(400)
+        res.send({success: false, error})
     }
 }
 //connection
@@ -180,7 +203,7 @@ exports.allUser = async (req, res) => {
 }
 exports.deleteUserById = async (req, res) => {
     try {
-        if(req.user.id !== req.params.id) {
+        if (req.user.id !== req.params.id) {
             let userServiceRes = await UserService.deleteUserById(req.params.id);
             res.status(200);
             res.send(userServiceRes);
@@ -202,7 +225,7 @@ exports.deleteUserById = async (req, res) => {
 //ADMIN Modifier le mail par id
 exports.updateMailAdmin = async (req, res) => {
     try {
-        if(req.user.id !== req.params.id) {
+        if (req.user.id !== req.params.id) {
             let userServiceRes = await UserService.updateMail(req.params.id, req.body);
             if (userServiceRes.success) {
                 res.status(200);
