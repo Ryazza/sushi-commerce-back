@@ -291,7 +291,6 @@ async function verifyEntry(subCategory, checkValue = null, update = false) {
     }
     if (update === true) {
         if (JSON.stringify(newIdCategory) !== JSON.stringify(oldIdCategory)) {
-            console.log("pas bon la")
             return {
                 success: true,
                 changeCategory: true,

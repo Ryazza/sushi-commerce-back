@@ -67,7 +67,6 @@ exports.createCategory = async (form) => {
                 const category = new Category({createdAt: new Date(), updateAt: new Date()});
                 Object.assign(category, form);
                 await category.save();
-                console.log("create category ID", category._id)
                 return {
                     success: true,
                     categoryId: category._id
@@ -172,7 +171,6 @@ async function verifyEntry(category, checkValue = null, update = false) {
             }
         } else if (update === true && nameExist.length > 0) {
             let updatedCategory = await Category.findById(id);
-            // console.log("updatedCategory", updatedCategory)
             if (updatedCategory.name !== category.name) {
 
                 return {

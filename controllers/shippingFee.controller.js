@@ -22,7 +22,6 @@ exports.createFee = async (req, res) => {
 exports.getPrice = async (req, res) => {
     try {
         let response = await ShippingFeeService.getPrice(req.params)
-        // console.log("reponse u controller",response)
         if (response.success === true) {
             res.status(201)
             res.send(response)
@@ -42,7 +41,6 @@ exports.getPrice = async (req, res) => {
 exports.getAll = async (req, res) => {
     try {
         let response = await ShippingFeeService.getAll()
-        console.log("reponse u controller",response)
         if (response.success === true) {
             res.status(201)
             res.send(response)

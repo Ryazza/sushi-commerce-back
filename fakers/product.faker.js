@@ -21,4 +21,3 @@ Lib.pushCategories(categories)
 
 // Lib.pushProducts(products).then(e=>console.log(e))
 
-console.log("fin du script")

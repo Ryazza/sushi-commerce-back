@@ -100,7 +100,6 @@ exports.pushProducts = async (products) => {
         i++;
 
         if (i === products.length) {
-            // console.log("saveId", saveId)
             console.log("products.length = ", i)
             return response;
 
@@ -154,7 +153,6 @@ exports.changeProductsSubCategoryId = (data, objectArray) => {
     objectArray.forEach((object) => {
         object.subCategoryId = findId(object, data);
     })
-    // console.log("result toto = " , objectArray[0])
     return objectArray;
 }
 
