@@ -1,7 +1,5 @@
 const UserService = require('../services/user.service')
-const jwt = require('jsonwebtoken');
-const checkTokenMiddleware = require('../controllers/jwt.controller');
-//inscription
+
 exports.addUser = async (req, res) => {
     try {
         let newUser = await UserService.addUser(req.body)
@@ -12,16 +10,64 @@ exports.addUser = async (req, res) => {
             res.status(400)
             res.send(newUser)
         }
-    } catch (e) {
+    } catch (errors) {
         res.status(403)
-        console.log(e)
-        res.send({
-            success: false,
-            errors: e
-        })
+        res.send({success: false, errors})
     }
 }
-//connection
+exports.addAdress = async (req, res) => {
+    try {
+        let newAddress = await UserService.addAddress(req.user.id, req.body)
+        if (newAddress.success === true) {
+            res.status(201)
+            res.send(newAddress)
+        } else {
+            res.status(400)
+            res.send(newAddress)
+        }
+    } catch (errors) {
+        res.status(403)
+        res.send({success: false, errors})
+    }
+}
+exports.getMyAdress = async (req, res) => {
+    try {
+        res.status(200);
+        res.send(
+            await UserService.getMyAdress(req.user.id)
+        )
+    } catch (errors) {
+        res.status(400)
+        res.send({success: false, errors})
+    }
+}
+exports.updateAddress = async (req, res) => {
+    try {
+        let newAddress = await UserService.updateAddress(req.user.id, req.params.id, req.body)
+        if (newAddress.success === true) {
+            res.status(201)
+            res.send(newAddress)
+        } else {
+            res.status(400)
+            res.send(newAddress)
+        }
+
+    } catch (errors) {
+        res.status(400)
+        res.send({success: false, errors})
+    }
+}
+exports.deleteAdress = async (req, res) => {
+    try {
+        res.status(200);
+        res.send(
+            await UserService.deleteAddress(req.user.id, req.params.id)
+        )
+    } catch (errors) {
+        res.status(400)
+        res.send({success: false, errors})
+    }
+}
 exports.connectUser = async (req, res) => {
     try {
         let logUser = await UserService.logUser(req.body)
@@ -40,46 +86,31 @@ exports.connectUser = async (req, res) => {
         })
     }
 }
-//Supprimer mon compte
 exports.deleteUser = async (req, res) => {
     try {
-        const token = req.headers.authorization && checkTokenMiddleware.extractBearerToken(req.headers.authorization);
-        const decoded = jwt.decode(token, {complete: false})
-
-        let userServiceRes = await UserService.unsetUser(decoded.id);
         res.status(200);
-        res.send(userServiceRes);
-
-    } catch (e) {
+        res.send(
+            await UserService.unsetUser(req.user.id)
+        );
+    } catch (errors) {
         res.status(400)
-        res.send({
-            success: false,
-            errors: e
-        })
+        res.send({success: false, errors})
     }
 }
-//Récupéré mes information
 exports.getMe = async (req, res) => {
     try {
-        const token = req.headers.authorization && checkTokenMiddleware.extractBearerToken(req.headers.authorization);
-        const decoded = jwt.decode(token, {complete: false});
-        let userServiceRes = await UserService.getMe(decoded.id);
         res.status(200);
-        res.send(userServiceRes);
-    } catch (e) {
+        res.send(
+            await UserService.getMe(req.user.id)
+        );
+    } catch (errors) {
         res.status(400);
-        res.send({
-            success: false,
-            errors: e
-        });
+        res.send({success: false, errors});
     }
 }
-//Modifier mon mot de passe
 exports.updateUserPass = async (req, res) => {
     try {
-        const token = req.headers.authorization && checkTokenMiddleware.extractBearerToken(req.headers.authorization);
-        const decoded = jwt.decode(token, {complete: false});
-        let userServiceRes = await UserService.updateUserPass(decoded.id, req.body);
+        let userServiceRes = await UserService.updateUserPass(req.user.id, req.body);
         if (userServiceRes.success) {
             res.status(200);
             res.send(userServiceRes);
@@ -87,20 +118,14 @@ exports.updateUserPass = async (req, res) => {
             res.status(400);
             res.send(userServiceRes);
         }
-    } catch (e) {
+    } catch (errors) {
         res.status(400);
-        res.send({
-            success: false,
-            errors: e
-        });
+        res.send({success: false, errors});
     }
 }
-//Modification de l'email
 exports.updateMail = async (req, res) => {
     try {
-        const token = req.headers.authorization && checkTokenMiddleware.extractBearerToken(req.headers.authorization);
-        const decoded = jwt.decode(token, {complete: false});
-        let userServiceRes = await UserService.updateMail(decoded.id, req.body);
+        let userServiceRes = await UserService.updateMail(req.user.id, req.body);
         if (userServiceRes.success) {
             res.status(200);
             res.send(userServiceRes);
@@ -108,20 +133,14 @@ exports.updateMail = async (req, res) => {
             res.status(400);
             res.send(userServiceRes);
         }
-    } catch (e) {
+    } catch (errors) {
         res.status(400);
-        res.send({
-            success: false,
-            errors: e
-        });
+        res.send({success: false, errors});
     }
 }
-//Modification de la date de naissance
 exports.updateBirth = async (req, res) => {
     try {
-        const token = req.headers.authorization && checkTokenMiddleware.extractBearerToken(req.headers.authorization);
-        const decoded = jwt.decode(token, {complete: false});
-        let userServiceRes = await UserService.updateBirth(decoded.id, req.body);
+        let userServiceRes = await UserService.updateBirth(req.user.id, req.body);
         if (userServiceRes.success) {
             res.status(200);
             res.send(userServiceRes);
@@ -129,37 +148,40 @@ exports.updateBirth = async (req, res) => {
             res.status(400);
             res.send(userServiceRes);
         }
-    } catch (e) {
+    } catch (error) {
         res.status(400);
-        res.send({
-            success: false,
-            errors: e
-        });
+        res.send({success: false, error});
     }
 }
-
-
 exports.allUser = async (req, res) => {
     try {
-        let allUser = await UserService.allUser();
         res.status(200);
-        res.send(allUser);
-    } catch (e) {
+        res.send(
+            await UserService.allUser()
+        );
+    } catch (errors) {
         res.status(400)
-        res.send({
-            success: false,
-            errors: e
-        })
+        res.send({success: false, errors})
+    }
+}
+exports.userById = async (req, res) => {
+    try {
+        res.status(200);
+        res.send(
+            await UserService.userById(req.params.id)
+        );
+    } catch (error) {
+        res.status(400)
+        res.send({success: false, error})
     }
 }
 exports.deleteUserById = async (req, res) => {
     try {
-        const token = req.headers.authorization && checkTokenMiddleware.extractBearerToken(req.headers.authorization);
-        const decoded = jwt.decode(token, {complete: false});
-        if(decoded.id !== req.params.id) {
-            let userServiceRes = await UserService.deleteUserById(req.params.id);
+        if (req.user.id !== req.params.id) {
             res.status(200);
-            res.send(userServiceRes);
+            res.send(
+                await UserService.deleteUserById(req.params.id)
+            );
         } else {
             res.status(400);
             res.send({
@@ -167,20 +189,14 @@ exports.deleteUserById = async (req, res) => {
                 message: "Vous ne pouvez pas supprimez votre compte depuis ici !"
             });
         }
-    } catch (e) {
-        res.status(400)
-        res.send({
-            success: false,
-            errors: e
-        })
+    } catch (errors) {
+        res.status(400);
+        res.send({success: false, errors});
     }
 }
-//ADMIN Modifier le mail par id
 exports.updateMailAdmin = async (req, res) => {
     try {
-        const token = req.headers.authorization && checkTokenMiddleware.extractBearerToken(req.headers.authorization);
-        const decoded = jwt.decode(token, {complete: false});
-        if(decoded.id !== req.params.id) {
+        if (req.user.id !== req.params.id) {
             let userServiceRes = await UserService.updateMail(req.params.id, req.body);
             if (userServiceRes.success) {
                 res.status(200);
@@ -196,20 +212,14 @@ exports.updateMailAdmin = async (req, res) => {
                 message: "Vous ne pouvez pas modifier votre email d'ici !"
             });
         }
-    } catch (e) {
+    } catch (errors) {
         res.status(400);
-        res.send({
-            success: false,
-            errors: e
-        });
+        res.send({success: false, errors});
     }
 }
-// ADMIN modifier le role par id
 exports.updateRole = async (req, res) => {
     try {
-        const token = req.headers.authorization && checkTokenMiddleware.extractBearerToken(req.headers.authorization);
-        const decoded = jwt.decode(token, {complete: false});
-        if (decoded.id !== req.params.id) {
+        if (req.user.id !== req.params.id) {
             let userServiceRes = await UserService.updateRole(req.params.id, req.body);
             if (userServiceRes.success) {
                 res.status(200);
@@ -225,11 +235,8 @@ exports.updateRole = async (req, res) => {
                 message: "Vous ne pouvez pas modifier votre rôle !"
             });
         }
-    } catch (e) {
+    } catch (errors) {
         res.status(400);
-        res.send({
-            success: false,
-            errors: e
-        });
+        res.send({success: false, errors});
     }
 }

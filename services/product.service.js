@@ -1,6 +1,4 @@
 const Product = require('../models/productModel.js');
-const {checkObjectId} = require('../helper/dbHelper');
-
 
 function checkForm(form) {
     if (form.name.length > 25 || form.name.length < 3) {
@@ -43,27 +41,14 @@ function checkForm(form) {
 
 async function checkStockUpdate(form, id, availableAuto = false) {
 
-    let verifId = checkObjectId(id);
-    if (availableAuto) {
-        verifId.success = true;
-    }
+    let product = await Product.findById(id)
 
-    if (!verifId.success) {
+    if (!product) {
         return {
             success: false,
-            error: "Vous devez rentrer un id correct " + verifId.message
-        }
-    } else {
-
-        let product = await Product.findById(id)
-        if (!product) {
-            return {
-                success: false,
-                error: "Votre produit " + id + " n'existe plus !"
-            }
+            error: "Votre produit " + id + " n'existe pas !"
         }
     }
-
     if (typeof form.quantity !== "number") {
         return {
             success: false,
@@ -90,58 +75,16 @@ async function checkStockUpdate(form, id, availableAuto = false) {
             }
         }
     }
-
     return {success: true};
-}
-
-exports.addProduct = async (form) => {
-
-    checkForm(form);
-    try {
-        const product = new Product({createdAt: new Date(), views : 0});
-        Object.assign(product, form);
-        await product.save();
-        return {
-            success: true
-        };
-    } catch (e) {
-        throw e;
-    }
-}
-
-exports.updateProduct = async (form, id) => {
-    checkForm(form);
-    try {
-        let product = await Product.findOneAndUpdate({_id: id}, {
-            name: form.name,
-            brand: form.brand,
-            category: form.subCategoryId.subCategory.name,
-            subCategory: form.subCategoryId.name,
-            description: form.description,
-            bigPicture: form.bigPicture,
-            pictures: form.pictures,
-            events: form.events,
-            quantity: form.quantity,
-            available: form.available,
-            price: form.price,
-            view: form.view,
-            sale: form.sale,
-            comment: form.comment,
-            }
-        );
-        Object.assign(product, form);
-        await product.save();
-        return {
-            success: true
-        };
-    } catch (e) {
-        throw e;
-    }
 }
 
 exports.allProducts = async () => {
     try {
-        let products = await Product.find({}).populate({ path: "subCategoryId", populate: { path: "category", select: "_id name"}, select: "_id name" });
+        let products = await Product.find({}).populate({
+            path: "subCategoryId",
+            populate: {path: "category", select: "_id name"},
+            select: "_id name"
+        });
         return {
             success: true,
             products: products
@@ -154,18 +97,13 @@ exports.allProducts = async () => {
 exports.getOneProduct = async (id) => {
 
     try {
-        let verifId = checkObjectId(id);
+        let product = await Product.findById(id).populate({
+            path: "subCategoryId",
+            populate: {path: "category", select: "_id name"},
+            select: "_id name"
+        });
 
-        if(!verifId.success) {
-            return {
-                success: false,
-                message: "Votre produit n'existe pas!"
-            }
-        }
-
-        let product = await Product.findById(id).populate({ path: "subCategoryId", populate: { path: "category", select: "_id name"}, select: "_id name" });
-
-        if(!product) {
+        if (!product) {
             return {
                 success: false,
                 error: "ID incorrect"
@@ -203,7 +141,11 @@ exports.getOneProduct = async (id) => {
 
 exports.searchProductByName = async (keyword) => {
     try {
-        let products = await Product.find({name: {$regex: keyword, $options: "i"}}).populate({ path: "subCategoryId", populate: { path: "category", select: "_id name"}, select: "_id name" })
+        let products = await Product.find({name: {$regex: keyword, $options: "i"}}).populate({
+            path: "subCategoryId",
+            populate: {path: "category", select: "_id name"},
+            select: "_id name"
+        })
 
         return {
             success: true,
@@ -220,7 +162,7 @@ exports.searchOneProduct = async (id) => {
             $inc: {
                 views: +1
             }
-        }).populate({ path: "subCategoryId", populate: { path: "category", select: "_id name"}, select: "_id name" });
+        }).populate({path: "subCategoryId", populate: {path: "category", select: "_id name"}, select: "_id name"});
 
         return {
             success: true,
@@ -232,6 +174,69 @@ exports.searchOneProduct = async (id) => {
 }
 
 /*---------------------- ADMIN -----------------------*/
+
+exports.addProduct = async (form) => {
+
+    checkForm(form);
+    try {
+        const product = new Product({createdAt: new Date(), views: 0});
+        Object.assign(product, form);
+        await product.save();
+        return {
+            success: true
+        };
+    } catch (e) {
+        throw e;
+    }
+}
+
+exports.updateProduct = async (form, id) => {
+    checkForm(form);
+    try {
+        let product = await Product.findOneAndUpdate({_id: id}, {
+                name: form.name,
+                brand: form.brand,
+                subCategoryId: form.subCategoryId,
+                description: form.description,
+                bigPicture: form.bigPicture,
+                pictures: form.pictures,
+                events: form.events,
+                quantity: form.quantity,
+                available: form.available,
+                price: form.price,
+                view: form.view,
+                sale: form.sale,
+                comment: form.comment,
+            }
+        );
+        Object.assign(product, form);
+        await product.save();
+        return {
+            success: true
+        };
+    } catch (e) {
+        throw e;
+    }
+}
+
+exports.updateProducts = async (products) => {
+
+    try {
+        for (const product of products) {
+            let currProduct = await Product.findOneAndUpdate({_id: product._id}, {
+                    product
+                }
+            );
+            Object.assign(currProduct, product);
+            await currProduct.save();
+        }
+        return {
+            success: true
+        };
+    } catch (e) {
+        throw e;
+    }
+}
 
 exports.showStock = async () => {
     try {
@@ -364,7 +369,11 @@ async function moreOrLess(id, stayNumber) {
 exports.sortProducts = async (type) => {
     if (type === "name") {
         try {
-            let products = await Product.find({}).sort({name: 1}).populate({ path: "subCategoryId", populate: { path: "category", select: "_id name"}, select: "_id name" });
+            let products = await Product.find({}).sort({name: 1}).populate({
+                path: "subCategoryId",
+                populate: {path: "category", select: "_id name"},
+                select: "_id name"
+            });
             return {
                 success: true,
                 products: products
@@ -375,7 +384,11 @@ exports.sortProducts = async (type) => {
     }
     if (type === "category") {
         try {
-            let products = await Product.find({}).sort({category: 1}).populate({ path: "subCategoryId", populate: { path: "category", select: "_id name"}, select: "_id name" });
+            let products = await Product.find({}).sort({category: 1}).populate({
+                path: "subCategoryId",
+                populate: {path: "category", select: "_id name"},
+                select: "_id name"
+            });
             return {
                 success: true,
                 products: products
@@ -386,7 +399,11 @@ exports.sortProducts = async (type) => {
     }
     if (type === "description") {
         try {
-            let products = await Product.find({}).sort({description: 1}).populate({ path: "subCategoryId", populate: { path: "category", select: "_id name"}, select: "_id name" });
+            let products = await Product.find({}).sort({description: 1}).populate({
+                path: "subCategoryId",
+                populate: {path: "category", select: "_id name"},
+                select: "_id name"
+            });
             return {
                 success: true,
                 products: products
@@ -397,7 +414,11 @@ exports.sortProducts = async (type) => {
     }
     if (type === "views") {
         try {
-            let products = await Product.find({}).sort({views: -1}).populate({ path: "subCategoryId", populate: { path: "category", select: "_id name"}, select: "_id name" });
+            let products = await Product.find({}).sort({views: -1}).populate({
+                path: "subCategoryId",
+                populate: {path: "category", select: "_id name"},
+                select: "_id name"
+            });
             return {
                 success: true,
                 products: products
@@ -436,7 +457,7 @@ exports.updateAvailable = async (products) => {
 
 }
 checkId = async (products) => {
-    let result={
+    let result = {
         success: true
     };
     for (const product of products) {
@@ -450,7 +471,7 @@ checkId = async (products) => {
         if (!search) {
             result = {
                 success: false,
-                error:  "Au moins une id n'existe pas"
+                error: "Au moins une id n'existe pas"
             }
         }
 
@@ -461,8 +482,8 @@ checkId = async (products) => {
 
 exports.updateEvent = async (products, eventType) => {
     try {
-      let check = await checkId(products);
-        if(check.success=== false){
+        let check = await checkId(products);
+        if (check.success === false) {
             return {
                 success: false,
                 error: check.error
@@ -489,12 +510,11 @@ exports.updateEvent = async (products, eventType) => {
                 console.log(e);
             }
         }
-        let message="";
+        let message = "";
         result.forEach(item => {
-            if (item.nModified ===0){
-                message= "Base de donnée non modifiée"
-            }
-            else{
+            if (item.nModified === 0) {
+                message = "Base de donnée non modifiée"
+            } else {
                 message = "Base de donnée modifiée avec succès"
             }
         })
@@ -507,27 +527,35 @@ exports.updateEvent = async (products, eventType) => {
         throw e;
     }
 
-    // si besoin, le code pour faire la boucle avec une seule requête :
-    // for (const product of products) {
-    //     let request;
-    //     console.log("entree dans la boucle, eventType = ", eventType)
-    //     try {
-    //         if (eventType === "discount") {
-    //             console.log(product.discount, product.id)
-    //             request =   await Product.updateOne({_id: product.id}, {"event.discount" : product.discount})
-    //         }
-    //         if (eventType === "new") {
-    //             request =  await Product.updateOne({_id: product.id}, {"event.new" : product.new})
-    //         }
-    //         if (eventType === "endOfSerie") {
-    //             request =  await Product.updateOne({_id: product.id}, {"event.endOfSerie" : product.endOfSerie})
-    //         }
-    //     } catch (e) {
-    //         console.log(e);
-    //     }
-    //     console.log(request)
-    // }
-
 
 }
 
+exports.findBestSales = async (type) => {
+    if (type === "all") {
+        try {
+            let products = await Product.find({}).sort({sale: -1}).limit(6).populate({
+                path: "subCategoryId",
+                populate: {path: "category", select: "_id name"},
+                select: "_id name"
+            });
+            return {
+                success: true,
+                products: products
+            }
+        } catch (e) {
+            throw e;
+        }
+    } else {
+        try {
+
+            // let products = await Product.find({subCategoryId: type}).sort({sale: -1}).limit(6);
+            return {
+                success: true,
+                products: await Product.find({subCategoryId: type}).sort({sale: -1}).limit(6)
+            }
+        } catch (e) {
+            throw e;
+        }
+    }
+
+}

@@ -23,5 +23,5 @@ users.forEach(async user =>  {
         console.log(e)
     }
 
-})
+}).then(r =>process.exit())
 

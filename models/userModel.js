@@ -27,9 +27,15 @@ const UsersSchema  = new mongoose.Schema({
         type: Date,
         required: true
     },
-    adress: {
-        type: Array
-    },
+    address: [{
+        no: Number,
+        address: String,
+        complement: String,
+        cp: String,
+        city: String,
+        country: String,
+        phone: String
+    }],
     payment: {
         type: Array
     },

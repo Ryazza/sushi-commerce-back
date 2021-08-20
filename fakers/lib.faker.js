@@ -5,6 +5,7 @@ products = require('./products_data.json');
 const CategoryService = require('../services/category.service')
 const ProductService = require('../services/product.service')
 const SubCategoryService = require("../services/subCategory.service");
+const ShippingFeeService = require("../services/shippingFee.service");
 let i = 0
 
 
@@ -99,7 +100,6 @@ exports.pushProducts = async (products) => {
         i++;
 
         if (i === products.length) {
-            // console.log("saveId", saveId)
             console.log("products.length = ", i)
             return response;
 
@@ -153,6 +153,38 @@ exports.changeProductsSubCategoryId = (data, objectArray) => {
     objectArray.forEach((object) => {
         object.subCategoryId = findId(object, data);
     })
-    // console.log("result toto = " , objectArray[0])
     return objectArray;
+}
+
+exports.pushShippingFees = async (items) => {
+    let response = [];
+    let i = 0;
+    for (const item of items) {
+        try {
+            let newItem = ShippingFeeService.addShippingFee(item)
+
+            if (newItem.success === true) {
+                response.push({name: item.name, result: newItem})
+                // console.log(subCategory.name, newSubCategory)
+            } else {
+                response.push({name: item.name, result: newItem})
+                // console.log(subCategory.name + " : new subCategory failed", newSubCategory)
+            }
+
+
+
+        } catch (e) {
+
+            console.log(e)
+        }
+        i++;
+
+        if (i === items.length) {
+            // console.log("saveId", saveId)
+
+            return response;
+
+        }
+
+    }
 }

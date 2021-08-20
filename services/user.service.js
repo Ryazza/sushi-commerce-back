@@ -3,15 +3,7 @@ const bcrypt = require('bcrypt')
 const jwt = require('jsonwebtoken');
 const SECRET = 'RyaSuiteSecretKey1298456';
 
-function validateEmail(email) {
-    const re = /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
-    return re.test(String(email).toLowerCase());
-}
-
-function isDate(date) {
-    return (new Date(date) !== "Invalid Date") && !isNaN(new Date(date));
-}
-//inscription
+// ------------------- User Service -------------------
 exports.addUser = async (form) => {
     try {
         if (!validateEmail(form.email)) {
@@ -70,7 +62,6 @@ exports.addUser = async (form) => {
         throw e
     }
 }
-//connexion
 exports.logUser = async (form) => {
     const user = await User.findOne({email: form.email})
     if (!user) {
@@ -99,22 +90,26 @@ exports.logUser = async (form) => {
         }
     }
 }
-// Supprimer mon compte
 exports.unsetUser = async (id) => {
-    await User.deleteOne({_id: id});
-    return {
-        success: true
-    };
-}
-//Récupérer mes information
-exports.getMe = async (id) => {
-    let user = await User.findOne({_id: id})
-    return {
-        success: true,
-        user: user
+    try {
+        await User.deleteOne({_id: id});
+        return {
+            success: true
+        };
+    } catch (error) {
+        throw error
     }
 }
-//Modifier mon mot de passse
+exports.getMe = async (id) => {
+    try {
+        return {
+            success: true,
+            user: await User.findOne({_id: id})
+        }
+    } catch (error) {
+        throw error
+    }
+}
 exports.updateUserPass = async (id, change) => {
     if (change.newPassword.length < 6) {
         return {
@@ -137,7 +132,6 @@ exports.updateUserPass = async (id, change) => {
         message: "Le mot de passe a bien été changé"
     };
 }
-// Modifier mon adress mail
 exports.updateMail = async (id, change) => {
     if (!validateEmail(change.email)) {
         return {
@@ -160,7 +154,6 @@ exports.updateMail = async (id, change) => {
         email: change.email
     };
 }
-//Modifier ma date de naissance
 exports.updateBirth = async (id, change) => {
     if (!isDate(change.birth)) {
         return {
@@ -184,22 +177,95 @@ exports.updateBirth = async (id, change) => {
         birth: new Date(change.birth)
     };
 }
-//ADMIN récupéré un la liste de tout les utilisateur inscrit
-exports.allUser = async () => {
-    let users = await User.find({})
+// ------------------- Address Service -------------------
+exports.addAddress = async (id, objectAddress) => {
+    let user = await User.findOne({_id: id})
+    if (user) {
+        switch (false) {
+            case verifyNumberValidity(objectAddress.no).success:
+                return verifyNumberValidity(objectAddress.no);
+            case verifyStringValidity(objectAddress.address).success:
+                return verifyStringValidity(objectAddress.address)
+            case verifyNumberValidity(objectAddress.cp).success:
+                return verifyNumberValidity(objectAddress.cp);
+            case verifyStringValidity(objectAddress.city).success:
+                return verifyStringValidity(objectAddress.city);
+            case verifyNumberValidity(objectAddress.phone).success:
+                return verifyNumberValidity(objectAddress.phone);
+            default:
+                user.address.push(objectAddress);
+                user.save();
+                return {
+                    success: true,
+                    message: "Address added successfully"
+                }
+        }
+    }
     return {
-        success: true,
-        users: users
+        success: false,
+        error: "User not found"
     }
 }
-//ADMIN Supprimer un utilisateur
+exports.getMyAdress = async (idUser) => {
+    try {
+        return {
+            success: true,
+            address: await User.findOne({_id: idUser}, 'address')
+        };
+    } catch (e) {
+        throw  e;
+    }
+}
+exports.deleteAddress = async (idUser, idAddress) => {
+    try {
+        await User.updateOne({_id: idUser}, {"$pull": {"address": {"_id": idAddress}}}, {safe: true, multi: true});
+        return {success: true};
+    } catch (error) {
+        throw error;
+    }
+}
+exports.updateAddress = async (idUser, idAddress, body) => {
+    try {
+        let updateValue = {};
+        if (verifyNumberValidity(body.no).success === true) updateValue = {...updateValue, 'address.$.no': body.no};
+        if (verifyStringValidity(body.address).success === true) updateValue = {...updateValue, 'address.$.address': body.address};
+        if (verifyNumberValidity(body.cp).success === true) updateValue = {...updateValue, 'address.$.cp,': body.cp};
+        if (verifyStringValidity(body.city).success === true) updateValue = {...updateValue, 'address.$.city': body.city};
+        if (verifyNumberValidity(body.phone).success === true) updateValue = {...updateValue, 'address.$.phone': body.phone};
+        if (verifyNumberValidity(body.complement).success === true) updateValue = {...updateValue, 'address.$.complement': body.complement};
+        await User.updateOne({_id: idUser, address: {$elemMatch: {_id: idAddress}}},
+            {$set: updateValue},
+            {'new': true, 'safe': true, 'upsert': true});
+        return {success: true};
+    } catch (error) {
+        throw error
+    }
+}
+// --------------------- ADMIN ---------------------
+exports.allUser = async () => {
+    try {
+        return {
+            success: true,
+            users: await User.find({})
+        }
+    } catch (error) {
+        throw error
+    }
+}
+exports.userById = async (id) => {
+    try {
+        return {
+            success: true,
+            users: await User.findById(id)
+        }
+    } catch (error) {
+        throw error
+    }
+}
 exports.deleteUserById = async (id) => {
     await User.deleteOne({_id: id})
-    return {
-        success: true
-    }
+    return {success: true}
 }
-//ADMIN modification du role de l'utilisateur
 exports.updateRole = async (id, role) => {
 
     await User.updateOne({_id: id}, {admin: role.admin, updateAt: new Date()});
@@ -207,4 +273,36 @@ exports.updateRole = async (id, role) => {
         success: true,
         message: "Le rôle a été modifié"
     };
+}
+// --------------------- Utils ---------------------
+verifyNumberValidity = (nbr) => {
+    let RegIsNumeric = /\d+$/g;
+    if (nbr && RegIsNumeric.test(nbr)) {
+        return {success: true}
+    } else {
+        return {
+            success: false,
+            error: "No not valid, number needed"
+        }
+    }
+}
+
+verifyStringValidity = (str) => {
+    if (str && typeof str === "string" && str.length > 2 && str.length < 255) {
+        return {success: true}
+    } else {
+        return {
+            success: false,
+            error: "Not valid string: 2 max : 255"
+        }
+    }
+}
+
+validateEmail = (email) => {
+    const re = /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
+    return re.test(String(email).toLowerCase());
+}
+
+isDate = (date) => {
+    return (new Date(date) !== "Invalid Date") && !isNaN(new Date(date));
 }

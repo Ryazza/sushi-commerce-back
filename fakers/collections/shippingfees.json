@@ -1,0 +1,1026 @@
+[{
+  "_id": {
+    "$oid": "611e2c4625fd751b05ddac82"
+  },
+  "country": [
+    "France"
+  ],
+  "weight": [
+    {
+      "_id": {
+        "$oid": "611e2c4625fd751b05ddac83"
+      },
+      "name": "O,5 kg",
+      "value": 3.66
+    },
+    {
+      "_id": {
+        "$oid": "611e2c4625fd751b05ddac84"
+      },
+      "name": "1 kg",
+      "value": 4.09
+    },
+    {
+      "_id": {
+        "$oid": "611e2c4625fd751b05ddac85"
+      },
+      "name": "2 kg",
+      "value": 5.25
+    },
+    {
+      "_id": {
+        "$oid": "611e2c4625fd751b05ddac86"
+      },
+      "name": "3 kg",
+      "value": 5.42
+    },
+    {
+      "_id": {
+        "$oid": "611e2c4625fd751b05ddac87"
+      },
+      "name": "4 kg",
+      "value": 5.75
+    },
+    {
+      "_id": {
+        "$oid": "611e2c4625fd751b05ddac88"
+      },
+      "name": "5 kg",
+      "value": 8.25
+    },
+    {
+      "_id": {
+        "$oid": "611e2c4625fd751b05ddac89"
+      },
+      "name": "7 kg",
+      "value": 9.92
+    },
+    {
+      "_id": {
+        "$oid": "611e2c4625fd751b05ddac8a"
+      },
+      "name": "10 kg",
+      "value": 11.25
+    },
+    {
+      "_id": {
+        "$oid": "611e2c4625fd751b05ddac8b"
+      },
+      "name": "15 kg",
+      "value": 14.92
+    },
+    {
+      "_id": {
+        "$oid": "611e2c4625fd751b05ddac8c"
+      },
+      "name": "20 kg",
+      "value": 16.59
+    },
+    {
+      "_id": {
+        "$oid": "611e2c4625fd751b05ddac8d"
+      },
+      "name": "30 kg",
+      "value": 20.75
+    }
+  ],
+  "type": "point relais",
+  "delay": 3,
+  "__v": 0
+},{
+  "_id": {
+    "$oid": "611e2c4625fd751b05ddac8e"
+  },
+  "country": [
+    "Belgique",
+    "Luxembourg"
+  ],
+  "weight": [
+    {
+      "_id": {
+        "$oid": "611e2c4625fd751b05ddac8f"
+      }
+    }
+  ],
+  "type": "point relais",
+  "delay": 3,
+  "__v": 0
+},{
+  "_id": {
+    "$oid": "611e2c4625fd751b05ddac90"
+  },
+  "country": [
+    "Pays-bas"
+  ],
+  "weight": [
+    {
+      "_id": {
+        "$oid": "611e2c4625fd751b05ddac91"
+      },
+      "name": "0.5 kg",
+      "value": 4.63
+    },
+    {
+      "_id": {
+        "$oid": "611e2c4625fd751b05ddac92"
+      },
+      "name": "1 kg",
+      "value": 5.04
+    },
+    {
+      "_id": {
+        "$oid": "611e2c4625fd751b05ddac93"
+      },
+      "name": "2 kg",
+      "value": 5.79
+    },
+    {
+      "_id": {
+        "$oid": "611e2c4625fd751b05ddac94"
+      },
+      "name": "3 kg",
+      "value": 6.54
+    },
+    {
+      "_id": {
+        "$oid": "611e2c4625fd751b05ddac95"
+      },
+      "name": "4 kg",
+      "value": 7.08
+    },
+    {
+      "_id": {
+        "$oid": "611e2c4625fd751b05ddac96"
+      },
+      "name": "5 kg",
+      "value": 8.5
+    },
+    {
+      "_id": {
+        "$oid": "611e2c4625fd751b05ddac97"
+      },
+      "name": "7 kg",
+      "value": 10.08
+    },
+    {
+      "_id": {
+        "$oid": "611e2c4625fd751b05ddac98"
+      },
+      "name": "10 kg",
+      "value": 11.8
+    },
+    {
+      "_id": {
+        "$oid": "611e2c4625fd751b05ddac99"
+      },
+      "name": "15 kg",
+      "value": 15.54
+    },
+    {
+      "_id": {
+        "$oid": "611e2c4625fd751b05ddac9a"
+      },
+      "name": "20 kg",
+      "value": 18.25
+    },
+    {
+      "_id": {
+        "$oid": "611e2c4625fd751b05ddac9b"
+      },
+      "name": "30 kg",
+      "value": null
+    }
+  ],
+  "delay": 5,
+  "type": "point relais",
+  "__v": 0
+},{
+  "_id": {
+    "$oid": "611e2c4625fd751b05ddac9c"
+  },
+  "country": [
+    "Espagne"
+  ],
+  "weight": [
+    {
+      "_id": {
+        "$oid": "611e2c4625fd751b05ddac9d"
+      },
+      "name": "0.5 kg",
+      "value": 5.67
+    },
+    {
+      "_id": {
+        "$oid": "611e2c4625fd751b05ddac9e"
+      },
+      "name": "1 kg",
+      "value": 6
+    },
+    {
+      "_id": {
+        "$oid": "611e2c4625fd751b05ddac9f"
+      },
+      "name": "2 kg",
+      "value": 6.75
+    },
+    {
+      "_id": {
+        "$oid": "611e2c4625fd751b05ddaca0"
+      },
+      "name": "3 kg",
+      "value": 7.5
+    },
+    {
+      "_id": {
+        "$oid": "611e2c4625fd751b05ddaca1"
+      },
+      "name": "4 kg",
+      "value": 8.25
+    },
+    {
+      "_id": {
+        "$oid": "611e2c4625fd751b05ddaca2"
+      },
+      "name": "5 kg",
+      "value": 9
+    },
+    {
+      "_id": {
+        "$oid": "611e2c4625fd751b05ddaca3"
+      },
+      "name": "7 kg",
+      "value": 10.75
+    },
+    {
+      "_id": {
+        "$oid": "611e2c4625fd751b05ddaca4"
+      },
+      "name": "10 kg",
+      "value": 12.75
+    },
+    {
+      "_id": {
+        "$oid": "611e2c4625fd751b05ddaca5"
+      },
+      "name": "15 kg",
+      "value": 16.5
+    },
+    {
+      "_id": {
+        "$oid": "611e2c4625fd751b05ddaca6"
+      },
+      "name": "20 kg",
+      "value": 20.67
+    },
+    {
+      "_id": {
+        "$oid": "611e2c4625fd751b05ddaca7"
+      },
+      "name": "30 kg",
+      "value": 24
+    }
+  ],
+  "delay": 5,
+  "type": "point relais",
+  "__v": 0
+},{
+  "_id": {
+    "$oid": "611e2c4625fd751b05ddacb4"
+  },
+  "country": [
+    "Espagne"
+  ],
+  "weight": [
+    {
+      "_id": {
+        "$oid": "611e2c4625fd751b05ddacb5"
+      },
+      "name": "0.5 kg",
+      "value": 8.5
+    },
+    {
+      "_id": {
+        "$oid": "611e2c4625fd751b05ddacb6"
+      },
+      "name": "1 kg",
+      "value": 8.67
+    },
+    {
+      "_id": {
+        "$oid": "611e2c4625fd751b05ddacb7"
+      },
+      "name": "2 kg",
+      "value": 9.75
+    },
+    {
+      "_id": {
+        "$oid": "611e2c4625fd751b05ddacb8"
+      },
+      "name": "3 kg",
+      "value": 10.67
+    },
+    {
+      "_id": {
+        "$oid": "611e2c4625fd751b05ddacb9"
+      },
+      "name": "4 kg",
+      "value": 12.58
+    },
+    {
+      "_id": {
+        "$oid": "611e2c4625fd751b05ddacba"
+      },
+      "name": "5 kg",
+      "value": 12.58
+    },
+    {
+      "_id": {
+        "$oid": "611e2c4625fd751b05ddacbb"
+      },
+      "name": "7 kg",
+      "value": 14.5
+    },
+    {
+      "_id": {
+        "$oid": "611e2c4625fd751b05ddacbc"
+      },
+      "name": "10 kg",
+      "value": 17.42
+    },
+    {
+      "_id": {
+        "$oid": "611e2c4625fd751b05ddacbd"
+      },
+      "name": "15 kg",
+      "value": 22.25
+    },
+    {
+      "_id": {
+        "$oid": "611e2c4625fd751b05ddacbe"
+      },
+      "name": "20 kg",
+      "value": 26.58
+    },
+    {
+      "_id": {
+        "$oid": "611e2c4625fd751b05ddacbf"
+      },
+      "name": "30 kg",
+      "value": 31.83
+    }
+  ],
+  "type": "domicile",
+  "delay": 5,
+  "__v": 0
+},{
+  "_id": {
+    "$oid": "611e2c4625fd751b05ddacc0"
+  },
+  "country": [
+    "Italie",
+    "Portugal",
+    "Autriche"
+  ],
+  "weight": [
+    {
+      "_id": {
+        "$oid": "611e2c4625fd751b05ddacc1"
+      },
+      "name": "0.5 kg",
+      "value": 9.33
+    },
+    {
+      "_id": {
+        "$oid": "611e2c4625fd751b05ddacc2"
+      },
+      "name": "1 kg",
+      "value": 9.5
+    },
+    {
+      "_id": {
+        "$oid": "611e2c4625fd751b05ddacc3"
+      },
+      "name": "2 kg",
+      "value": 10.5
+    },
+    {
+      "_id": {
+        "$oid": "611e2c4625fd751b05ddacc4"
+      },
+      "name": "3 kg",
+      "value": 11.5
+    },
+    {
+      "_id": {
+        "$oid": "611e2c4625fd751b05ddacc5"
+      },
+      "name": "4 kg",
+      "value": 13.33
+    },
+    {
+      "_id": {
+        "$oid": "611e2c4625fd751b05ddacc6"
+      },
+      "name": "5 kg",
+      "value": 13.33
+    },
+    {
+      "_id": {
+        "$oid": "611e2c4625fd751b05ddacc7"
+      },
+      "name": "7 kg",
+      "value": 15.17
+    },
+    {
+      "_id": {
+        "$oid": "611e2c4625fd751b05ddacc8"
+      },
+      "name": "10 kg",
+      "value": 18.92
+    },
+    {
+      "_id": {
+        "$oid": "611e2c4625fd751b05ddacc9"
+      },
+      "name": "15 kg",
+      "value": 23.25
+    },
+    {
+      "_id": {
+        "$oid": "611e2c4625fd751b05ddacca"
+      },
+      "name": "20 kg",
+      "value": 25.92
+    },
+    {
+      "_id": {
+        "$oid": "611e2c4625fd751b05ddaccb"
+      },
+      "name": "30 kg",
+      "value": 33.25
+    }
+  ],
+  "type": "domicile",
+  "delay": 6,
+  "__v": 0
+},{
+  "_id": {
+    "$oid": "611e2c4625fd751b05ddaca8"
+  },
+  "country": [
+    "Allemagne",
+    "Belgique",
+    "Luxembourg",
+    "Pays-bas"
+  ],
+  "weight": [
+    {
+      "_id": {
+        "$oid": "611e2c4625fd751b05ddaca9"
+      },
+      "name": "0.5 kg",
+      "value": 7.92
+    },
+    {
+      "_id": {
+        "$oid": "611e2c4625fd751b05ddacaa"
+      },
+      "name": "1 kg",
+      "value": 8.17
+    },
+    {
+      "_id": {
+        "$oid": "611e2c4625fd751b05ddacab"
+      },
+      "name": "2 kg",
+      "value": 8.83
+    },
+    {
+      "_id": {
+        "$oid": "611e2c4625fd751b05ddacac"
+      },
+      "name": "3 kg",
+      "value": 9.42
+    },
+    {
+      "_id": {
+        "$oid": "611e2c4625fd751b05ddacad"
+      },
+      "name": "4 kg",
+      "value": 10.58
+    },
+    {
+      "_id": {
+        "$oid": "611e2c4625fd751b05ddacae"
+      },
+      "name": "5 kg",
+      "value": 10.58
+    },
+    {
+      "_id": {
+        "$oid": "611e2c4625fd751b05ddacaf"
+      },
+      "name": "7 kg",
+      "value": 11.83
+    },
+    {
+      "_id": {
+        "$oid": "611e2c4625fd751b05ddacb0"
+      },
+      "name": "10 kg",
+      "value": 13.67
+    },
+    {
+      "_id": {
+        "$oid": "611e2c4625fd751b05ddacb1"
+      },
+      "name": "15 kg",
+      "value": 16.92
+    },
+    {
+      "_id": {
+        "$oid": "611e2c4625fd751b05ddacb2"
+      },
+      "name": "20 kg",
+      "value": 20.75
+    },
+    {
+      "_id": {
+        "$oid": "611e2c4625fd751b05ddacb3"
+      },
+      "name": "30 kg",
+      "value": 26.58
+    }
+  ],
+  "type": "domicile",
+  "delay": 3,
+  "__v": 0
+},{
+  "_id": {
+    "$oid": "611e2c6fe4f8fc1b47479dc3"
+  },
+  "country": [
+    "Belgique",
+    "Luxembourg"
+  ],
+  "weight": [
+    {
+      "_id": {
+        "$oid": "611e2c6fe4f8fc1b47479dc4"
+      }
+    }
+  ],
+  "type": "point relais",
+  "delay": 3,
+  "__v": 0
+},{
+  "_id": {
+    "$oid": "611e2c6fe4f8fc1b47479dc5"
+  },
+  "country": [
+    "Pays-bas"
+  ],
+  "weight": [
+    {
+      "_id": {
+        "$oid": "611e2c6fe4f8fc1b47479dc6"
+      },
+      "name": "0.5 kg",
+      "value": 4.63
+    },
+    {
+      "_id": {
+        "$oid": "611e2c6fe4f8fc1b47479dc7"
+      },
+      "name": "1 kg",
+      "value": 5.04
+    },
+    {
+      "_id": {
+        "$oid": "611e2c6fe4f8fc1b47479dc8"
+      },
+      "name": "2 kg",
+      "value": 5.79
+    },
+    {
+      "_id": {
+        "$oid": "611e2c6fe4f8fc1b47479dc9"
+      },
+      "name": "3 kg",
+      "value": 6.54
+    },
+    {
+      "_id": {
+        "$oid": "611e2c6fe4f8fc1b47479dca"
+      },
+      "name": "4 kg",
+      "value": 7.08
+    },
+    {
+      "_id": {
+        "$oid": "611e2c6fe4f8fc1b47479dcb"
+      },
+      "name": "5 kg",
+      "value": 8.5
+    },
+    {
+      "_id": {
+        "$oid": "611e2c6fe4f8fc1b47479dcc"
+      },
+      "name": "7 kg",
+      "value": 10.08
+    },
+    {
+      "_id": {
+        "$oid": "611e2c6fe4f8fc1b47479dcd"
+      },
+      "name": "10 kg",
+      "value": 11.8
+    },
+    {
+      "_id": {
+        "$oid": "611e2c6fe4f8fc1b47479dce"
+      },
+      "name": "15 kg",
+      "value": 15.54
+    },
+    {
+      "_id": {
+        "$oid": "611e2c6fe4f8fc1b47479dcf"
+      },
+      "name": "20 kg",
+      "value": 18.25
+    },
+    {
+      "_id": {
+        "$oid": "611e2c6fe4f8fc1b47479dd0"
+      },
+      "name": "30 kg",
+      "value": null
+    }
+  ],
+  "delay": 5,
+  "type": "point relais",
+  "__v": 0
+},{
+  "_id": {
+    "$oid": "611e2c6fe4f8fc1b47479dd1"
+  },
+  "country": [
+    "Espagne"
+  ],
+  "weight": [
+    {
+      "_id": {
+        "$oid": "611e2c6fe4f8fc1b47479dd2"
+      },
+      "name": "0.5 kg",
+      "value": 5.67
+    },
+    {
+      "_id": {
+        "$oid": "611e2c6fe4f8fc1b47479dd3"
+      },
+      "name": "1 kg",
+      "value": 6
+    },
+    {
+      "_id": {
+        "$oid": "611e2c6fe4f8fc1b47479dd4"
+      },
+      "name": "2 kg",
+      "value": 6.75
+    },
+    {
+      "_id": {
+        "$oid": "611e2c6fe4f8fc1b47479dd5"
+      },
+      "name": "3 kg",
+      "value": 7.5
+    },
+    {
+      "_id": {
+        "$oid": "611e2c6fe4f8fc1b47479dd6"
+      },
+      "name": "4 kg",
+      "value": 8.25
+    },
+    {
+      "_id": {
+        "$oid": "611e2c6fe4f8fc1b47479dd7"
+      },
+      "name": "5 kg",
+      "value": 9
+    },
+    {
+      "_id": {
+        "$oid": "611e2c6fe4f8fc1b47479dd8"
+      },
+      "name": "7 kg",
+      "value": 10.75
+    },
+    {
+      "_id": {
+        "$oid": "611e2c6fe4f8fc1b47479dd9"
+      },
+      "name": "10 kg",
+      "value": 12.75
+    },
+    {
+      "_id": {
+        "$oid": "611e2c6fe4f8fc1b47479dda"
+      },
+      "name": "15 kg",
+      "value": 16.5
+    },
+    {
+      "_id": {
+        "$oid": "611e2c6fe4f8fc1b47479ddb"
+      },
+      "name": "20 kg",
+      "value": 20.67
+    },
+    {
+      "_id": {
+        "$oid": "611e2c6fe4f8fc1b47479ddc"
+      },
+      "name": "30 kg",
+      "value": 24
+    }
+  ],
+  "delay": 5,
+  "type": "point relais",
+  "__v": 0
+},{
+  "_id": {
+    "$oid": "611e2c6fe4f8fc1b47479de9"
+  },
+  "country": [
+    "Espagne"
+  ],
+  "weight": [
+    {
+      "_id": {
+        "$oid": "611e2c6fe4f8fc1b47479dea"
+      },
+      "name": "0.5 kg",
+      "value": 8.5
+    },
+    {
+      "_id": {
+        "$oid": "611e2c6fe4f8fc1b47479deb"
+      },
+      "name": "1 kg",
+      "value": 8.67
+    },
+    {
+      "_id": {
+        "$oid": "611e2c6fe4f8fc1b47479dec"
+      },
+      "name": "2 kg",
+      "value": 9.75
+    },
+    {
+      "_id": {
+        "$oid": "611e2c6fe4f8fc1b47479ded"
+      },
+      "name": "3 kg",
+      "value": 10.67
+    },
+    {
+      "_id": {
+        "$oid": "611e2c6fe4f8fc1b47479dee"
+      },
+      "name": "4 kg",
+      "value": 12.58
+    },
+    {
+      "_id": {
+        "$oid": "611e2c6fe4f8fc1b47479def"
+      },
+      "name": "5 kg",
+      "value": 12.58
+    },
+    {
+      "_id": {
+        "$oid": "611e2c6fe4f8fc1b47479df0"
+      },
+      "name": "7 kg",
+      "value": 14.5
+    },
+    {
+      "_id": {
+        "$oid": "611e2c6fe4f8fc1b47479df1"
+      },
+      "name": "10 kg",
+      "value": 17.42
+    },
+    {
+      "_id": {
+        "$oid": "611e2c6fe4f8fc1b47479df2"
+      },
+      "name": "15 kg",
+      "value": 22.25
+    },
+    {
+      "_id": {
+        "$oid": "611e2c6fe4f8fc1b47479df3"
+      },
+      "name": "20 kg",
+      "value": 26.58
+    },
+    {
+      "_id": {
+        "$oid": "611e2c6fe4f8fc1b47479df4"
+      },
+      "name": "30 kg",
+      "value": 31.83
+    }
+  ],
+  "type": "domicile",
+  "delay": 5,
+  "__v": 0
+},{
+  "_id": {
+    "$oid": "611e2c6fe4f8fc1b47479df5"
+  },
+  "country": [
+    "Italie",
+    "Portugal",
+    "Autriche"
+  ],
+  "weight": [
+    {
+      "_id": {
+        "$oid": "611e2c6fe4f8fc1b47479df6"
+      },
+      "name": "0.5 kg",
+      "value": 9.33
+    },
+    {
+      "_id": {
+        "$oid": "611e2c6fe4f8fc1b47479df7"
+      },
+      "name": "1 kg",
+      "value": 9.5
+    },
+    {
+      "_id": {
+        "$oid": "611e2c6fe4f8fc1b47479df8"
+      },
+      "name": "2 kg",
+      "value": 10.5
+    },
+    {
+      "_id": {
+        "$oid": "611e2c6fe4f8fc1b47479df9"
+      },
+      "name": "3 kg",
+      "value": 11.5
+    },
+    {
+      "_id": {
+        "$oid": "611e2c6fe4f8fc1b47479dfa"
+      },
+      "name": "4 kg",
+      "value": 13.33
+    },
+    {
+      "_id": {
+        "$oid": "611e2c6fe4f8fc1b47479dfb"
+      },
+      "name": "5 kg",
+      "value": 13.33
+    },
+    {
+      "_id": {
+        "$oid": "611e2c6fe4f8fc1b47479dfc"
+      },
+      "name": "7 kg",
+      "value": 15.17
+    },
+    {
+      "_id": {
+        "$oid": "611e2c6fe4f8fc1b47479dfd"
+      },
+      "name": "10 kg",
+      "value": 18.92
+    },
+    {
+      "_id": {
+        "$oid": "611e2c6fe4f8fc1b47479dfe"
+      },
+      "name": "15 kg",
+      "value": 23.25
+    },
+    {
+      "_id": {
+        "$oid": "611e2c6fe4f8fc1b47479dff"
+      },
+      "name": "20 kg",
+      "value": 25.92
+    },
+    {
+      "_id": {
+        "$oid": "611e2c6fe4f8fc1b47479e00"
+      },
+      "name": "30 kg",
+      "value": 33.25
+    }
+  ],
+  "type": "domicile",
+  "delay": 6,
+  "__v": 0
+},{
+  "_id": {
+    "$oid": "611e2c6fe4f8fc1b47479ddd"
+  },
+  "country": [
+    "Allemagne",
+    "Belgique",
+    "Luxembourg",
+    "Pays-bas"
+  ],
+  "weight": [
+    {
+      "_id": {
+        "$oid": "611e2c6fe4f8fc1b47479dde"
+      },
+      "name": "0.5 kg",
+      "value": 7.92
+    },
+    {
+      "_id": {
+        "$oid": "611e2c6fe4f8fc1b47479ddf"
+      },
+      "name": "1 kg",
+      "value": 8.17
+    },
+    {
+      "_id": {
+        "$oid": "611e2c6fe4f8fc1b47479de0"
+      },
+      "name": "2 kg",
+      "value": 8.83
+    },
+    {
+      "_id": {
+        "$oid": "611e2c6fe4f8fc1b47479de1"
+      },
+      "name": "3 kg",
+      "value": 9.42
+    },
+    {
+      "_id": {
+        "$oid": "611e2c6fe4f8fc1b47479de2"
+      },
+      "name": "4 kg",
+      "value": 10.58
+    },
+    {
+      "_id": {
+        "$oid": "611e2c6fe4f8fc1b47479de3"
+      },
+      "name": "5 kg",
+      "value": 10.58
+    },
+    {
+      "_id": {
+        "$oid": "611e2c6fe4f8fc1b47479de4"
+      },
+      "name": "7 kg",
+      "value": 11.83
+    },
+    {
+      "_id": {
+        "$oid": "611e2c6fe4f8fc1b47479de5"
+      },
+      "name": "10 kg",
+      "value": 13.67
+    },
+    {
+      "_id": {
+        "$oid": "611e2c6fe4f8fc1b47479de6"
+      },
+      "name": "15 kg",
+      "value": 16.92
+    },
+    {
+      "_id": {
+        "$oid": "611e2c6fe4f8fc1b47479de7"
+      },
+      "name": "20 kg",
+      "value": 20.75
+    },
+    {
+      "_id": {
+        "$oid": "611e2c6fe4f8fc1b47479de8"
+      },
+      "name": "30 kg",
+      "value": 26.58
+    }
+  ],
+  "type": "domicile",
+  "delay": 3,
+  "__v": 0
+}]

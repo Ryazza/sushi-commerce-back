@@ -1,6 +1,4 @@
 const subCategoryService = require('../services/subCategory.service')
-const checkTokenMiddleware = require('../controllers/jwt.controller');
-
 
 /*------------------------ USER -------------------------------*/
 
@@ -71,9 +69,7 @@ exports.getOneSubCategoryAndProductAdmin = async (req, res) => {
 
 exports.createSubCategory = async (req, res) => {
     try {
-        const token = req.headers.authorization && checkTokenMiddleware.extractBearerToken(req.headers.authorization);
-
-        let newSubCategory = await subCategoryService.createSubCategory(req.body, token)
+        let newSubCategory = await subCategoryService.createSubCategory(req.body)
 
         if (newSubCategory.success === true) {
             res.status(201)
@@ -95,10 +91,7 @@ exports.createSubCategory = async (req, res) => {
 
 exports.updateSubCategory = async (req, res) => {
     try {
-        const token = req.headers.authorization && checkTokenMiddleware.extractBearerToken(req.headers.authorization);
-
-        let subCategoryServiceRes = await subCategoryService.updateSubCategory(req.params.id , req.body, token);
-
+        let subCategoryServiceRes = await subCategoryService.updateSubCategory(req.params.id , req.body);
         if (subCategoryServiceRes.success) {
             res.status(200);
             res.send(subCategoryServiceRes);
@@ -119,8 +112,7 @@ exports.updateSubCategory = async (req, res) => {
 exports.deleteSubCategory = async ( req, res ) => {
     try {
 
-        const token = req.headers.authorization && checkTokenMiddleware.extractBearerToken(req.headers.authorization);
-        let subCategory = await subCategoryService.deleteSubCategoryById(req.params.id, token);
+        let subCategory = await subCategoryService.deleteSubCategoryById(req.params.id);
         if (subCategory.success) {
             res.status(200);
             res.send({
